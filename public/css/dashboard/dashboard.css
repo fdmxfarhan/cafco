@@ -143,7 +143,7 @@
     }
     .product-cards-area .course{
         background-color: rgb(248, 248, 248);
-        border-radius: 2vw;
+        border-radius: 1vw;
         overflow: hidden;
         margin-bottom: 1vw;
         position: relative;
@@ -163,8 +163,8 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        border-top-right-radius: 2vw;
-        border-bottom-right-radius: 2vw;
+        border-top-right-radius: 1vw;
+        border-bottom-right-radius: 1vw;
     }
     .product-cards-area .course .info{
         float: right;
@@ -209,6 +209,10 @@
     .product-cards-area .course .labels a.remove:hover{
         background-color: var(--hover);
     }
+    .product-cards-area .course a .label.red:hover{
+        background-color: var(--hover);
+    }
+
 }
 @media only screen and (max-width: 800px) {
     

@@ -12,12 +12,13 @@ block content
                 ul 
                     li به پنل کاربری خود خوش آمدید
         -}
-        -if(false){
+        -if(notPayedCoursesNum != 0){
             .notif-msg
                 i.fa.fa-times.close-notif-msg
                 ul 
-                    li شما n صورت حساب پرداخت نشده دارید. جهت پرداخت صورت حساب خود 
-                        a(href="#") اینجا 
+                    li شما #{notPayedCoursesNum} صورت حساب پرداخت نشده دارید. 
+                    li جهت پرداخت صورت حساب خود 
+                        a(href="/dashboard/pay") اینجا 
                         | را کلیک کنید.
         -}
 
@@ -61,16 +62,18 @@ block content
                     .info 
                         .title= user.course[i].course.title
                         .subtitle مدرس: #{user.course[i].course.teacher}
-                        .subtitle زمان شروع: #{courses[i].startDate.year}/#{courses[i].startDate.month}/#{courses[i].startDate.day}
+                        .subtitle زمان شروع: #{user.course[i].course.startDate.year}/#{user.course[i].course.startDate.month}/#{user.course[i].course.startDate.day}
                     .labels 
                         -if(!user.course[i].payed){
-                            a.remove(href="#") 
+                            a.remove(href="/dashboard/remove-user-course?courseID=#{user.course[i].courseID}&index=#{i}") 
                                 i.fa.fa-trash
-                            .label.red پرداخت نشده
+                            a(href="/dashboard/pay") 
+                                .label.red پرداخت نشده
                         -}
                         .label.green= user.course[i].course.status
             -}
         -}
+
     h1.title دوره های پیشنهادی برای شما
     .product-cards-area
         -if(courses.length == 0){

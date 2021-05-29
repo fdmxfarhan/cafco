@@ -137,20 +137,31 @@ body{
         padding: 0;
     }
     .dashboard .content-area .message-area .success-msg{
-        background-color: greenyellow;
+        background-color: rgb(130, 255, 92);
         border-radius: 1vw;
         width: 95%;
         margin: 1vw 0;
         padding: 0.3vw 1vw;
         position: relative;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        color: rgb(39, 39, 39);
     }
     .dashboard .content-area .message-area .notif-msg{
-        background-color: salmon;
+        background-color: rgb(255, 151, 139);
         border-radius: 1vw;
         width: 95%;
         margin: 1vw 0;
         padding: 0.3vw 1vw;
         position: relative;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        color: rgb(39, 39, 39);
+    }
+    .dashboard .content-area .message-area .notif-msg a{
+        text-decoration: none;
+        color: rgb(0, 153, 255);
+        font-weight: bold;
     }
     .dashboard .content-area .message-area i.close-success-msg, .dashboard .content-area .message-area i.close-notif-msg{
         position: absolute;

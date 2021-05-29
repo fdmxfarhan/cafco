@@ -1,0 +1,39 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/pay.css")
+
+block content
+    .course-list
+        h1.pay-title دوره های ثبت نام شده
+        -for(var i=0; i<user.course.length; i++){
+            .course 
+                .cover-img 
+                    img(src="#{user.course[i].course.cover}", alt="cover")
+                .info 
+                    .title= user.course[i].course.title
+                    .subtitle مدرس: #{user.course[i].course.teacher}
+                    .subtitle زمان شروع: #{user.course[i].course.startDate.year}/#{user.course[i].course.startDate.month}/#{user.course[i].course.startDate.day}
+                .labels 
+                    a.remove(href="/dashboard/remove-user-course?courseID=#{user.course[i].courseID}&index=#{i}") 
+                        i.fa.fa-trash
+                .price #{user.course[i].course.price/10} تومان
+        -}
+    .payment-card
+        .info
+            .info-part.first
+                .item-title تعداد دوره ها: 
+                .item-value #{user.course.length}
+            .info-part
+                .item-title مجموع هزینه ها: 
+                .item-value #{priceSum} ریال
+            .info-part
+                .item-title تخفیف: 
+                .item-value #{discount} ریال
+            .info-part
+                .item-title قابل پرداخت: 
+            .sum.green #{priceSum - discount} ریال
+        a.pay(href="") پرداخت
+
+    script(src="/js/dashboard.js") 
+    script(src="/js/pay.js") 

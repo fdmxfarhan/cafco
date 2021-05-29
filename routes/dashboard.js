@@ -11,10 +11,16 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'user')
     {
         Course.find({}, (err, courses) => {
+            var notPayedCoursesNum = 0;
+            for(var i=0; i<req.user.course.length; i++)
+            {
+                if(!req.user.course[i].payed) notPayedCoursesNum++;
+            }
             res.render('./dashboard/user-dashboard', {
                 user: req.user,
                 login: req.query.login,
-                courses
+                courses,
+                notPayedCoursesNum,
             });
         });
     }
@@ -47,6 +53,30 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
             res.send('این دوره قبلا ثبت شده');
         }
     })
+});
+
+router.get('/remove-user-course', ensureAuthenticated, (req, res, next) => {
+    var courseList = req.user.course;
+    courseList.splice(req.query.index, 1);
+    User.updateMany({idNumber: req.user.idNumber}, {$set: {course: courseList}}, (err, doc) => {
+        res.redirect('/dashboard');
+    });
+});
+
+router.get('/pay', ensureAuthenticated, (req, res, next) => {
+    var courseList = req.user.course;
+    var priceSum = 0;
+    for(var i=0; i<courseList.length; i++)
+    {
+        if(!courseList[i].payed)
+            priceSum += courseList[i].course.price;
+    }
+    res.render('./dashboard/user-pay', {
+        user: req.user,
+        priceSum,
+        discount: 0,
+
+    });
 });
 
 module.exports = router;
