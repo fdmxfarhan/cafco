@@ -46,7 +46,7 @@ router.get('/pay', function(req, res, next){
       url: 'https://api.idpay.ir/v1.1/payment',
       headers: {
         'Content-Type': 'application/json',
-        // 'X-API-KEY': 'f069e17a-41ba-4af4-99c1-2c137dda9cdd',
+        'X-API-KEY': 'f069e17a-41ba-4af4-99c1-2c137dda9cdd',
         // 'X-API-KEY': 'fe6a4553-cd95-4dff-af2e-80594c1c18c5',
         'X-SANDBOX': 1,
       },
@@ -80,7 +80,7 @@ router.post('/pay', function(req,res, next){
         url: 'https://api.idpay.ir/v1.1/payment/verify',
         headers: {
           'Content-Type': 'application/json',
-          // 'X-API-KEY': 'f069e17a-41ba-4af4-99c1-2c137dda9cdd',
+          'X-API-KEY': 'f069e17a-41ba-4af4-99c1-2c137dda9cdd',
           // 'X-API-KEY': 'fe6a4553-cd95-4dff-af2e-80594c1c18c5',
           'X-SANDBOX': 1,
         },
