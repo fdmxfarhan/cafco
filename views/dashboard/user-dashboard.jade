@@ -23,66 +23,71 @@ block content
 
     .graph-cards-area
         .card 
-            .title تعداد دوره ها
+            .title دوره های گزرانده شده
             //- .number 100
-            .progress-circle.over50.p85
-                span 100
+            .progress-circle.p1
+                span 0
                 .left-half-clipper
                     .first50-bar
                     .value-bar
         .card 
-            .title تعداد شرکت کنندگان
+            .title دوره های ثبت نام شده
             //- .number 200
-            .progress-circle.over50.p85
-                span 200
+            .progress-circle.p2
+                span= user.course.length
                 .left-half-clipper
                     .first50-bar
                     .value-bar
         .card 
             .title تعداد دوره ها
             //- .number 100
-            .progress-circle.over50.p85
-                span 100
+            .progress-circle.over50.p70
+                span= courses.length
                 .left-half-clipper
                     .first50-bar
                     .value-bar
         
     h1.title دوره های من
     .product-cards-area
-        .not-found شما هیچ دوره ای ثبت نام نکرده اید. برای ثبت نام 
-            a(href="#") اینجا 
-            | کلیک کنید.
+        -if(user.course.length == 0){
+            .not-found شما هیچ دوره ای ثبت نام نکرده اید. برای ثبت نام 
+                a(href="#") اینجا 
+                | کلیک کنید.
+        -}else{
+            -for(var i=0; i<user.course.length; i++){
+                .course 
+                    .cover-img 
+                        img(src="#{user.course[i].course.cover}", alt="cover")
+                    .info 
+                        .title= user.course[i].course.title
+                        .subtitle مدرس: #{user.course[i].course.teacher}
+                        .subtitle زمان شروع: #{courses[i].startDate.year}/#{courses[i].startDate.month}/#{courses[i].startDate.day}
+                    .labels 
+                        -if(!user.course[i].payed){
+                            a.remove(href="#") 
+                                i.fa.fa-trash
+                            .label.red پرداخت نشده
+                        -}
+                        .label.green= user.course[i].course.status
+            -}
+        -}
     h1.title دوره های پیشنهادی برای شما
     .product-cards-area
-        //- .not-found شما هیچ دوره ای ثبت نام نکرده اید. برای ثبت نام 
-        //-     a(href="#") اینجا 
-        //-     | کلیک کنید.
-        .card 
-            .image 
-                img(src="/img/classes/img-01.jpg")
-            .title دوره آموزشی 1
-            .text 
-                | در این قسمت توضیحات مورد نیاز در مورد دوره آموزشی نوشته می شود. با کلیک بر روی دکمه ثبت نام این دوره به لیست دوره ها اضافه شده و پس از پرداخت هزینه فعال می شود.
-            .price 100.000 تومان
-        .card 
-            .image 
-                img(src="/img/classes/img-02.png")
-            .title دوره آموزشی 1
-            .text 
-                | در این قسمت توضیحات مورد نیاز در مورد دوره آموزشی نوشته می شود. با کلیک بر روی دکمه ثبت نام این دوره به لیست دوره ها اضافه شده و پس از پرداخت هزینه فعال می شود.
-            .price 100.000 تومان
-        .card 
-            .image 
-                img(src="/img/classes/img-01.jpg")
-            .title دوره آموزشی 1
-            .text 
-                | در این قسمت توضیحات مورد نیاز در مورد دوره آموزشی نوشته می شود. با کلیک بر روی دکمه ثبت نام این دوره به لیست دوره ها اضافه شده و پس از پرداخت هزینه فعال می شود.
-            .price 100.000 تومان
-        .card 
-            .image 
-                img(src="/img/classes/img-02.png")
-            .title دوره آموزشی 1
-            .text 
-                | در این قسمت توضیحات مورد نیاز در مورد دوره آموزشی نوشته می شود. با کلیک بر روی دکمه ثبت نام این دوره به لیست دوره ها اضافه شده و پس از پرداخت هزینه فعال می شود.
-            .price 100.000 تومان
+        -if(courses.length == 0){
+            .not-found دوره ای جهت نمایش وجود ندارد
+        -}else{
+            -for(var i=0; i<courses.length && i< 6; i++){
+                .card(id="card#{i}")
+                    .image 
+                        img(src="#{courses[i].cover}")
+                    .title= courses[i].title
+                    .text= courses[i].description
+                    .price #{courses[i].price/10} تومان
+            -}
+        -}
+    a.show-more(href="/courses") 
+        i.fa.fa-chevron-left
+        | مشاهده بیشتر ...
+    include course-view 
+    
     script(src="/js/dashboard.js") 

@@ -1,0 +1,23 @@
+-for(var i=0; i<courses.length && i< 6; i++){
+    .popup-area(id="course-view#{i}")
+        .popup
+            i.fa.fa-times.close-popup
+            h1.popup-title= courses[i].title
+            .two-side-cont
+                .part 
+                    .text= courses[i].description
+                    ul
+                        li مدرس: #{courses[i].teacher}
+                        li زمان شروع: #{courses[i].startDate.year}/#{courses[i].startDate.month}/#{courses[i].startDate.day}
+                        li محدوده سنی: #{courses[i].minAge} تا #{courses[i].maxAge} سال
+                        li ظرفیت: #{courses[i].capacity} نفر
+                        li تعداد جلسات: #{courses[i].session}
+                        li هزینه: #{courses[i].price/10} تومان
+                    a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}") 
+                        i.fa.fa-check
+                        | ثبت نام
+                //- .break-side 
+                .part 
+                    .cover-image 
+                        img(src="/img/classes/img-01.jpg", alt="cover")
+-}

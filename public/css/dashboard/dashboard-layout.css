@@ -21,13 +21,14 @@
     --background: #ececec;
     --brown: #3e2917;
     --blue: #1971e4;
+    --green: #18d112;
     --yellow: #febf18;
-    --hover: #8305be;
+    --hover: #ff7b00;
     --dark: #050507;
     --light: white;
     --kerem: #eec278;
     --red: #ff0000;
-    --textcolor: rgb(29, 29, 29);
+    --text: rgb(100, 100, 100);
 }
 body{
     margin: 0;
@@ -40,7 +41,7 @@ body{
 }
 
 .black-modal{
-    /* display: none; */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -63,7 +64,7 @@ body{
     padding: 0;
     margin: 0;
 }
-
+.hidden{display: none;}
 @media only screen and (min-width: 800px) {
     .dashboard .side-bar{
         background-color: var(--yellow);
@@ -131,22 +132,23 @@ body{
         bottom: 1vw;
     }
     .dashboard .content-area .message-area{
-        margin: 0;
+        width: 85%;
+        margin: auto;
         padding: 0;
     }
     .dashboard .content-area .message-area .success-msg{
         background-color: greenyellow;
         border-radius: 1vw;
-        width: 85%;
-        margin: 1vw auto;
+        width: 95%;
+        margin: 1vw 0;
         padding: 0.3vw 1vw;
         position: relative;
     }
     .dashboard .content-area .message-area .notif-msg{
         background-color: salmon;
         border-radius: 1vw;
-        width: 85%;
-        margin: 1vw auto;
+        width: 95%;
+        margin: 1vw 0;
         padding: 0.3vw 1vw;
         position: relative;
     }
@@ -161,20 +163,20 @@ body{
         color: var(--red);
     }
     .popup-area{
+        display: none;
         position: fixed;
         top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        left: 11.5%;
+        width: 75%;
+        margin: 5vw auto;
         z-index: 11;
     }
     .popup-area .popup{
         background-color: white;
-        width: 75%;
-        margin: 5vw auto;
         border-radius: 1vw;
         position: relative;
         padding: 2vw;
+        z-index: 12;
     }
     .popup-area .popup .close-popup{
         position: absolute;
@@ -196,6 +198,173 @@ body{
         margin: auto;
         text-align: center;
         margin-bottom: 1vw;
+    }
+    .popup-area .two-side-cont{
+        overflow: hidden;
+        width: 90%;
+        margin: auto;
+    }
+    .popup-area .two-side-cont .break-side{
+        background-color: lightgray;
+        width: 0.1vw;
+        height: 20vw;
+        overflow: hidden;
+        float: right;
+        margin: 1vw;
+    }
+    .popup-area .two-side-cont .part{
+        float: right;
+        width: 46%;
+        margin: 1%;
+    }
+    .popup-area .two-side-cont .part .text-input{
+        border-radius: 2vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        margin-bottom: 1.5vw;
+    }
+    .popup-area .two-side-cont .part .text-input i{
+        font-size: 1.2vw;
+        color: var(--blue);
+        padding: 0.5vw 1vw;
+    }
+    .popup-area .two-side-cont .part .text-input input{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.4vw 1vw;
+        border: none;
+        width: 80%;
+    }
+    .popup-area .two-side-cont .part .text-input input:focus{
+        outline: none;
+    }
+    .popup-area .two-side-cont .part textarea{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.4vw 1vw;
+        border: none;
+        width: 80%;
+        border-radius: 1vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        margin-bottom: 1.5vw;
+        width: 93%;
+        height: 14vw;
+        resize: vertical;
+    }
+    .popup-area .two-side-cont .part textarea:focus{
+        outline: none;
+    }
+    .popup-area .two-side-cont .age-input{
+        margin-bottom: 1vw;
+    }
+    .popup-area .two-side-cont .age-input input{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.4vw 1vw;
+        border: none;
+        width: 80%;
+        border-radius: 2vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        margin-bottom: 1.5vw;
+        width: 4vw;
+        margin: 0 0.3vw;
+        text-align: center;
+    }
+    .popup-area .two-side-cont .age-input input:focus{
+        outline: none;
+    }
+    .popup-area .two-side-cont .date-input{
+        margin-bottom: 1vw;
+    }
+    .popup-area .two-side-cont .date-input input{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.4vw 1vw;
+        border: none;
+        width: 80%;
+        border-radius: 2vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        margin-bottom: 1.5vw;
+        width: 4vw;
+        margin: 0 0.3vw;
+        text-align: center;
+    }
+    .popup-area .two-side-cont .date-input input:focus{
+        outline: none;
+    }
+    .popup-area .two-side-cont input.file{
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .popup-area .two-side-cont input.submit{
+        border: none;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        background-color: var(--blue);
+        color: white;
+        padding: 0.5vw 4vw;
+        border-radius: 1vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+        margin-top: 1vw;
+        /* margin-right: 2vw; */
+    }
+    .popup-area .two-side-cont input.submit:hover{background-color: chocolate;}
+    .popup-area .two-side-cont .upload-area{
+        border: lightblue 2px dashed;
+        position: relative;
+        cursor: pointer;
+        padding: 2vw 0;
+        text-align: center;
+        color: #798AAF;
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        width: 98%;
+        border-radius: 1vw;
+        margin-bottom: 1vw;
+    }
+    .popup-area .two-side-cont .cover-image{
+        width: 98%;
+        margin: auto;
+    }
+    .popup-area .two-side-cont .cover-image img{
+        width: 100%;
+    }
+    .popup-area .two-side-cont .text{
+        text-align: justify;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        margin-bottom: 1vw;
+    }
+    .popup-area .two-side-cont a.submit{
+        border: none;
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        background-color: var(--green);
+        color: white;
+        padding: 0.5vw 4vw;
+        border-radius: 1vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+        margin-top: 1vw;
+        text-decoration: none;
+        margin-top: 2vw;
+        display: block;
+        width: fit-content;
+    }
+    .popup-area .two-side-cont a.submit:hover{
+        background-color: var(--hover);
+    }
+    .popup-area .two-side-cont a.submit i{
+        padding-left: 0.5vw;
+    }
+    .translation-panel .upload-area i{
+        padding-right: 1vw;
+        font-size: 1.8vw;
     }
 }
 

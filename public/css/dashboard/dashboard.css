@@ -38,6 +38,7 @@
         width: 85%;
         margin: auto;
         padding: 2vw 0;
+        padding-bottom: 1vw;
         overflow: hidden;
     }
     .product-cards-area .not-found{
@@ -57,12 +58,18 @@
         float: right;
         width: 30%;
         margin: 1vw;
-        background-color: var(--background);
+        background-color: rgb(248, 248, 248);
         box-shadow:  0.3vw  0.3vw 0.6vw #bebebe,
                     -0.3vw -0.3vw 0.6vw #ffffff;
         border-radius: 1vw;
-        min-height: 26vw;
+        min-height: 29vw;
         position: relative;
+        cursor: pointer;
+        transition-duration: 500ms;
+    }
+    .product-cards-area .card:hover{
+        box-shadow:  0.3vw  0.3vw 1vw #3b3b3b9d,
+                    -0.3vw -0.3vw 1vw #ffffff;
     }
     .product-cards-area .card .image img{
         width: 100%;
@@ -70,7 +77,6 @@
         border-top-left-radius: 1vw;
         border-top-right-radius: 1vw;
     }
-
     .product-cards-area .card .title{
         color: var(--brown);
         font-weight: bold;
@@ -84,7 +90,7 @@
         margin: auto;
         font-size: 1vw;
         text-align: justify;
-        
+        margin-bottom: 2vw;
     }
     .product-cards-area .card .price{
         position: absolute;
@@ -94,25 +100,114 @@
         font-weight: bold;
         color: rgb(0, 190, 0);
     }
-    .product-cards-area .card.add{
+    .product-cards-area .card.add-course{
         background-color: rgb(255, 192, 185);
         text-align: center;
         cursor: pointer;
         transition-duration: 500ms;
     }
-    .product-cards-area .card.add:hover{
+    .product-cards-area .card.add-course:hover{
         background-color: salmon;
     }
-    .product-cards-area .card.add i.plus{
+    .product-cards-area .card.add-course i.plus{
         color: white;
         margin: 6vw auto;
         margin-bottom: 0;
         font-size: 10vw;
     }
-    .product-cards-area .card.add .add-text{
+    .product-cards-area .card.add-course .add-text{
         color: white;
         font-size: 2vw;
         margin: 0;
+    }
+    a.show-more{
+        color: green;
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        text-align: left;
+        display: block;
+        width: 80%;
+        margin: auto;
+        margin-bottom: 2vw;
+        text-decoration: none;
+        /* font-weight: bold; */
+        transition-duration: 500ms;
+    }
+    a.show-more:hover{
+        font-weight: bold;
+        color: var(--hover);
+    }
+    a.show-more i{
+        padding-left: 0.4vw;
+        font-size: 0.8vw;
+    }
+    .product-cards-area .course{
+        background-color: rgb(248, 248, 248);
+        border-radius: 2vw;
+        overflow: hidden;
+        margin-bottom: 1vw;
+        position: relative;
+        padding: 0;
+        
+    }
+    .product-cards-area .course .cover-img{
+        float: right;
+        width: 20%;
+        margin: 0;
+        padding: 0;
+        height: fit-content;
+        height: 8vw;
+    }
+    .product-cards-area .course .cover-img img{
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border-top-right-radius: 2vw;
+        border-bottom-right-radius: 2vw;
+    }
+    .product-cards-area .course .info{
+        float: right;
+        padding: 0.7vw 2vw;
+    }
+    .product-cards-area .course .info .title{
+        color: var(--blue);
+        font-weight: bold;
+        font-family: 'iransans';
+        font-size: 1.3vw;
+    }
+    .product-cards-area .course .info .subtitle{
+        color: var(--text);
+        margin: 0;
+        font-family: 'iransans';
+        font-size: 1vw;
+    }
+    .product-cards-area .course .labels{
+        position: absolute;
+        left: 2vw;
+        top: 2vw;
+        overflow: hidden;
+    }
+    .product-cards-area .course .labels .label.green{background-color: rgb(42, 228, 42);}
+    .product-cards-area .course .labels .label.red{background-color: salmon;}
+    .product-cards-area .course .labels .label{
+        float: left;
+        margin: 0 0.5vw;
+        padding: 0.3vw 1vw;
+        border-radius: 1vw;
+        color: white;
+    }
+    .product-cards-area .course .labels a.remove{
+        display: block;
+        float: left;
+        padding: 0.3vw 1vw;
+        border-radius: 1vw;
+        margin: 0 0.5vw;
+        background-color: var(--red);
+        color: white;
+    }
+    .product-cards-area .course .labels a.remove:hover{
+        background-color: var(--hover);
     }
 }
 @media only screen and (max-width: 800px) {

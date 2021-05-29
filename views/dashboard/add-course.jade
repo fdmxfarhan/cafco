@@ -1,0 +1,43 @@
+.popup-area#add-course
+    .popup
+        i.fa.fa-times.close-popup
+        h1.popup-title افزودن دوره جدید
+        .two-side-cont
+            form(action="/upload/course" enctype="multipart/form-data" method="POST") 
+                input.hidden(type="text" name="redirect" value="/dashboard")
+                .part 
+                    .text-input 
+                        i.fa.fa-pencil 
+                        input(type="text" name="title" placeholder="عنوان دوره" required)
+                    textarea#txt-area(name="description" placeholder="توضیحات ..." required)
+                    .text-input 
+                        i.fa.fa-user 
+                        input(type="text" name="teacher" placeholder="مدرس" required)
+                    .text-input 
+                        i.fa.fa-user 
+                        input(type="Number" name="session" placeholder="تعداد جلسات" required)
+                .break-side 
+                .part 
+                    .age-input
+                        label(for="minAge") محدوده سنی از
+                        input(type="Number" name="minAge" placeholder="سال" required)
+                        label(for="maxAge") تا
+                        input(type="Number" name="maxAge" placeholder="سال" required)
+                    .date-input 
+                        label(for="day") شروع دوره: 
+                        input(type="Number" name="day" placeholder="روز" required)
+                        label(for="month") / 
+                        input(type="Number" name="month" placeholder="ماه" required)
+                        label(for="year") / 
+                        input(type="Number" name="year" placeholder="سال" value="1400" required)
+                    .text-input 
+                        i.fa.fa-glass
+                        input(type="Number" name="capacity" placeholder="ظرفیت" required)
+                    .text-input 
+                        i.fa.fa-dollar 
+                        input(type="Number" name="price" placeholder="هزینه دوره (ریال)" required)
+                    .upload-area فایل خود را انتخاب کنید
+                        i.fa.fa-cloud-upload
+                        input.file(type="file" name="myFile")
+                    input.submit(type="submit" value="ثبت")
+            

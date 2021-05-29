@@ -2,19 +2,23 @@ var mongoose = require('mongoose');
 
 var CourseSchema = new mongoose.Schema({
   price: Number, // Rial
-  off: Number, //percent
+  discount: Number, //percent
+  haveDiscount: Boolean,
   title: String, 
-  description: Text,
+  description: String,
   teacher: String,
-  startDate: Date,
+  startDate: Object,
   session: Number,
   requiredCourse: [Object],
   requiredTools: [Object],
   minAge: Number,
   maxAge: Number,
-  status: String,
+  status: {
+    type: String,
+    default: 'شروع نشده'
+  },
   capacity: Number,
-  
+  cover: String,
 });
 
 var Course = mongoose.model('Course', CourseSchema);

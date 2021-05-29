@@ -25,8 +25,8 @@ block content
         .card 
             .title تعداد دوره ها
             //- .number 100
-            .progress-circle.over50.p85
-                span 100
+            .progress-circle.p30
+                span= courses.length
                 .left-half-clipper
                     .first50-bar
                     .value-bar
@@ -54,56 +54,20 @@ block content
     //-         | کلیک کنید.
     h1.title لیست دوره ها
     .product-cards-area 
-        .card 
-            .image 
-                img(src="/img/classes/img-01.jpg")
-            .title دوره آموزشی 1
-            .text 
-                | در این قسمت توضیحات مورد نیاز در مورد دوره آموزشی نوشته می شود. با کلیک بر روی دکمه ثبت نام این دوره به لیست دوره ها اضافه شده و پس از پرداخت هزینه فعال می شود.
-            .price 100.000 تومان
-        .card 
-            .image 
-                img(src="/img/classes/img-02.png")
-            .title دوره آموزشی 1
-            .text 
-                | در این قسمت توضیحات مورد نیاز در مورد دوره آموزشی نوشته می شود. با کلیک بر روی دکمه ثبت نام این دوره به لیست دوره ها اضافه شده و پس از پرداخت هزینه فعال می شود.
-            .price 100.000 تومان
-        .card 
-            .image 
-                img(src="/img/classes/img-01.jpg")
-            .title دوره آموزشی 1
-            .text 
-                | در این قسمت توضیحات مورد نیاز در مورد دوره آموزشی نوشته می شود. با کلیک بر روی دکمه ثبت نام این دوره به لیست دوره ها اضافه شده و پس از پرداخت هزینه فعال می شود.
-            .price 100.000 تومان
-        .card 
-            .image 
-                img(src="/img/classes/img-02.png")
-            .title دوره آموزشی 1
-            .text 
-                | در این قسمت توضیحات مورد نیاز در مورد دوره آموزشی نوشته می شود. با کلیک بر روی دکمه ثبت نام این دوره به لیست دوره ها اضافه شده و پس از پرداخت هزینه فعال می شود.
-            .price 100.000 تومان
-        .card.add
+        .card.add-course
             i.fa.fa-plus.plus
             .add-text افزودن دوره
+        -for(var i=0; i<courses.length && i< 6; i++){
+            .card(id="card#{i}") 
+                .image 
+                    img(src="#{courses[i].cover}")
+                .title= courses[i].title
+                .text= courses[i].description
+                .price #{courses[i].price/10} تومان
+        -}
+    include add-course
 
-    .popup-area
-        .popup
-            i.fa.fa-times.close-popup
-            h1.popup-title افزودن دوره جدید
-            .two-side-cont
-                .part 
-                    form(action="/dashboard/") 
-                        .text-input 
-                            i.fa.fa-pencil 
-                            input(type="text" name="title" placeholder="عنوان دوره")
-                        .text-input 
-                            i.fa.fa-pencil 
-                            input(type="text" name="title" placeholder="عنوان دوره")
-                        
-                .break-side 
-                .part 
-
-
+    include course-view
 
     script(src="/js/dashboard.js") 
 
