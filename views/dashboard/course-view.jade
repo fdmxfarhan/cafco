@@ -20,4 +20,14 @@
                 .part 
                     .cover-image 
                         img(src="/img/classes/img-01.jpg", alt="cover")
+                    -if(user.role == 'admin'){
+                        .action
+                            a.remove(href="/dashboard/remove-course?courseID=#{courses[i]._id}") 
+                                i.fa.fa-trash 
+                                | حذف دوره
+                            -if(courses[i].status == 'شروع نشده')
+                                a.status.active(href="/dashboard/set-course-status?courseID=#{course}") شروع نشده
+                            -else
+                                a.status(href="/dashboard/set-course-status?courseID=#{course}") شروع نشده
+                    -}
 -}

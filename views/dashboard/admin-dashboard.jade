@@ -65,10 +65,14 @@ block content
                 .text= courses[i].description
                 .price #{courses[i].price/10} تومان
         -}
+    
+    a.show-more(href="/courses") 
+        i.fa.fa-chevron-left
+        | مشاهده بیشتر ...
+
     include add-course
-
+    
     include course-view
-
     script(src="/js/dashboard.js") 
 
 
