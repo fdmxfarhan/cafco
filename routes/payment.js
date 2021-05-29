@@ -9,7 +9,9 @@ const Payment = require('../models/Payment');
 
 
 router.get('/', (req, res, next) => {
-  res.render(`success-pay`);
+  Payment.findOne({}, (err, payment) => {
+    res.render(`success-pay`, payment);
+  });
 })
 
 router.get('/pay', ensureAuthenticated,function(req, res, next){
