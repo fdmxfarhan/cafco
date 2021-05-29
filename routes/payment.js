@@ -103,6 +103,16 @@ router.post('/pay', function(req,res, next){
                 payment
               });
             });
+            User.findOne({idNumber: payment.idNumber}, (err, user) => {
+              if(err) console.log(err);
+              var courseList = user.course;
+              for (let i = 0; i < courseList.length; i++) {
+                courseList[i].payed = true;
+              }
+              User.updateMany({idNumber: payment.idNumber}, {$set: {course: courseList}}, (err, doc) => {
+                if(err) console.log(err);
+              });
+            });
           });
         }
         else{
