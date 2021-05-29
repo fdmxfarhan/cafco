@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
   res.render(`success-pay`);
 })
 
-router.get('/pay', function(req, res, next){
+router.get('/pay', ensureAuthenticated,function(req, res, next){
   var courseList = req.user.course;
   var notPayedCourses = [];
   var priceSum = 0;
