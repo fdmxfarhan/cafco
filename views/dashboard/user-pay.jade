@@ -6,18 +6,24 @@ block styles
 block content
     .course-list
         h1.pay-title دوره های ثبت نام شده
-        -for(var i=0; i<user.course.length; i++){
-            .course 
-                .cover-img 
-                    img(src="#{user.course[i].course.cover}", alt="cover")
-                .info 
-                    .title= user.course[i].course.title
-                    .subtitle مدرس: #{user.course[i].course.teacher}
-                    .subtitle زمان شروع: #{user.course[i].course.startDate.year}/#{user.course[i].course.startDate.month}/#{user.course[i].course.startDate.day}
-                .labels 
-                    a.remove(href="/dashboard/remove-user-course?courseID=#{user.course[i].courseID}&index=#{i}") 
-                        i.fa.fa-trash
-                .price #{user.course[i].course.price/10} تومان
+        -if(user.course.length == 0){
+            .not-found شما هیچ دوره ای ثبت نام نکرده اید. برای ثبت نام 
+                a(href="#") اینجا 
+                | کلیک کنید.
+        -}else{
+            -for(var i=0; i<user.course.length; i++){
+                .course 
+                    .cover-img 
+                        img(src="#{user.course[i].course.cover}", alt="cover")
+                    .info 
+                        .title= user.course[i].course.title
+                        .subtitle مدرس: #{user.course[i].course.teacher}
+                        .subtitle زمان شروع: #{user.course[i].course.startDate.year}/#{user.course[i].course.startDate.month}/#{user.course[i].course.startDate.day}
+                    .labels 
+                        a.remove(href="/dashboard/remove-user-course-pay?courseID=#{user.course[i].courseID}&index=#{i}") 
+                            i.fa.fa-trash
+                    .price #{user.course[i].course.price/10} تومان
+            -}
         -}
     .payment-card
         .info
@@ -33,7 +39,8 @@ block content
             .info-part
                 .item-title قابل پرداخت: 
             .sum.green #{priceSum - discount} ریال
-        a.pay(href="") پرداخت
+        -if(user.course.length > 0)
+            a.pay(href="/payment/pay") پرداخت
 
     script(src="/js/dashboard.js") 
     script(src="/js/pay.js") 

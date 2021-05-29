@@ -62,6 +62,13 @@ router.get('/remove-user-course', ensureAuthenticated, (req, res, next) => {
         res.redirect('/dashboard');
     });
 });
+router.get('/remove-user-course-pay', ensureAuthenticated, (req, res, next) => {
+    var courseList = req.user.course;
+    courseList.splice(req.query.index, 1);
+    User.updateMany({idNumber: req.user.idNumber}, {$set: {course: courseList}}, (err, doc) => {
+        res.redirect('/dashboard/pay');
+    });
+});
 
 router.get('/pay', ensureAuthenticated, (req, res, next) => {
     var courseList = req.user.course;
