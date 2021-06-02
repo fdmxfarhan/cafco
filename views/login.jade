@@ -45,10 +45,10 @@ block content
             | ورود
         form(action="/users/login" id="register" method="POST")
             .text-input-area
-                input.textinput(type="text" placeholder="کد ملی" name="username" value= "#{ typeof uname != 'undefined' ? uname: '' }")
+                input.textinput(type="text" placeholder="کد ملی" name="username" value= "#{ typeof uname != 'undefined' ? uname: '' }" required)
                 i.fa.fa-user
             .text-input-area
-                input.textinput(type="password" placeholder="رمز عبور" name="password" value= "#{ typeof psw != 'undefined' ? psw: '' }")
+                input.textinput(type="password" placeholder="رمز عبور" name="password" value= "#{ typeof psw != 'undefined' ? psw: '' }" required)
                 i.fa.fa-key
             .text-input-area
                 button.submit(type="submit") ورود
