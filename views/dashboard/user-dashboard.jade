@@ -85,10 +85,10 @@ block content
                         img(src="#{courses[i].cover}")
                     .title= courses[i].title
                     .text= courses[i].description
-                    .price #{courses[i].price/10} تومان
+                    .price #{dot(courses[i].price/10)} تومان
             -}
         -}
-    a.show-more(href="/courses") 
+    a.show-more(href="/dashboard/courses") 
         i.fa.fa-chevron-left
         | مشاهده بیشتر ...
     include course-view 

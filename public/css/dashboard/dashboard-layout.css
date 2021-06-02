@@ -65,6 +65,9 @@ body{
     margin: 0;
 }
 .hidden{display: none;}
+.center{
+    text-align: center;
+}
 @media only screen and (min-width: 800px) {
     .dashboard .side-bar{
         background-color: var(--yellow);
@@ -376,6 +379,50 @@ body{
     .translation-panel .upload-area i{
         padding-right: 1vw;
         font-size: 1.8vw;
+    }
+    .popup-area .action{
+        overflow: hidden;
+        margin-top: 1vw;
+    }
+    .popup-area .action a{
+        float: right;
+        padding: 0.3vw 1vw;
+        text-decoration: none;
+        border-radius: 1.5vw;
+        margin-left: 1vw;
+        background-color: rgb(81, 212, 81);
+        color: white;
+        transition-duration: 500ms;
+    }
+    .popup-area .action a:hover{
+        background-color: rgb(0, 255, 0);
+    }
+    .popup-area .action a i{
+        padding-left: 1vw;
+    }
+    .popup-area .action a.remove{
+        background-color: salmon;
+    }
+    .popup-area .action a.remove:hover{
+        background-color: rgb(255, 25, 0);
+    }
+    .popup-area .action a.edit{
+        background-color: lightskyblue;
+    }
+    .popup-area .action a.edit:hover{
+        background-color: rgb(0, 157, 255);
+    }
+    .popup-area .action a.status{
+        background-color: white;
+        border: var(--blue) 0.2vw solid;
+        color: var(--blue);
+        padding: 0.1vw 1vw;
+        font-size: 1vw;
+    }
+    .popup-area .action a.status.active{
+        background-color: var(--blue);
+        color: white;
+
     }
 }
 

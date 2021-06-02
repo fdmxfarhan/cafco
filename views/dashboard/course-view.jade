@@ -13,9 +13,11 @@
                         li ظرفیت: #{courses[i].capacity} نفر
                         li تعداد جلسات: #{courses[i].session}
                         li هزینه: #{courses[i].price/10} تومان
-                    a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}") 
-                        i.fa.fa-check
-                        | ثبت نام
+                    -if(user.role != 'admin'){
+                        a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}") 
+                            i.fa.fa-check
+                            | ثبت نام
+                    -}
                 //- .break-side 
                 .part 
                     .cover-image 
@@ -24,10 +26,23 @@
                         .action
                             a.remove(href="/dashboard/remove-course?courseID=#{courses[i]._id}") 
                                 i.fa.fa-trash 
-                                | حذف دوره
+                                | حذف 
+                            a.edit(href="/dashboard/edit-course?courseID=#{courses[i]._id}") 
+                                i.fa.fa-edit
+                                | ویرایش 
+                        .action
                             -if(courses[i].status == 'شروع نشده')
-                                a.status.active(href="/dashboard/set-course-status?courseID=#{course}") شروع نشده
+                                a.status.active(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=شروع نشده") شروع نشده 
                             -else
-                                a.status(href="/dashboard/set-course-status?courseID=#{course}") شروع نشده
+                                a.status(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=شروع نشده") شروع نشده 
+                            -if(courses[i].status == 'در حال برگزاری')
+                                a.status.active(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=در حال برگزاری") در حال برگزاری
+                            -else
+                                a.status(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=در حال برگزاری") در حال برگزاری 
+                            -if(courses[i].status == 'پایان یافته')
+                                a.status.active(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=پایان یافته") پایان یافته
+                            -else
+                                a.status(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=پایان یافته") پایان یافته
+                            
                     -}
 -}

@@ -1,0 +1,27 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/user-view.css")
+
+block content
+    h1.title.center لیست همه کاربران
+
+    .user-list 
+        table 
+            tr 
+                th ردیف
+                th نام و نام خانوادگی
+                th شماره تلفن
+                th کد ملی
+                th تعداد دوره های ثبت نام شده
+                th نوع حساب
+            -for(var i=0; i<users.length; i++){
+                tr(id="view-user#{i}")
+                    td= i+1
+                    td= users[i].fullname
+                    td= users[i].phone
+                    td= users[i].idNumber
+                    td= users[i].course.length
+                    td= users[i].role
+            -}
+    

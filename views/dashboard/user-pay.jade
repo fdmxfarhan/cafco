@@ -12,17 +12,19 @@ block content
                 | کلیک کنید.
         -}else{
             -for(var i=0; i<user.course.length; i++){
-                .course 
-                    .cover-img 
-                        img(src="#{user.course[i].course.cover}", alt="cover")
-                    .info 
-                        .title= user.course[i].course.title
-                        .subtitle مدرس: #{user.course[i].course.teacher}
-                        .subtitle زمان شروع: #{user.course[i].course.startDate.year}/#{user.course[i].course.startDate.month}/#{user.course[i].course.startDate.day}
-                    .labels 
-                        a.remove(href="/dashboard/remove-user-course-pay?courseID=#{user.course[i].courseID}&index=#{i}") 
-                            i.fa.fa-trash
-                    .price #{user.course[i].course.price/10} تومان
+                -if(!user.course[i].payed){
+                    .course 
+                        .cover-img 
+                            img(src="#{user.course[i].course.cover}", alt="cover")
+                        .info 
+                            .title= user.course[i].course.title
+                            .subtitle مدرس: #{user.course[i].course.teacher}
+                            .subtitle زمان شروع: #{user.course[i].course.startDate.year}/#{user.course[i].course.startDate.month}/#{user.course[i].course.startDate.day}
+                        .labels 
+                            a.remove(href="/dashboard/remove-user-course-pay?courseID=#{user.course[i].courseID}&index=#{i}") 
+                                i.fa.fa-trash
+                        .price #{dot(user.course[i].course.price/10)} تومان
+                -}
             -}
         -}
     .payment-card
@@ -32,13 +34,13 @@ block content
                 .item-value #{user.course.length}
             .info-part
                 .item-title مجموع هزینه ها: 
-                .item-value #{priceSum} ریال
+                .item-value #{dot(priceSum)} ریال
             .info-part
                 .item-title تخفیف: 
-                .item-value #{discount} ریال
+                .item-value #{dot(discount)} ریال
             .info-part
                 .item-title قابل پرداخت: 
-            .sum.green #{priceSum - discount} ریال
+            .sum.green #{dot(priceSum - discount)} ریال
         -if(user.course.length > 0)
             a.pay(href="/payment/pay") پرداخت
 

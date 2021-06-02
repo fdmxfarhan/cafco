@@ -5,6 +5,7 @@ const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Course = require('../models/Course');
 const mail = require('../config/mail');
+const dot = require('../config/dot');
 
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
@@ -21,19 +22,43 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 login: req.query.login,
                 courses,
                 notPayedCoursesNum,
+                dot,
             });
         });
     }
     else if(req.user.role = 'admin')
     {
         Course.find({}, (err, courses) => {
-            res.render('./dashboard/admin-dashboard', {
-                user: req.user,
-                login: req.query.login,
-                courses,
+            User.find({}, (err, users) => {
+                var studentsNum = 0;
+                for (let i = 0; i < users.length; i++) {
+                    users[i].course.forEach(userCourse => {
+                        if(userCourse.payed) studentsNum++;
+                    });
+                }
+                res.render('./dashboard/admin-dashboard', {
+                    user: req.user,
+                    login: req.query.login,
+                    courses,
+                    studentsNum,
+                    dot,
+                });
             });
         });
     }
+});
+
+router.get('/users-view', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        User.find({}, (err, users) => {
+            res.render('./dashboard/admin-users-view', {
+                user: req.user,
+                users,
+            });
+        });
+    }
+    else
+        res.send('permission denied');
 });
 
 router.get('/register-course', ensureAuthenticated, (req, res, next) => {
@@ -53,6 +78,12 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
             res.send('این دوره قبلا ثبت شده');
         }
     })
+});
+
+router.get('/remove-course', ensureAuthenticated, (req, res, next) => {
+    Course.deleteOne({_id: req.query.courseID}, (err, doc) => {
+        res.redirect('/dashboard');
+    });
 });
 
 router.get('/remove-user-course', ensureAuthenticated, (req, res, next) => {
@@ -82,8 +113,27 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
         user: req.user,
         priceSum,
         discount: 0,
-
+        dot,
     });
 });
+
+router.get('/set-course-status', ensureAuthenticated, (req, res, next) => {
+    Course.updateMany({_id: req.query.courseID}, {$set: {status: req.query.status}}, (err, doc) => {
+        if(err) console.log(err);
+        res.redirect('/dashboard');
+    });
+});
+
+router.get('/courses', ensureAuthenticated, (req, res, next) => {
+    Course.find({}, (err, courses) => {
+        res.render('./dashboard/admin-courses', {
+            user: req.user,
+            courses,
+            dot,
+        });
+    });
+});
+
+
 
 module.exports = router;

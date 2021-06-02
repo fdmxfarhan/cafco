@@ -16,29 +16,58 @@ html
         .dashboard
             .side-bar 
                 .avatar
-                    img(src="/img/avatar/1.png", alt="avatar")
+                    -if(user.role == 'user')
+                        img(src="/img/avatar/1.png", alt="avatar")
+                    -else
+                        img(src="/img/avatar/10.png", alt="avatar")
                 .name= user.fullname
                 .nav-links 
-                    a.sidebar-nav-link(href="/dashboard") 
-                        i.fa.fa-user 
-                        | داشبورد
-                    .break 
-                    a.sidebar-nav-link(href="#") 
-                        i.fa.fa-book
-                        | دوره های من
-                    .break 
-                    a.sidebar-nav-link(href="#") 
-                        i.fa.fa-credit-card
-                        | صورت حساب ها
-                    .break 
-                    a.sidebar-nav-link(href="#") 
-                        i.fa.fa-bell
-                        | اعلان ها
-                    .break 
-                    a.sidebar-nav-link(href="#") 
-                        i.fa.fa-gears
-                        | تنظیمات
-                
+                    -if(user.role == 'user'){
+                        a.sidebar-nav-link(href="/dashboard") 
+                            i.fa.fa-user 
+                            | داشبورد
+                        .break 
+                        a.sidebar-nav-link(href="#") 
+                            i.fa.fa-book
+                            | دوره های من
+                        .break 
+                        a.sidebar-nav-link(href="#") 
+                            i.fa.fa-credit-card
+                            | صورت حساب ها
+                        .break 
+                        a.sidebar-nav-link(href="#") 
+                            i.fa.fa-bell
+                            | اعلان ها
+                        .break 
+                        a.sidebar-nav-link(href="#") 
+                            i.fa.fa-gears
+                            | تنظیمات
+                    -}else if(user.role == 'admin'){
+                        a.sidebar-nav-link(href="/dashboard") 
+                            i.fa.fa-user 
+                            | داشبورد
+                        .break 
+                        a.sidebar-nav-link(href="/dashboard/courses") 
+                            i.fa.fa-book
+                            | دوره ها
+                        .break 
+                        a.sidebar-nav-link(href="/dashboard/users-view") 
+                            i.fa.fa-users
+                            | کاربران
+                        .break 
+                        a.sidebar-nav-link(href="#") 
+                            i.fa.fa-credit-card
+                            | تخفیف ها
+                        .break 
+                        a.sidebar-nav-link(href="#") 
+                            i.fa.fa-dollar
+                            | مالی
+                        .break 
+                        
+                        a.sidebar-nav-link(href="#") 
+                            i.fa.fa-gears
+                            | تنظیمات
+                    -}
                 a.logout(href="/users/logout") 
                     i.fa.fa-power-off
                     | خروج

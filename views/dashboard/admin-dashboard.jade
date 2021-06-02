@@ -25,19 +25,35 @@ block content
         .card 
             .title تعداد دوره ها
             //- .number 100
-            .progress-circle.p30
-                span= courses.length
-                .left-half-clipper
-                    .first50-bar
-                    .value-bar
+            -if(courses.length <= 50){
+                .progress-circle(class="p#{courses.length}")
+                    span= courses.length
+                    .left-half-clipper
+                        .first50-bar
+                        .value-bar
+            -}else{
+                .progress-circle.over50(class="p#{courses.length}")
+                    span= courses.length
+                    .left-half-clipper
+                        .first50-bar
+                        .value-bar
+            -}
         .card 
             .title تعداد شرکت کنندگان
             //- .number 200
-            .progress-circle.over50.p85
-                span 200
-                .left-half-clipper
-                    .first50-bar
-                    .value-bar
+            -if(studentsNum <= 50){
+                .progress-circle(class="p#{studentsNum}")
+                    span= studentsNum
+                    .left-half-clipper
+                        .first50-bar
+                        .value-bar
+            -}else{
+                .progress-circle.over50(class="p#{studentsNum}")
+                    span= studentsNum
+                    .left-half-clipper
+                        .first50-bar
+                        .value-bar
+            -}
         .card 
             .title تعداد دوره ها
             //- .number 100
@@ -57,16 +73,16 @@ block content
         .card.add-course
             i.fa.fa-plus.plus
             .add-text افزودن دوره
-        -for(var i=0; i<courses.length && i< 6; i++){
+        -for(var i=0; i<courses.length && i< 5; i++){
             .card(id="card#{i}") 
                 .image 
                     img(src="#{courses[i].cover}")
                 .title= courses[i].title
                 .text= courses[i].description
-                .price #{courses[i].price/10} تومان
+                .price #{dot(courses[i].price/10)} تومان
         -}
     
-    a.show-more(href="/courses") 
+    a.show-more(href="/dashboard/courses") 
         i.fa.fa-chevron-left
         | مشاهده بیشتر ...
 
