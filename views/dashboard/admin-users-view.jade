@@ -4,8 +4,10 @@ block styles
     link(rel="stylesheet", href="/css/dashboard/user-view.css")
 
 block content
-    h1.title.center لیست همه کاربران
-
+    -if(course)
+        h1.title.center لیست کاربران دوره #{course.title}
+    -else
+        h1.title.center لیست همه کاربران
     .user-list 
         table 
             tr 

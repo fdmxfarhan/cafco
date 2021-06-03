@@ -1,0 +1,36 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/css-circular-prog-bar.css")
+    link(rel="stylesheet", href="/css/dashboard/dashboard.css")
+
+block content
+    h1.title دوره های من
+    .product-cards-area
+        -if(user.course.length == 0){
+            .not-found شما هیچ دوره ای ثبت نام نکرده اید. برای ثبت نام 
+                a(href="#") اینجا 
+                | کلیک کنید.
+        -}else{
+            -for(var i=0; i<user.course.length; i++){
+                .course(id="card#{i}")
+                    .cover-img 
+                        img(src="#{user.course[i].course.cover}", alt="cover")
+                    .info 
+                        .title= user.course[i].course.title
+                        .subtitle مدرس: #{user.course[i].course.teacher}
+                        .subtitle زمان شروع: #{user.course[i].course.startDate.year}/#{user.course[i].course.startDate.month}/#{user.course[i].course.startDate.day}
+                    .labels 
+                        -if(!user.course[i].payed){
+                            a.remove(href="/dashboard/remove-user-course?courseID=#{user.course[i].courseID}&index=#{i}") 
+                                i.fa.fa-trash
+                            a(href="/dashboard/pay") 
+                                .label.red پرداخت نشده
+                        -}
+                        .label.green= user.course[i].course.status
+            -}
+        -}
+    
+    //- include course-view 
+    
+    script(src="/js/dashboard.js") 

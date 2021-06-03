@@ -30,6 +30,9 @@
                             a.edit(href="/dashboard/edit-course?courseID=#{courses[i]._id}") 
                                 i.fa.fa-edit
                                 | ویرایش 
+                            a.list(href="/dashboard/course-list?courseID=#{courses[i]._id}") 
+                                i.fa.fa-list
+                                | لیست 
                         .action
                             -if(courses[i].status == 'شروع نشده')
                                 a.status.active(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=شروع نشده") شروع نشده 

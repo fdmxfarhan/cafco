@@ -4,8 +4,10 @@ var router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Course = require('../models/Course');
+var Payment = require('../models/Payment');
 const mail = require('../config/mail');
 const dot = require('../config/dot');
+const shamsi = require('../config/shamsi');
 
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
@@ -134,6 +136,40 @@ router.get('/courses', ensureAuthenticated, (req, res, next) => {
     });
 });
 
+router.get('/user-courses-view', ensureAuthenticated, (req, res, next) => {
+    res.render('./dashboard/user-courses-view', {
+        user: req.user,
+        dot,
+    });
+});
 
+router.get('/course-list', ensureAuthenticated, (req, res, next) => {
+    Course.findById(req.query.courseID, (err, course) => {
+        User.find({}, (err, users) => {
+            var usersList = [];
+            users.forEach(usr => {
+                usr.course.forEach(crs => {
+                    if(crs.courseID == req.query.courseID)
+                        usersList.push(usr);
+                });
+            });
+            res.render('./dashboard/admin-users-view', {
+                user: req.user,
+                users: usersList,
+                course,
+            });
+        });
+    });
+});
+
+router.get('/user-payments', ensureAuthenticated, (req, res, next) => {
+    Payment.find({idNumber: req.user.idNumber}, (err, payments) => {
+        res.render('./dashboard/user-payments', {
+            payments,
+            user: req.user,
+            shamsi,
+        });
+    });
+});
 
 module.exports = router;

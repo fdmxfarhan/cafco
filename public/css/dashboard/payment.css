@@ -1,0 +1,45 @@
+@media only screen and (min-width: 800px) {
+    h1.title {
+        width: 85%;
+        margin: auto;
+        font-family: 'iransans';
+        font-size: 1.5vw;
+        color: var(--blue);
+        border-bottom: lightgray 0.1vw solid;
+        padding: 0.3vw 0;
+        margin-top: 2vw;
+        margin-bottom: 2vw;
+    }
+    .list {
+        width: 80%;
+        margin: 1vw auto;
+    }
+    .list table{
+        width: 100%;
+        text-align: center;
+    }
+    .list table th{
+        background-color: var(--blue);
+        color: white;
+        padding: 0.4vw 0;
+        border-top-left-radius: 1vw;
+        border-top-right-radius: 1vw;
+    }
+    .list table td{
+        padding: 0.4vw 0;
+        border-bottom: lightgray 0.1vw solid;
+    }
+    .list table tr:hover{
+        background-color: rgb(234, 247, 255);
+        cursor: pointer;
+    }
+}
+@media only screen and (max-width: 800px) {
+    
+}
+
+
+
+
+
+

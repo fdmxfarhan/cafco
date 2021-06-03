@@ -1,0 +1,30 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/payment.css")
+
+block content
+    h1.title.center صورت حساب ها
+    .list 
+        table 
+            tr 
+                th ردیف
+                th مبلغ صورت حساب
+                th توضیحات
+                th تاریخ پرداخت
+                th کد پیگیری
+                th وضعیت
+            -for(var i=0; i<payments.length; i++){
+                tr(id="view-user#{i}")
+                    td= i+1
+                    td= payments[i].amount
+                    td= payments[i].description
+                    td= shamsi(payments[i].date)
+                    td= payments[i].track_id
+                    td 
+                        -if(payments[i].payed)
+                            .green پرداخت شده
+                        -else
+                            .red لغو شده
+            -}
+    
