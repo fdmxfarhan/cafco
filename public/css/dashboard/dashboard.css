@@ -73,7 +73,7 @@
     }
     .product-cards-area .card .image img{
         width: 100%;
-        height: 12vw;
+        /* height: 12vw; */
         border-top-left-radius: 1vw;
         border-top-right-radius: 1vw;
     }
