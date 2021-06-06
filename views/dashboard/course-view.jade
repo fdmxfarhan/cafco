@@ -21,7 +21,7 @@
                 //- .break-side 
                 .part 
                     .cover-image 
-                        img(src="/img/classes/img-01.jpg", alt="cover")
+                        img(src="#{courses[i].cover}", alt="cover")
                     -if(user.role == 'admin'){
                         .action
                             a.remove(href="/dashboard/remove-course?courseID=#{courses[i]._id}") 
