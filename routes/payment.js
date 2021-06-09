@@ -57,7 +57,7 @@ router.get('/pay', function(req, res, next) {
                 'idNumber': payment.idNumber,
                 'phone': payment.phone,
                 'desc': payment.description,
-                'callback': 'http://194.59.171.220:3000/payment/pay',
+                'callback': 'http://cafcoreg.ir/payment/pay',
                 'reseller': null,
             },
             json: true,
