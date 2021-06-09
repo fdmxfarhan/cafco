@@ -8,7 +8,7 @@ block content
         h1.pay-title دوره های ثبت نام شده
         -if(user.course.length == 0){
             .not-found شما هیچ دوره ای ثبت نام نکرده اید. برای ثبت نام 
-                a(href="#") اینجا 
+                a(href="/dashboard/courses") اینجا 
                 | کلیک کنید.
         -}else{
             -for(var i=0; i<user.course.length; i++){

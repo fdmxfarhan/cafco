@@ -24,12 +24,19 @@
                         label(for="maxAge") تا
                         input(type="Number" name="maxAge" placeholder="سال" required)
                     .date-input 
-                        label(for="day") شروع دوره: 
+                        label(for="day") پایان دوره: 
                         input(type="Number" name="day" placeholder="روز" required)
                         label(for="month") / 
                         input(type="Number" name="month" placeholder="ماه" required)
                         label(for="year") / 
                         input(type="Number" name="year" placeholder="سال" value="1400" required)
+                    .date-input 
+                        label(for="day") شروع دوره: 
+                        input(type="Number" name="endDay" placeholder="روز" required)
+                        label(for="month") / 
+                        input(type="Number" name="endMonth" placeholder="ماه" required)
+                        label(for="year") / 
+                        input(type="Number" name="endYear" placeholder="سال" value="1400" required)
                     .text-input 
                         i.fa.fa-glass
                         input(type="Number" name="capacity" placeholder="ظرفیت" required)
