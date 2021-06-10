@@ -48,7 +48,7 @@ router.get('/pay', function(req, res, next) {
                 'Content-Type': 'application/json',
                 'X-API-KEY': 'dec2b2aa-2cb5-47f4-8584-963dc313f363',
                 // 'X-API-KEY': 'fe6a4553-cd95-4dff-af2e-80594c1c18c5',
-                // 'X-SANDBOX': 1,
+                'X-SANDBOX': 0,
             },
             body: {
                 'order_id': payment._id,
@@ -82,7 +82,7 @@ router.post('/pay', function(req, res, next) {
                     'Content-Type': 'application/json',
                     'X-API-KEY': 'dec2b2aa-2cb5-47f4-8584-963dc313f363',
                     // 'X-API-KEY': 'fe6a4553-cd95-4dff-af2e-80594c1c18c5',
-                    // 'X-SANDBOX': 1,
+                    'X-SANDBOX': 0,
                 },
                 body: {
                     'id': req.body.id,
