@@ -42,7 +42,7 @@ router.get('/pay', function(req, res, next) {
             return;
         }
         var options = {
-            method: 'GET',
+            method: 'POST',
             url: 'https://api.idpay.ir/v1.1/payment',
             headers: {
                 'Content-Type': 'application/json',
