@@ -36,7 +36,7 @@ router.get('/pay', function(req, res, next) {
         courseList: notPayedCourses,
     });
     newPayment.save().then(payment => {
-        console.log(payment);
+        // console.log(payment);
         if (newPayment.amount == 0) {
             res.send('error: you cant pay ziro amount');
             return;
@@ -64,6 +64,7 @@ router.get('/pay', function(req, res, next) {
         };
         request(options, function(error, response, body) {
             if (error) console.log(error);
+            console.log(body);
             res.redirect(body.link);
         });
     }).catch(err => {
