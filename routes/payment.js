@@ -42,7 +42,7 @@ router.get('/pay', function(req, res, next) {
             return;
         }
         var options = {
-            method: 'POST',
+            method: 'GET',
             url: 'https://api.idpay.ir/v1.1/payment',
             headers: {
                 'Content-Type': 'application/json',
@@ -71,12 +71,12 @@ router.get('/pay', function(req, res, next) {
     });
 });
 
-router.post('/pay', function(req, res, next) {
+router.get('/pay', function(req, res, next) {
     console.log(req.body);
     Payment.findOne({ _id: req.body.order_id }, (err, payment) => {
         if (payment) {
             var options2 = {
-                method: 'POST',
+                method: 'GET',
                 url: 'https://api.idpay.ir/v1.1/payment/verify',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ router.post('/pay', function(req, res, next) {
                 json: true,
             };
             request(options2, function(error, response, body) {
-                if (error) throw new Error(error);
+                if (error) console.log(error);
                 console.log(body);
                 if (body.status == 100) {
                     Payment.updateMany({ _id: payment._id }, { $set: { payed: true, track_id: body.payment.track_id } }, (err, doc) => {
