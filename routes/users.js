@@ -13,6 +13,13 @@ router.get('/register', (req, res, next) => {
         res.render('register');
 });
 
+router.get('/register2', (req, res, next) => {
+    if(req.user)
+        res.redirect('/dashboard');
+    else
+        res.render('register');
+});
+
 router.get('/login', (req, res, next) => {
     if(req.user)
         res.redirect('/dashboard');
