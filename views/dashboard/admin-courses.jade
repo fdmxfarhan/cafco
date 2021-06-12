@@ -4,11 +4,24 @@ block styles
     link(rel="stylesheet", href="/css/dashboard/dashboard.css")
 
 block content
+    br
     h1.title لیست دوره ها
+        .search 
+            form(action="/dashboard/courses" method="POST" id="form1") 
+                input(type="text" name="search" id="search" placeholder="جست و جو..." )
+                button(type="submit" form="form1")
+                    i.fa.fa-search
+            .preview#preview
+
     .product-cards-area 
-        .card.add-course
-            i.fa.fa-plus.plus
-            .add-text افزودن دوره
+        -if(user.role == 'admin'){
+            .card.add-course
+                i.fa.fa-plus.plus
+                .add-text افزودن دوره
+        -}
+        -if(courses.length == 0){
+            .not-found دوره ای جهت نمایش یافت نشد
+        -}
         -for(var i=0; i<courses.length; i++){
             .card(id="card#{i}") 
                 .image 
@@ -21,3 +34,6 @@ block content
 
     include course-view
     script(src="/js/dashboard.js") 
+    //- script(src="/js/search.js") 
+        
+        

@@ -33,6 +33,91 @@
         background-color: rgb(234, 247, 255);
         cursor: pointer;
     }
+    .popup{
+        overflow: hidden;
+    }
+    .popup h1.title{
+        margin-top: 1vw;
+    }
+    .popup .part{
+        float: right;
+        width: 49%;
+    }
+    .popup .part .item{
+        font-weight: bold;
+        color: darkblue;
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        margin-bottom: 1vw;
+    }
+    .popup .part .item a{
+        text-decoration: none;
+        color: var(--blue);
+        font-weight: normal;
+    }
+    .popup .part .item a:hover{
+        color: var(--hover);
+    }
+    .popup .part .item i{
+        padding-left: 1vw;
+    }
+    .popup .part .item .num{
+        color: gray;
+        display: inline;
+        margin-right: 0.5vw;
+        font-weight: normal;
+    }
+    .popup .part h1{
+        color: var(--blue);
+        margin: 0;
+        font-family: 'iransans';
+        font-size: 1.3vw;
+    }
+    .popup .part .user-course-list-view{
+        height: 20vw;
+        margin-bottom: 1vw;
+        margin-top: 1vw;
+        overflow-y: scroll;
+        padding: 0.5vw;
+    }
+    .popup .part .user-course-list-view .course{
+        overflow: hidden;
+        border-radius: 1.5vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    .popup .part .user-course-list-view .course img{
+        width: 25%;
+        float: right;
+    }
+    .popup .part .user-course-list-view .course .info{
+        width: 70%;
+        float: right;
+        margin-right: 5%;
+    }
+    .popup .part .user-course-list-view .course .info h1{
+        font-size: 1.1vw;
+        margin-top: 0.5vw;
+    }
+    .popup .part .user-course-list-view .course .info h2{
+        font-size: 1vw;
+        color: gray;
+        margin: 0;
+    }
+    .popup .part .user-course-list-view .course .info .labels{
+        position: absolute;
+        left: 1vw;
+        bottom: 0.5vw;
+        overflow: hidden;
+    }
+    .popup .part .user-course-list-view .course .info .labels .label{
+        float: left;
+        font-size: 1vw;
+        margin: 0 0.4vw;
+    }
+    .popup .part .user-course-list-view .course .info .labels .label.green{color: green;}
+    .popup .part .user-course-list-view .course .info .labels .label.red{color: red;}
+    .popup .part .user-course-list-view .course .info .labels .label.blue{color: blue;}
 }
 @media only screen and (max-width: 800px) {
     

@@ -26,4 +26,49 @@ block content
                     td= users[i].course.length
                     td= users[i].role
             -}
-    
+    -for(var i=0; i<users.length; i++){
+        .popup-area(id="user-view-popup#{i}")
+            .popup
+                i.fa.fa-times.close-popup
+                h1.title= users[i].fullname
+                .part
+                    .item 
+                        i.fa.fa-phone
+                        | تلفن: 
+                        a.phone(href="tel:#{users[i].phone}")= users[i].phone
+                    .item 
+                        i.fa.fa-user
+                        | کد ملی: 
+                        .num= users[i].idNumber
+                    .item 
+                        i.fa.fa-map-marker
+                        | نشانی: 
+                        .num= users[i].address
+                    .item 
+                        i.fa.fa-book
+                        | نام مدرسه: 
+                        .num= users[i].school
+                    .item 
+                        i.fa.fa-sitemap
+                        | آدرس آی پی: 
+                        .num= users[i].ipAddress
+                .part
+                    h1 دوره های ثبت نام شده (#{users[i].course.length}):
+                    .user-course-list-view
+                        -for(var j=0; j<users[i].course.length; j++){
+                            -var course = users[i].course[j].course;
+                            .course 
+                                img(src="#{course.cover}", alt="cover")
+                                .info 
+                                    h1= course.title
+                                    h2 مدرس: #{course.teacher}
+                                    .labels 
+                                        .label.blue= course.status
+                                        -if(users[i].course[j].payed)
+                                            .label.green پرداخت شده
+                                        -else
+                                            .label.red پرداخت نشده
+                                        
+                        -}
+    -}
+    script(src="/js/user-view.js") 

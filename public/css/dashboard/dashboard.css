@@ -26,6 +26,7 @@
         font-size: 1.2vw;
     }
     h1.title {
+        position: relative;
         width: 85%;
         margin: auto;
         font-family: 'iransans';
@@ -219,7 +220,38 @@
     .product-cards-area .course a .label.red:hover{
         background-color: var(--hover);
     }
-
+    h1.title .search{
+        position: absolute;
+        left: 1vw;
+        bottom: 0.4vw;
+    }
+    h1.title .search input{
+        background-color: white;
+        border: none;
+        border-top-right-radius: 1vw;
+        border-bottom-right-radius: 1vw;
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        padding: 0.3vw 2vw;
+    }
+    h1.title .search input:focus{
+        outline: none;
+        
+    }
+    h1.title .search button{
+        background-color: var(--blue);
+        color: white;
+        border: none;
+        border-top-left-radius: 1vw;
+        border-bottom-left-radius: 1vw;
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        padding: 0.3vw 1vw;
+        cursor: pointer;
+    }
+    h1.title .search button:hover{
+        background-color: var(--hover);
+    }
 }
 @media only screen and (max-width: 800px) {
     

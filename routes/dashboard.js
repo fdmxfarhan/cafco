@@ -146,6 +146,22 @@ setInterval(() => {
             }
         });
     });
+
+    User.find({}, (err, users) => {
+        Course.find({}, (err, courses) => {
+            users.forEach(user => {
+                for(var i=0; i<user.course.length; i++){
+                    for(var j=0; j<courses.length; j++){
+                        if(user.course[i].courseID == courses[j]._id)
+                            user.course[i].course = courses[j];
+                    }
+                }
+                User.updateMany({_id: user._id}, {$set: {course: user.course}}, (err, doc) => {
+                    if(err) console.log(err);
+                });
+            });
+        });
+    });
 }, 30 * 1000);
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
@@ -268,6 +284,29 @@ router.get('/courses', ensureAuthenticated, (req, res, next) => {
     });
 });
 
+contain = (course, word) => {
+    if(course.title.search(word) != -1) return true;
+    if(course.description.search(word) != -1) return true;
+    if(course.teacher.search(word) != -1) return true;
+    if(course.status.search(word) != -1) return true;
+    if(course.cover.search(word) != -1) return true;
+    return false;
+};
+router.post('/courses', ensureAuthenticated, (req, res, next) => {
+    Course.find({}, (err, courses) => {
+        result = [];
+        courses.forEach(course => {
+            if(contain(course, req.body.search))
+                result.push(course);
+        });
+        res.render('./dashboard/admin-courses', {
+            user: req.user,
+            courses: result,
+            dot,
+        });
+    });
+});
+
 router.get('/user-courses-view', ensureAuthenticated, (req, res, next) => {
     res.render('./dashboard/user-courses-view', {
         user: req.user,
@@ -303,7 +342,24 @@ router.get('/user-payments', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
+router.get('/admin-payments', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        Payment.find({}, (err, payments) => {
+            res.render('./dashboard/admin-payments', {
+                payments,
+                user: req.user,
+                shamsi,
+            });
+        });
+    }
+});
 
-
+router.get('/discount', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        res.render('./dashboard/admin-discount', {
+            user: req.user,
+        });
+    }
+});
 
 module.exports = router;
