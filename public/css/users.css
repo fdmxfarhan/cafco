@@ -25,7 +25,6 @@
         margin: 1.5vw auto;
         /* background-color: lightblue; */
     }
-    
     .register input.textinput{
         display: block;
         width: 35vw;
@@ -128,14 +127,14 @@
         height: 0.3vw;
         margin-top: 0.5vw;
     }
-    .date-input label{
+    .register .date-input label{
         color: gray;
         font-size: 1.2vw;
     }
-    .date-input label, .date-input input{
+    .register .date-input label, .date-input input{
         display: inline;
     }
-    .date-input input{
+    .register .date-input input{
         font-family: 'iransans';
         font-size: 1.2vw;
         padding: 0.4vw 2vw;
@@ -149,7 +148,7 @@
         margin: 0 0.3vw;
         text-align: center; 
     }
-    input:focus{outline: none;}
+    .register input:focus{outline: none;}
 
 }
 
