@@ -127,14 +127,14 @@
         height: 0.3vw;
         margin-top: 0.5vw;
     }
-    .register .date-input label{
+    .register .date-input-area label{
         color: gray;
         font-size: 1.2vw;
     }
-    .register .date-input label, .date-input input{
+    .register .date-input-area label, .date-input-area input{
         display: inline;
     }
-    .register .date-input input{
+    .register .date-input-area input{
         font-family: 'iransans';
         font-size: 1.2vw;
         padding: 0.4vw 2vw;
@@ -270,14 +270,14 @@
         height: 1vw;
         margin-top: 0.5vw;
     }
-    .date-input label{
+    .date-input-area label{
         color: gray;
         font-size: 3.3vw;
     }
-    .date-input label, .date-input input{
+    .date-input-area label, .date-input-area input{
         display: inline;
     }
-    .date-input input{
+    .date-input-area input{
         font-family: 'iransans';
         font-size: 3.3vw;
         padding: 1vw 4vw;

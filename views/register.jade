@@ -1,7 +1,7 @@
 extends layout
 block styles
     link(rel="stylesheet", href="/css/users.css")
-    
+
 
 block content
     //- include partials/messages
@@ -35,7 +35,7 @@ block content
             .text-input-area
                 input.textinput(type="text" placeholder="نام مدرسه" name="school" value= "#{ typeof school != 'undefined' ? school: '' }")
                 i.fa.fa-book
-            .date-input 
+            .date-input-area
                 label(for="day") تاریخ تولد: 
                 input(type="Number" name="birthDay" placeholder="روز" required)
                 label(for="month") / 
