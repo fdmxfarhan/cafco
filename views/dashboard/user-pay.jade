@@ -29,6 +29,12 @@ block content
             -}
         -}
     a.add-course(href="/dashboard/courses") ثبت نام دوره جدید
+    -if(discount72){
+        .discount 
+            ul 
+                -if(discount72)
+                    li شما با ثبت نام در بیش از 72 جلسه 20 درصد تخفیف دریافت کردید.
+    -}
     .payment-card
         .info
             .info-part.first
@@ -45,11 +51,5 @@ block content
             .sum.green #{dot(priceSum - discount)} ریال
         -if(user.course.length > 0)
             a.pay(href="/payment/pay?discount=#{discount}") پرداخت
-    -if(discount72){
-        .discount 
-            ul 
-                -if(discount72)
-                    li شما با ثبت نام در بیش از 72 جلسه 20 درصد تخفیف دریافت کردید.
-    -}
     script(src="/js/dashboard.js") 
     script(src="/js/pay.js") 

@@ -35,7 +35,42 @@
     }
 }
 @media only screen and (max-width: 800px) {
-    
+    h1.title {
+        width: 98%;
+        margin: auto;
+        font-family: 'iransans';
+        font-size: 3.5vw;
+        color: var(--blue);
+        border-bottom: lightgray 0.1vw solid;
+        padding: 1vw 1vw;
+        margin-top: 4vw;
+        margin-bottom: 4vw;
+    }
+    .list {
+        width: 96%;
+        margin: 3vw auto;
+    }
+    .list table{
+        width: 100%;
+        text-align: center;
+    }
+    .list table th{
+        background-color: var(--blue);
+        color: white;
+        padding: 1vw 0;
+        border-top-left-radius: 3vw;
+        border-top-right-radius: 3vw;
+        font-size: 3vw;
+    }
+    .list table td{
+        padding: 1vw 0;
+        border-bottom: lightgray 0.1vw solid;
+        font-size: 3vw;
+    }
+    .list table tr:hover{
+        background-color: rgb(234, 247, 255);
+        cursor: pointer;
+    }
 }
 
 
