@@ -15,6 +15,7 @@ var PaymentSchema = new mongoose.Schema({
     },
     track_id: String,
     courseList: [Object],
+    discount: Number,
   });
 
 var Payment = mongoose.model('Payment', PaymentSchema);

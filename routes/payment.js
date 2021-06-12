@@ -24,6 +24,10 @@ router.get('/pay', function(req, res, next) {
             notPayedCourses.push(courseList[i])
         }
     }
+    // mines the discount amount 
+    priceSum -= req.query.discount;
+
+    // create new payment
     var newPayment = new Payment({
         userID: req.user._id,
         fullname: req.user.fullname,
@@ -34,6 +38,7 @@ router.get('/pay', function(req, res, next) {
         date: Date.now(),
         payed: false,
         courseList: notPayedCourses,
+        discount: req.query.discount,
     });
     newPayment.save().then(payment => {
         // console.log(payment);
@@ -108,7 +113,10 @@ router.post('/pay', function(req, res, next) {
                             for (let i = 0; i < courseList.length; i++) {
                                 courseList[i].payed = true;
                             }
-                            User.updateMany({ idNumber: payment.idNumber }, { $set: { course: courseList } }, (err, doc) => {
+                            User.updateMany({ idNumber: payment.idNumber }, { $set: { 
+                                course: courseList, 
+                                // card: user.card + payment.discount,
+                            }}, (err, doc) => {
                                 if (err) console.log(err);
                             });
                         });

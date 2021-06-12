@@ -79,7 +79,7 @@ block content
         -if(courses.length == 0){
             .not-found دوره ای جهت نمایش وجود ندارد
         -}else{
-            -for(var i=0; i<courses.length && i< 6; i++){
+            -for(var i=0; i<courses.length; i++){
                 .card(id="card#{i}")
                     .image 
                         img(src="#{courses[i].cover}")

@@ -127,6 +127,29 @@
         height: 0.3vw;
         margin-top: 0.5vw;
     }
+    .date-input label{
+        color: gray;
+        font-size: 1.2vw;
+    }
+    .date-input label, .date-input input{
+        display: inline;
+    }
+    .date-input input{
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        padding: 0.4vw 2vw;
+        border: none;
+        width: 80%;
+        border-radius: 2vw;        
+        box-shadow: 0 0.3vw 0.8vw 0.2vw #5b167a3b;
+
+        margin-bottom: 1.5vw;
+        width: 6vw;
+        margin: 0 0.3vw;
+        text-align: center; 
+    }
+    input:focus{outline: none;}
+
 }
 
 @media only screen and (max-width: 800px) {
@@ -247,6 +270,28 @@
         height: 1vw;
         margin-top: 0.5vw;
     }
+    .date-input label{
+        color: gray;
+        font-size: 3.3vw;
+    }
+    .date-input label, .date-input input{
+        display: inline;
+    }
+    .date-input input{
+        font-family: 'iransans';
+        font-size: 3.3vw;
+        padding: 1vw 4vw;
+        border: none;
+        width: 80%;
+        border-radius: 4vw;        
+        box-shadow: 0 0.3vw 0.8vw 0.2vw #5b167a3b;
+        margin-bottom: 1.5vw;
+        width: 9vw;
+        margin: 0 0.3vw;
+        text-align: center; 
+    }
+    input:focus{outline: none;}
+
 }
 
 

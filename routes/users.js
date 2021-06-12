@@ -21,12 +21,12 @@ router.get('/login', (req, res, next) => {
 });
   
 router.post('/register', (req, res, next) => {
-    const { firstName, lastName, address, phone, school, idNumber, password, configpassword } = req.body;
+    const { firstName, lastName, address, phone, school, idNumber, password, configpassword, birthDay, birthMonth, birthYear} = req.body;
     const role = 'user', card = 0;
     const ipAddress = req.connection.remoteAddress;
     let errors = [];
     /// check required
-    if(!firstName || !lastName || !address || !phone || !school || !idNumber || !password || !configpassword){
+    if(!firstName || !lastName || !address || !phone || !school || !idNumber || !password || !configpassword || !birthDay || !birthMonth || !birthYear){
         errors.push({msg: 'لطفا موارد خواسته شده را کامل کنید!'});
     }
     /// check password match
@@ -52,7 +52,7 @@ router.post('/register', (req, res, next) => {
                 res.render('register', { firstName, lastName, address, phone, school, idNumber, errors });
             }
             else {
-                const newUser = new User({ipAddress, fullname, firstName, lastName, address, phone, school, idNumber, password, role, card});
+                const newUser = new User({ipAddress, fullname, firstName, lastName, address, phone, school, idNumber, password, role, card, birthday: {day: birthDay, month: birthMonth, year: birthYear}});
                 // Hash password
                 bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if(err) throw err;

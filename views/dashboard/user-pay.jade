@@ -20,6 +20,7 @@ block content
                             .title= user.course[i].course.title
                             .subtitle مدرس: #{user.course[i].course.teacher}
                             .subtitle زمان شروع: #{user.course[i].course.startDate.year}/#{user.course[i].course.startDate.month}/#{user.course[i].course.startDate.day}
+                            .subtitle تعداد جلسات: #{user.course[i].course.session}
                         .labels 
                             a.remove(href="/dashboard/remove-user-course-pay?courseID=#{user.course[i].courseID}&index=#{i}") 
                                 i.fa.fa-trash
@@ -27,6 +28,7 @@ block content
                 -}
             -}
         -}
+    a.add-course(href="/dashboard/courses") ثبت نام دوره جدید
     .payment-card
         .info
             .info-part.first
@@ -42,7 +44,12 @@ block content
                 .item-title قابل پرداخت: 
             .sum.green #{dot(priceSum - discount)} ریال
         -if(user.course.length > 0)
-            a.pay(href="/payment/pay") پرداخت
-
+            a.pay(href="/payment/pay?discount=#{discount}") پرداخت
+    -if(discount72){
+        .discount 
+            ul 
+                -if(discount72)
+                    li شما با ثبت نام در بیش از 72 جلسه 20 درصد تخفیف دریافت کردید.
+    -}
     script(src="/js/dashboard.js") 
     script(src="/js/pay.js") 

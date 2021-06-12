@@ -12,6 +12,8 @@ html
         link(rel="stylesheet", href="/css/dashboard/dashboard-layout.css")
         block styles
     body
+        #open-side-bar 
+            i.fa.fa-list-ul
         .black-modal
         .dashboard
             .side-bar 
@@ -21,6 +23,8 @@ html
                     -else
                         img(src="/img/avatar/10.png", alt="avatar")
                 .name= user.fullname
+                .card موجودی: 
+                    .green #{user.card} ریال
                 .nav-links 
                     -if(user.role == 'user'){
                         a.sidebar-nav-link(href="/dashboard") 
@@ -74,3 +78,4 @@ html
 
             .content-area
                 block content
+        script(src="/js/dashboard-layout.js")     

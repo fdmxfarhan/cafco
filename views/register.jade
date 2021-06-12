@@ -34,6 +34,13 @@ block content
             .text-input-area
                 input.textinput(type="text" placeholder="نام مدرسه" name="school" value= "#{ typeof school != 'undefined' ? school: '' }")
                 i.fa.fa-book
+            .date-input 
+                label(for="day") تاریخ تولد: 
+                input(type="Number" name="birthDay" placeholder="روز" required)
+                label(for="month") / 
+                input(type="Number" name="birthMonth" placeholder="ماه" required)
+                label(for="year") / 
+                input(type="Number" name="birthYear" placeholder="سال" value="1380" required)
             .text-input-area
                 input.textinput(type="text" placeholder="کد ملی" name="idNumber" value= "#{ typeof idNumber != 'undefined' ? idNumber: '' }")
                 i.fa.fa-user

@@ -127,11 +127,11 @@
     }
     .course-list .course .cover-img{
         float: right;
-        width: 27%;
+        width: 30%;
         margin: 0;
         padding: 0;
         height: fit-content;
-        height: 8vw;
+        /* height: 9vw; */
     }
     .course-list .course .cover-img img{
         width: 100%;
@@ -253,6 +253,31 @@
     }
     .payment-card a.pay:hover{
         background-color: var(--hover);
+    }
+    .discount {
+        width: 50%;
+        margin-right: 5%;
+        background-color: rgb(179, 255, 179);
+        border-radius: 1.5vw;
+        padding: 0.5vw 1vw;
+    }
+    a.add-course{
+        background-color: var(--blue);
+        margin-right: 5%;
+        padding: 0.5vw 1vw;
+        border-radius: 1.5vw;
+        color: white;
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        text-decoration: none;
+        transition-duration: 500ms;
+        display: block;
+        width: fit-content;
+        margin-bottom: 1vw;
+    }
+    a.add-course:hover{
+        background-color: var(--hover);
+        border-radius: 0.3vw;
     }
 }
 @media only screen and (max-width: 800px) {

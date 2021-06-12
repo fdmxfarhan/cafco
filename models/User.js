@@ -14,14 +14,22 @@ var UserSchema = new mongoose.Schema({
   fullname: String,
   password: String,
   role: String,
-  card: Number,
+  card: {
+    type: Number,
+    default: 0,
+  },
   sex: String,
   file: {
     type: [Object],
-    default: []
+    default: [],
   },
   avatar: Number,
   course: [Object],
+  birthday: 
+  {
+    type: Object,
+    default: {day: 0, month: 0, year: 0},
+  },
 });
 
 var User = mongoose.model('User', UserSchema);

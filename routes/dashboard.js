@@ -9,7 +9,16 @@ const mail = require('../config/mail');
 const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
 
+getAge = (year) => {
+    _greg = new Date(Date.now());
+    _day = _greg.getDate();
+    _month = _greg.getMonth() + 1;
+    _year = _greg.getFullYear();
+    _jalali = gregorian_to_jalali(_year, _month, _day)
+    now = { year: _jalali[0], month: _jalali[1], day: _jalali[2] };
 
+    return(now.year - year);
+}
 
 function div(a, b) {
     return parseInt((a / b));
@@ -166,7 +175,9 @@ setInterval(() => {
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if (req.user.role == 'user') {
-        Course.find({}, (err, courses) => {
+        age = getAge(req.user.birthday.year);
+        
+        Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
             var notPayedCoursesNum = 0;
             for (var i = 0; i < req.user.course.length; i++) {
                 if (!req.user.course[i].payed) notPayedCoursesNum++;
@@ -254,16 +265,23 @@ router.get('/remove-user-course-pay', ensureAuthenticated, (req, res, next) => {
 
 router.get('/pay', ensureAuthenticated, (req, res, next) => {
     var courseList = req.user.course;
-    var priceSum = 0;
+    var priceSum = 0, discount = 0, sessionNum = 0;
+    var discount72 = false;
     for (var i = 0; i < courseList.length; i++) {
         if (!courseList[i].payed)
             priceSum += courseList[i].course.price;
+        sessionNum += courseList[i].course.session;
+    }
+    if(sessionNum > 72) {
+        discount72 = true;
+        discount += Math.floor((priceSum * 20) / 100)
     }
     res.render('./dashboard/user-pay', {
         user: req.user,
         priceSum,
-        discount: 0,
+        discount,
         dot,
+        discount72,
     });
 });
 
@@ -360,6 +378,30 @@ router.get('/discount', ensureAuthenticated, (req, res, next) => {
             user: req.user,
         });
     }
+});
+
+
+router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        Course.findById(req.query.courseID, (err, course) => {
+            res.render('./dashboard/admin-edit-course', {
+                course,
+                user: req.user,
+                shamsi,
+            });
+        });
+    }
+});
+
+router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
+    const { title, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID } = req.body;
+    if(req.user.role == 'admin'){
+        Course.updateMany({_id: courseID}, {$set: {title, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID}}, (err, doc) => {
+            req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
+            res.redirect(`/dashboard/admin-edit-course?courseID=${courseID}`);
+        });
+    }
+    
 });
 
 module.exports = router;
