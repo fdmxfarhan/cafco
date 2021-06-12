@@ -77,7 +77,7 @@ router.post('/pay', function(req, res, next) {
     Payment.findOne({ _id: req.body.order_id }, (err, payment) => {
         if (payment) {
             var options2 = {
-                method: 'GET',
+                method: 'POST',
                 url: 'https://api.idpay.ir/v1.1/payment/verify',
                 headers: {
                     'Content-Type': 'application/json',
