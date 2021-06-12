@@ -72,7 +72,7 @@ router.get('/pay', function(req, res, next) {
     });
 });
 
-router.get('/pay', function(req, res, next) {
+router.post('/pay', function(req, res, next) {
     console.log(req.body);
     Payment.findOne({ _id: req.body.order_id }, (err, payment) => {
         if (payment) {
