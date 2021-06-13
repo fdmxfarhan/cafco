@@ -28,12 +28,12 @@ router.get('/login', (req, res, next) => {
 });
   
 router.post('/register', (req, res, next) => {
-    const { firstName, lastName, address, phone, school, idNumber, password, configpassword, birthDay, birthMonth, birthYear} = req.body;
+    const { firstName, lastName, address, phone, school, idNumber, password, configpassword, birthDay, birthMonth, birthYear, education} = req.body;
     const role = 'user', card = 0;
     const ipAddress = req.connection.remoteAddress;
     let errors = [];
     /// check required
-    if(!firstName || !lastName || !address || !phone || !school || !idNumber || !password || !configpassword || !birthDay || !birthMonth || !birthYear){
+    if(!firstName || !lastName || !address || !phone || !school || !idNumber || !password || !configpassword || !birthDay || !birthMonth || !birthYear || !education){
         errors.push({msg: 'لطفا موارد خواسته شده را کامل کنید!'});
     }
     /// check password match
@@ -59,7 +59,22 @@ router.post('/register', (req, res, next) => {
                 res.render('register', { firstName, lastName, address, phone, school, idNumber, errors });
             }
             else {
-                const newUser = new User({ipAddress, fullname, firstName, lastName, address, phone, school, idNumber, password, role, card, birthday: {day: birthDay, month: birthMonth, year: birthYear}});
+                var educatinoNum = 0;
+                     if(education == 'پیش دبستانی')                     educationNum = 0;
+                else if(education == 'اول ابتدایی')                     educationNum = 1;
+                else if(education == 'دوم ابتدایی')                     educationNum = 2;
+                else if(education == 'سوم ابتدایی')                     educationNum = 3;
+                else if(education == 'چهارم ابتدایی')                   educationNum = 4;
+                else if(education == 'پنجم ابتدایی')                    educationNum = 5;
+                else if(education == 'ششم ابتدایی')                     educationNum = 6;
+                else if(education == 'هفتم دوره اول دبیرستان')         educationNum = 7;
+                else if(education == 'هشتم دوره اول دبیرستان')         educationNum = 8;
+                else if(education == 'نهم دوره اول دبیرستان')          educationNum = 9;
+                else if(education == 'دهم دوره دوم دبیرستان')          educationNum = 10;
+                else if(education == 'یازدهم دوره دوم دبیرستان')       educationNum = 11;
+                else if(education == 'دوازدهم دوره دوم دبیرستان')      educationNum = 12;
+                else                                                     educationNum = 13;
+                const newUser = new User({ipAddress, fullname, firstName, lastName, address, phone, school, idNumber, password, role, card, birthday: {day: birthDay, month: birthMonth, year: birthYear}, education, educationNum});
                 // Hash password
                 bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if(err) throw err;

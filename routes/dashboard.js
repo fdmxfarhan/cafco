@@ -175,8 +175,9 @@ setInterval(() => {
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if (req.user.role == 'user') {
-        age = getAge(req.user.birthday.year);
-        
+        // age = getAge(req.user.birthday.year);
+        age = req.user.educationNum;
+        // Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
         Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
             var notPayedCoursesNum = 0;
             for (var i = 0; i < req.user.course.length; i++) {

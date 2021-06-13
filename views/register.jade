@@ -42,6 +42,25 @@ block content
                 input(type="Number" name="birthMonth" placeholder="ماه" required)
                 label(for="year") / 
                 input(type="Number" name="birthYear" placeholder="سال" value="1380" required)
+            .select-input-area
+                label(for="education") پایه تحصیلی (در حال تحصیل یا گذرانده شده): 
+                select(name="education") 
+                    option(value="پیش دبستانی") پیش دبستانی
+                    option(value="اول ابتدایی") اول ابتدایی
+                    option(value="دوم ابتدایی") دوم ابتدایی
+                    option(value="سوم ابتدایی") سوم ابتدایی
+                    option(value="چهارم ابتدایی") چهارم ابتدایی
+                    option(value="پنجم ابتدایی") پنجم ابتدایی
+                    option(value="ششم ابتدایی") ششم ابتدایی
+                    option(value="هفتم دوره اول دبیرستان") هفتم دوره اول دبیرستان
+                    option(value="هشتم دوره اول دبیرستان") هشتم دوره اول دبیرستان
+                    option(value="نهم دوره اول دبیرستان") نهم دوره اول دبیرستان
+                    option(value="دهم دوره دوم دبیرستان") دهم دوره دوم دبیرستان
+                    option(value="یازدهم دوره دوم دبیرستان") یازدهم دوره دوم دبیرستان
+                    option(value="دوازدهم دوره دوم دبیرستان") دوازدهم دوره دوم دبیرستان
+                    option(value="بزرگسال") بزرگسال
+                    
+                
             .text-input-area
                 input.textinput(type="text" placeholder="کد ملی" name="idNumber" value= "#{ typeof idNumber != 'undefined' ? idNumber: '' }")
                 i.fa.fa-user

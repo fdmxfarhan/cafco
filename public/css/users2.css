@@ -149,7 +149,35 @@
         text-align: center; 
     }
     .register input:focus{outline: none;}
+    
 
+    .register .select-input-area{
+        /* display: inline-block; */
+        margin-top: 1.5vw;
+    }
+    .register .select-input-area label{
+        color: gray;
+        font-size: 1.2vw;
+    }
+    .select-input-area label, .select-input-area select{
+        display: inline;
+    }
+    .register .select-input-area select{
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        padding: 0.4vw 2vw;
+        border: none;
+        width: 80%;
+        border-radius: 2vw;        
+        box-shadow: 0 0.3vw 0.8vw 0.2vw #5b167a3b;
+
+        margin-bottom: 1.5vw;
+        width: 16vw;
+        margin: 0 0.3vw;
+        text-align: center; 
+    }
+    .register select:focus{outline: none;}
+    
 }
 
 @media only screen and (max-width: 800px) {
@@ -292,6 +320,37 @@
     }
     input:focus{outline: none;}
 
+    
+    
+    
+    
+    
+    .register .select-input-area{
+        /* display: inline-block; */
+        margin-top: 3.5vw;
+        margin-bottom: 4vw;
+    }
+    .register .select-input-area label{
+        color: gray;
+        font-size: 3.2vw;
+    }
+    .select-input-area label, .select-input-area select{
+        display: inline;
+    }
+    .register .select-input-area select{
+        font-family: 'iransans';
+        font-size: 3.2vw;
+        padding: 1vw 4vw;
+        border: none;
+        width: 80%;
+        border-radius: 4vw;        
+        box-shadow: 0 0.4vw 1.5vw 0.6vw #5b167a3b;
+        width: 88%;
+        margin: 0 0.3vw;
+        text-align: center; 
+    }
+    .register select:focus{outline: none;}
+    
 }
 
 
