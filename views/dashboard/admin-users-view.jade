@@ -52,6 +52,7 @@ block content
                         i.fa.fa-sitemap
                         | آدرس آی پی: 
                         .num= users[i].ipAddress
+                    a(href="/dashboard/make-admin?userID=#{users[i]._id}") ادمین کردن
                 .part
                     h1 دوره های ثبت نام شده (#{users[i].course.length}):
                     .user-course-list-view

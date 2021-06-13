@@ -404,4 +404,12 @@ router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
     
 });
 
+router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        User.updateMany({_id: req.query.userID}, {$set: {role: 'admin'}}, (err, doc) => {
+            res.redirect('/dashboard/users-view')
+        })
+    }
+});
+
 module.exports = router;

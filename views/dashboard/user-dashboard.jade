@@ -24,7 +24,7 @@ block content
 
     .graph-cards-area
         .card 
-            .title دوره های گزرانده شده
+            .title دوره های گذرانده شده
             //- .number 100
             .progress-circle.p1
                 span 0
@@ -89,9 +89,9 @@ block content
                     .status= courses[i].status
             -}
         -}
-    a.show-more(href="/dashboard/courses") 
-        i.fa.fa-chevron-left
-        | مشاهده بیشتر ...
+    //- a.show-more(href="/dashboard/courses") 
+    //-     i.fa.fa-chevron-left
+    //-     | مشاهده بیشتر ...
     include course-view 
     
     script(src="/js/dashboard.js") 
