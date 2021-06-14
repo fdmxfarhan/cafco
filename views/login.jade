@@ -43,7 +43,7 @@ block content
         h1.title 
             i.fa.fa-sign-in
             | ورود
-        form(action="/users/login" target="_blank" id="register" method="POST")
+        form(action="/users/login" target="_parent" id="register" method="POST")
             .text-input-area
                 input.textinput(type="text" placeholder="شماره تماس" name="username" value= "#{ typeof uname != 'undefined' ? uname: '' }" required)
                 i.fa.fa-user
@@ -52,5 +52,5 @@ block content
                 i.fa.fa-key
             .text-input-area
                 button.submit(type="submit") ورود
-            a.link(href="https://cafcoreg.ir/users/register" target="_blank") هنوز ثبت نام نکرده اید؟
+            a.link(href="https://cafcoreg.ir/users/register" target="_parent") هنوز ثبت نام نکرده اید؟
     script(src="/js/users.js")
