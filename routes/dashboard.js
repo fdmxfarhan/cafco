@@ -9,6 +9,23 @@ const mail = require('../config/mail');
 const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
 
+var educationStages = [
+    'پیش دبستانی',
+    'اول ابتدایی',
+    'دوم ابتدایی',
+    'سوم ابتدایی',
+    'چهارم ابتدایی',
+    'پنجم ابتدایی',
+    'ششم ابتدایی',
+    'هفتم دوره اول دبیرستان',
+    'هشتم دوره اول دبیرستان',
+    'نهم دوره اول دبیرستان',
+    'دهم دوره دوم دبیرستان',
+    'یازدهم دوره دوم دبیرستان',
+    'دوازدهم دوره دوم دبیرستان',
+    'بزرگسال',
+];
+
 getAge = (year) => {
     _greg = new Date(Date.now());
     _day = _greg.getDate();
@@ -188,7 +205,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 if (!req.user.course[i].payed) notPayedCoursesNum++;
                 registeredCourse.push(req.user.course[i].courseID)
             }
-            // console.log(registeredCourse);
+            console.log(educationStages);
             res.render('./dashboard/user-dashboard', {
                 user: req.user,
                 login: req.query.login,
@@ -197,6 +214,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 dot,
                 anarestani,
                 registeredCourse,
+                educationStages,
             });
         });
     } else if (req.user.role = 'admin') {
@@ -216,6 +234,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                     dot,
                     anarestani: false,
                     registeredCourse: [],
+                    educationStages,
                 });
             });
         });

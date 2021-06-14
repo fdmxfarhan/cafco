@@ -9,7 +9,10 @@
                     ul
                         li مدرس: #{courses[i].teacher}
                         li زمان شروع: #{courses[i].startDate.year}/#{courses[i].startDate.month}/#{courses[i].startDate.day}
-                        li محدوده سنی: #{courses[i].minAge} تا #{courses[i].maxAge} سال
+                        -if(courses[i].minAge == courses[i].maxAge)
+                            li پایه تحصیلی: #{educationStages[courses[i].minAge]}
+                        -else
+                            li پایه تحصیلی: #{educationStages[courses[i].minAge]} تا #{educationStages[courses[i].maxAge]}
                         li ظرفیت: #{courses[i].capacity} نفر 
                             -if(courses[i].students.length >= courses[i].capacity)
                                 .red-inline (تکمیل شده)
