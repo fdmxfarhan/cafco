@@ -226,6 +226,7 @@ router.get('/users-view', ensureAuthenticated, (req, res, next) => {
 
 router.get('/register-course', ensureAuthenticated, (req, res, next) => {
     Course.findById(req.query.courseID, (err, course) => {
+        var students = course.students;
         if (err) console.log(err);
         var courseList = req.user.course;
         var registered = false;
@@ -235,7 +236,10 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
         if (!registered) {
             courseList.push({ courseID: req.query.courseID, course, payed: false });
             User.updateMany({ idNumber: req.user.idNumber }, { $set: { course: courseList } }, (err, doc) => {
-                res.redirect('/dashboard');
+                students.push(req.user._id);
+                Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {
+                    res.redirect('/dashboard');
+                });
             });
         } else {
             res.send('این دوره قبلا ثبت شده');

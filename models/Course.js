@@ -20,6 +20,10 @@ var CourseSchema = new mongoose.Schema({
     },
     capacity: Number,
     cover: String,
+    students: {
+        type: [Object],
+        default: [],
+    },
 });
 
 var Course = mongoose.model('Course', CourseSchema);

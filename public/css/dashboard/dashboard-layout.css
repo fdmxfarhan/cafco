@@ -232,7 +232,7 @@ body {
         top: 0;
         left: 11.5%;
         width: 75%;
-        margin: 5vw auto;
+        margin: 2vw auto;
         z-index: 11;
     }
     .popup-area .popup {
@@ -276,7 +276,12 @@ body {
         float: right;
         margin: 1vw;
     }
+    .popup-area .two-side-cont .part .red-inline{
+        color: red;
+        display: inline;
+    }
     .popup-area .two-side-cont .part {
+
         float: right;
         width: 46%;
         margin: 1%;

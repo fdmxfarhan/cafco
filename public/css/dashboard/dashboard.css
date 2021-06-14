@@ -104,11 +104,18 @@
         color: rgb(0, 190, 0);
     }
     .product-cards-area .card .status{
-            position: absolute;
-            right: 1vw;
-            bottom: 1vw;
-            font-size: 0.9vw;
-            color: lightskyblue;
+        position: absolute;
+        right: 1vw;
+        bottom: 0.8vw;
+        font-size: 0.9vw;
+        color: lightskyblue;
+    }
+    .product-cards-area .card .filled{
+        position: absolute;
+        right: 1vw;
+        bottom: 2.1vw;
+        font-size: 0.9vw;
+        color: red;
     }
     .product-cards-area .card.add-course{
         background-color: rgb(255, 192, 185);
