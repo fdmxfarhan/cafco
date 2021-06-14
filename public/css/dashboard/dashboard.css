@@ -74,7 +74,7 @@
     }
     .product-cards-area .card .image img{
         width: 100%;
-        /* height: 12vw; */
+        /* height: 22vw; */
         border-top-left-radius: 1vw;
         border-top-right-radius: 1vw;
     }
@@ -103,18 +103,27 @@
         font-weight: bold;
         color: rgb(0, 190, 0);
     }
+    .product-cards-area .card .discounted{
+        position: absolute;
+        bottom: 2.6vw;
+        left: 2vw;
+        font-size: 1vw;
+        font-weight: normal;
+        color: rgb(160, 160, 160);
+        text-decoration: line-through;
+    }
     .product-cards-area .card .status{
         position: absolute;
         right: 1vw;
-        bottom: 0.8vw;
+        bottom: 1vw;
         font-size: 0.9vw;
         color: lightskyblue;
     }
     .product-cards-area .card .filled{
         position: absolute;
-        right: 1vw;
-        bottom: 2.1vw;
-        font-size: 0.9vw;
+        left: 1vw;
+        bottom: 1vw;
+        font-size: 1.1vw;
         color: red;
     }
     .product-cards-area .card.add-course{

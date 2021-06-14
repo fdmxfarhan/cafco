@@ -10,7 +10,11 @@ block content
             .success-msg
                 i.fa.fa-times.close-success-msg
                 ul 
-                    li به پنل کاربری خود خوش آمدید
+                    -if(anarestani)
+                        li انارستانی عزیز به پنل کاربری خود خوش آمدید
+                    -else
+                        li به پنل کاربری خود خوش آمدید
+                    
         -}
         -if(notPayedCoursesNum != 0){
             .notif-msg
@@ -85,10 +89,18 @@ block content
                         img(src="#{courses[i].cover}")
                     .title= courses[i].title
                     .text= courses[i].description
-                    .price #{dot(courses[i].price/10)} تومان
                     .status= courses[i].status
                     -if(courses[i].students.length >= courses[i].capacity)
-                        .filled (ظرفیت تکمیل شده)
+                        .filled ظرفیت تکمیل شده
+                    -else if(courses[i].price == 0)
+                        .price رایگان
+                    -else{
+                        -if(anarestani){
+                            .discounted #{dot(courses[i].price/10)} تومان
+                            .price #{dot((courses[i].price - (courses[i].price*40)/100 )/10)} تومان
+                        -}else
+                            .price #{dot(courses[i].price/10)} تومان
+                    -}
             -}
         -}
     //- a.show-more(href="/dashboard/courses") 

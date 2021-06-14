@@ -13,8 +13,13 @@
                         li ظرفیت: #{courses[i].capacity} نفر 
                             -if(courses[i].students.length >= courses[i].capacity)
                                 .red-inline (تکمیل شده)
+                        -if(courses[i].students.length > 0)
+                            li تعداد شرکت کنندگان: #{courses[i].students.length} نفر
                         li تعداد جلسات: #{courses[i].session}
-                        li هزینه: #{courses[i].price/10} تومان
+                        -if(courses[i].price == 0)
+                            li هزینه: رایگان
+                        -else if(anarestani)
+                            li هزینه: #{courses[i].price/10} تومان
                     -if(user.role != 'admin' && courses[i].status != 'پایان یافته' && courses[i].students.length < courses[i].capacity){
                         a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}") 
                             i.fa.fa-check

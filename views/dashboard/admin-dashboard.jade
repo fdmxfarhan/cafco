@@ -79,8 +79,14 @@ block content
                     img(src="#{courses[i].cover}")
                 .title= courses[i].title
                 .text= courses[i].description
-                .price #{dot(courses[i].price/10)} تومان
                 .status= courses[i].status
+                -if(courses[i].students.length >= courses[i].capacity)
+                    .filled ظرفیت تکمیل شده
+                -else if(courses[i].price == 0)
+                    .price رایگان
+                -else 
+                    .price #{dot(courses[i].price/10)} تومان
+                    
         -}
     
     //- a.show-more(href="/dashboard/courses") 

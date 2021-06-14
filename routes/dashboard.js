@@ -176,9 +176,12 @@ setInterval(() => {
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if (req.user.role == 'user') {
         // age = getAge(req.user.birthday.year);
-        age = req.user.educationNum;
         // Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
+        age = req.user.educationNum;
         Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
+            var anarestani = false;
+            if(req.user.phone.slice(0, 5) == '09944' || req.user.phone.slice(0, 5) == '09945' || req.user.phone.slice(0, 5) == '09933' || req.user.phone.slice(0, 5) == '09932' || req.user.phone.slice(0, 5) == '09908' || req.user.phone.slice(0, 5) == '09940')
+                anarestani = true;
             var notPayedCoursesNum = 0;
             for (var i = 0; i < req.user.course.length; i++) {
                 if (!req.user.course[i].payed) notPayedCoursesNum++;
@@ -189,6 +192,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 courses,
                 notPayedCoursesNum,
                 dot,
+                anarestani,
             });
         });
     } else if (req.user.role = 'admin') {
@@ -234,7 +238,9 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
             if (course2.courseID == req.query.courseID) registered = true;
         });
         if (!registered) {
-            courseList.push({ courseID: req.query.courseID, course, payed: false });
+            var payState = false;
+            if(course.price == 0) payState = true;
+            courseList.push({ courseID: req.query.courseID, course, payed: payState });
             User.updateMany({ idNumber: req.user.idNumber }, { $set: { course: courseList } }, (err, doc) => {
                 students.push(req.user._id);
                 Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {
