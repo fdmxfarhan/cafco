@@ -39,14 +39,14 @@ html
                         a.sidebar-nav-link(href="/dashboard/user-payments") 
                             i.fa.fa-credit-card
                             | صورت حساب ها
-                        .break 
-                        a.sidebar-nav-link(href="#") 
-                            i.fa.fa-bell
-                            | اعلان ها
-                        .break 
-                        a.sidebar-nav-link(href="#") 
-                            i.fa.fa-gears
-                            | تنظیمات
+                        //- .break 
+                        //- a.sidebar-nav-link(href="#") 
+                        //-     i.fa.fa-bell
+                        //-     | اعلان ها
+                        //- .break 
+                        //- a.sidebar-nav-link(href="#") 
+                        //-     i.fa.fa-gears
+                        //-     | تنظیمات
                     -}else if(user.role == 'admin'){
                         a.sidebar-nav-link(href="/dashboard") 
                             i.fa.fa-user 
@@ -69,9 +69,9 @@ html
                             | مالی
                         .break 
                         
-                        a.sidebar-nav-link(href="#") 
-                            i.fa.fa-gears
-                            | تنظیمات
+                        //- a.sidebar-nav-link(href="#") 
+                        //-     i.fa.fa-gears
+                        //-     | تنظیمات
                     -}
                 a.logout(href="/users/logout") 
                     i.fa.fa-power-off

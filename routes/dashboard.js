@@ -178,7 +178,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
         // age = getAge(req.user.birthday.year);
         // Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
         age = req.user.educationNum;
-        Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
+        Course.find({ minAge: {$lt : age+1}, maxAge: { $gt :  age-1}, }, (err, courses) => {
             var anarestani = false;
             if(req.user.phone.slice(0, 5) == '09944' || req.user.phone.slice(0, 5) == '09945' || req.user.phone.slice(0, 5) == '09933' || req.user.phone.slice(0, 5) == '09932' || req.user.phone.slice(0, 5) == '09908' || req.user.phone.slice(0, 5) == '09940')
                 anarestani = true;
