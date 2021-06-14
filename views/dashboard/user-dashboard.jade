@@ -55,9 +55,7 @@ block content
     h1.title دوره های من
     .product-cards-area
         -if(user.course.length == 0){
-            .not-found شما هیچ دوره ای ثبت نام نکرده اید. برای ثبت نام 
-                a(href="/dashboard/courses") اینجا 
-                | کلیک کنید.
+            .not-found شما هیچ دوره ای ثبت نام نکرده اید. برای ثبت نام روی دوره مورد نظر کلیک کنید.
         -}else{
             -for(var i=0; i<user.course.length; i++){
                 .course 
