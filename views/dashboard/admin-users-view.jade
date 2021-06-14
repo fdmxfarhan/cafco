@@ -57,10 +57,10 @@ block content
                         | پایه تحصیلی: 
                         .num= users[i].education
                     -if(users[i].role == 'user')
-                        a(href="/dashboard/make-admin?userID=#{users[i]._id}") ادمین کردن
+                        a(href="/dashboard/make-admin?userID=#{users[i]._id}") ادمین کردن 
                     -else
-                        a(href="/dashboard/make-user?userID=#{users[i]._id}") یوزر کردن
-                    a(href="/dashboard/delete-user?userID=#{users[i]._id}") حذف کاربر
+                        a(href="/dashboard/make-user?userID=#{users[i]._id}") یوزر کردن 
+                    a(href="/dashboard/remove-user?userID=#{users[i]._id}") حذف کاربر 
 
                 .part
                     h1 دوره های ثبت نام شده (#{users[i].course.length}):
