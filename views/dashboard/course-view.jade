@@ -20,7 +20,7 @@
                             li هزینه: رایگان
                         -else if(anarestani)
                             li هزینه: #{courses[i].price/10} تومان
-                    -if(user.role != 'admin' && courses[i].status != 'پایان یافته' && courses[i].students.length < courses[i].capacity){
+                    -if(user.role != 'admin' && courses[i].status != 'پایان یافته' && courses[i].students.length < courses[i].capacity && registeredCourse.indexOf(courses[i]._id.toString()) == -1){
                         a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}") 
                             i.fa.fa-check
                             | ثبت نام

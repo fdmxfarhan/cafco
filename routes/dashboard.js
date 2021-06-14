@@ -183,9 +183,12 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
             if(req.user.phone.slice(0, 5) == '09944' || req.user.phone.slice(0, 5) == '09945' || req.user.phone.slice(0, 5) == '09933' || req.user.phone.slice(0, 5) == '09932' || req.user.phone.slice(0, 5) == '09908' || req.user.phone.slice(0, 5) == '09940')
                 anarestani = true;
             var notPayedCoursesNum = 0;
+            var registeredCourse = [];
             for (var i = 0; i < req.user.course.length; i++) {
                 if (!req.user.course[i].payed) notPayedCoursesNum++;
+                registeredCourse.push(req.user.course[i].courseID)
             }
+            // console.log(registeredCourse);
             res.render('./dashboard/user-dashboard', {
                 user: req.user,
                 login: req.query.login,
@@ -193,6 +196,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 notPayedCoursesNum,
                 dot,
                 anarestani,
+                registeredCourse,
             });
         });
     } else if (req.user.role = 'admin') {
@@ -210,6 +214,8 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                     courses,
                     studentsNum,
                     dot,
+                    anarestani: false,
+                    registeredCourse: [],
                 });
             });
         });
