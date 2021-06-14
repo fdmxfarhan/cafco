@@ -431,4 +431,12 @@ router.get('/make-user', ensureAuthenticated, (req, res, next) => {
     }
 });
 
+router.get('/remove-user', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        User.deleteMany({_id: req.query.userID}, (err, doc) => {
+            res.redirect('/dashboard/users-view')
+        })
+    }
+});
+
 module.exports = router;

@@ -60,6 +60,8 @@ block content
                         a(href="/dashboard/make-admin?userID=#{users[i]._id}") ادمین کردن
                     -else
                         a(href="/dashboard/make-user?userID=#{users[i]._id}") یوزر کردن
+                    a(href="/dashboard/delete-user?userID=#{users[i]._id}") حذف کاربر
+
                 .part
                     h1 دوره های ثبت نام شده (#{users[i].course.length}):
                     .user-course-list-view
