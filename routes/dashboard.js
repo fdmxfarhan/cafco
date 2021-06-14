@@ -342,6 +342,9 @@ router.get('/courses', ensureAuthenticated, (req, res, next) => {
             user: req.user,
             courses,
             dot,
+            anarestani: false,
+            registeredCourse: [],
+            educationStages,
         });
     });
 });
