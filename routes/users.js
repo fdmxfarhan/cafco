@@ -28,7 +28,7 @@ router.get('/login', (req, res, next) => {
 });
   
 router.post('/register', (req, res, next) => {
-    const { firstName, lastName, address, phone, school, idNumber, password, configpassword, birthDay, birthMonth, birthYear, education} = req.body;
+    var { firstName, lastName, address, phone, school, idNumber, password, configpassword, birthDay, birthMonth, birthYear, education} = req.body;
     const role = 'user', card = 0;
     const ipAddress = req.connection.remoteAddress;
     let errors = [];
@@ -81,9 +81,18 @@ router.post('/register', (req, res, next) => {
                 newUser.password = hash;
                 newUser.save()
                     .then(user => {
+                        // const username = idNumber;
+                        // console.log(username, password);
+
+                        // passport.authenticate('local', {
+                        //     successRedirect: '/dashboard?login=true',
+                        //     failureRedirect: '/users/login',
+                        //     failureFlash: true
+                        // })(req, res, next);
+
                         req.flash('success_msg', 'ثبت نام با موفقیت انجام شد. اکنون میتوانید وارد شوید.');
                         res.redirect('/users/login');
-                         
+
                     }).catch(err => console.log(err));
                 }));
                 console.log(newUser);
