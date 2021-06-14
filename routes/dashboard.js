@@ -281,17 +281,24 @@ router.get('/remove-user-course-pay', ensureAuthenticated, (req, res, next) => {
 });
 
 router.get('/pay', ensureAuthenticated, (req, res, next) => {
+    var anarestani = false;
+    if(req.user.phone.slice(0, 5) == '09944' || req.user.phone.slice(0, 5) == '09945' || req.user.phone.slice(0, 5) == '09933' || req.user.phone.slice(0, 5) == '09932' || req.user.phone.slice(0, 5) == '09908' || req.user.phone.slice(0, 5) == '09940'){
+        anarestani = true;
+    }
     var courseList = req.user.course;
     var priceSum = 0, discount = 0, sessionNum = 0;
     var discount72 = false;
     for (var i = 0; i < courseList.length; i++) {
         if (!courseList[i].payed)
-            priceSum += courseList[i].course.price;
+        priceSum += courseList[i].course.price;
         sessionNum += courseList[i].course.session;
     }
-    if(sessionNum > 72) {
+    if(sessionNum > 72 && !anarestani) {
         discount72 = true;
         discount += Math.floor((priceSum * 20) / 100)
+    }
+    if(anarestani){
+        discount += Math.floor((priceSum * 40) / 100)
     }
     res.render('./dashboard/user-pay', {
         user: req.user,
@@ -299,6 +306,7 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
         discount,
         dot,
         discount72,
+        anarestani,
     });
 });
 
