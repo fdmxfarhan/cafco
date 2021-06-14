@@ -92,6 +92,8 @@
         font-size: 1vw;
         text-align: justify;
         margin-bottom: 2vw;
+        max-height: 15vw;
+        overflow: hidden;
     }
     .product-cards-area .card .price{
         position: absolute;
