@@ -368,6 +368,9 @@ router.post('/courses', ensureAuthenticated, (req, res, next) => {
             user: req.user,
             courses: result,
             dot,
+            anarestani: false,
+            registeredCourse: [],
+            educationStages,
         });
     });
 });
