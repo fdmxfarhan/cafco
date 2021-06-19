@@ -131,22 +131,22 @@
         font-size: 1.1vw;
         padding: 0.4vw 1vw;
         border: none;
-        margin-left: 1vw;
+        margin-left: 0.5vw;
     }
     .add-course-to-user input.check{
-        margin-left: 1vw;
+        margin-left: 0.5vw;
     }
     .add-course-to-user input.submit{
         border: none;
         font-family: 'iransans';
-        font-size: 1.1vw;
+        font-size: 1vw;
         background-color: var(--blue);
         color: white;
-        padding: 0.5vw 2vw;
+        padding: 0.5vw 1vw;
         border-radius: 1.5vw;
         cursor: pointer;
         transition-duration: 500ms;
-        margin-right: 1vw;
+        margin-right: 0.5vw;
         
     }
 }
