@@ -85,6 +85,7 @@
         border-radius: 1.5vw;
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
         position: relative;
+        margin-bottom: 1vw;
     }
     .popup .part .user-course-list-view .course img{
         width: 25%;
@@ -118,6 +119,36 @@
     .popup .part .user-course-list-view .course .info .labels .label.green{color: green;}
     .popup .part .user-course-list-view .course .info .labels .label.red{color: red;}
     .popup .part .user-course-list-view .course .info .labels .label.blue{color: blue;}
+    .user-list table .green{
+        color: rgb(14, 212, 14);
+        display: inline;
+    }
+    .add-course-to-user select{
+        border-radius: 2vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        margin-bottom: 1.5vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.4vw 1vw;
+        border: none;
+        margin-left: 1vw;
+    }
+    .add-course-to-user input.check{
+        margin-left: 1vw;
+    }
+    .add-course-to-user input.submit{
+        border: none;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        background-color: var(--blue);
+        color: white;
+        padding: 0.5vw 2vw;
+        border-radius: 1.5vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+        margin-right: 1vw;
+        
+    }
 }
 @media only screen and (max-width: 800px) {
     

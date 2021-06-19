@@ -20,7 +20,9 @@ block content
             -for(var i=0; i<users.length; i++){
                 tr(id="view-user#{i}")
                     td= i+1
-                    td= users[i].fullname
+                    td= users[i].fullname 
+                        -if(isAnarestani(users[i].phone))
+                            .green  (انارستانی)
                     td= users[i].phone
                     td= users[i].idNumber
                     td= users[i].course.length
@@ -80,5 +82,14 @@ block content
                                             .label.red پرداخت نشده
                                         
                         -}
+                    .add-course-to-user 
+                        form(action="/dashboard/admin-add-course-to-user" method="POST") 
+                            select(name="courseID") 
+                                -for(var j=0; j<courses.length; j++)
+                                    option(value="#{courses[j]._id}")= courses[j].title
+                            input.hidden(type="text" name="userID" value="#{users[i]._id}")
+                            input.check(type="checkbox" name="payed" id="payed" value="پرداخت شده")
+                            label(for="payed") پرداخت شده
+                            input.submit(type="submit" value="افزودن دوره")
     -}
     script(src="/js/user-view.js") 

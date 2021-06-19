@@ -9,6 +9,12 @@ const mail = require('../config/mail');
 const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
 
+var isAnarestani = (phone) => {
+    if(phone.slice(0, 5) == '09944' || phone.slice(0, 5) == '09945' || phone.slice(0, 5) == '09933' || phone.slice(0, 5) == '09932' || phone.slice(0, 5) == '09908' || phone.slice(0, 5) == '09940'){
+        return true;
+    }
+    return false;
+}
 var educationStages = [
     'پیش دبستانی',
     'اول ابتدایی',
@@ -243,14 +249,17 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
 
 router.get('/users-view', ensureAuthenticated, (req, res, next) => {
     if (req.user.role == 'admin') {
-        User.find({}, (err, users) => {
-            res.render('./dashboard/admin-users-view', {
-                user: req.user,
-                users,
+        Course.find({}, (err, courses) => {
+            User.find({}, (err, users) => {
+                res.render('./dashboard/admin-users-view', {
+                    user: req.user,
+                    users,
+                    isAnarestani,
+                    courses,
+                });
             });
-        });
-    } else
-        res.send('permission denied');
+        })
+    } else  res.send('permission denied');
 });
 
 router.get('/register-course', ensureAuthenticated, (req, res, next) => {
@@ -475,6 +484,38 @@ router.get('/remove-user', ensureAuthenticated, (req, res, next) => {
         User.deleteMany({_id: req.query.userID}, (err, doc) => {
             res.redirect('/dashboard/users-view')
         })
+    }
+});
+
+router.post('/admin-add-course-to-user', ensureAuthenticated, (req, res, next) => {
+    console.log(req.body);
+    if(req.user.role == 'admin'){
+        User.findById(req.body.userID, (err, user) => {
+            Course.findById(req.body.courseID, (err, course) => {
+                var students = course.students;
+                var courseList = user.course;
+                var registered = false;
+                courseList.forEach(course2 => {
+                    if (course2.courseID == req.body.courseID) registered = true;
+                });
+                if (!registered) {
+                    var payState = false;
+                    if(req.body.payed) payState = true;
+                    if(course.price == 0) payState = true;
+                    courseList.push({ courseID: req.body.courseID, course, payed: payState });
+
+                    User.updateMany({ _id: req.body.userID }, { $set: { course: courseList } }, (err, doc) => {
+                        students.push(req.user._id);
+                        Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {
+                            res.redirect('/dashboard/users-view');
+                        });
+                    });
+                } else {
+                    res.send('این دوره قبلا ثبت شده');
+                }
+            });
+            
+        });
     }
 });
 
