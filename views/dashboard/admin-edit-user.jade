@@ -1,0 +1,53 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/edit-user.css")
+
+block content
+
+    -if(success_msg != ''){
+        .message-area
+            .success-msg
+                i.fa.fa-times.close-success-msg
+                ul 
+                    li= success_msg
+    -}
+    
+    h1.title اطلاعات شخصی
+    form(action="/dashboard/admin-edit-user" method="POST") 
+        input.hidden(type="text" name="userID" value="#{editingUser._id}")
+        .text-input 
+            label(for="firstName") نام: 
+            input(type="text" name="firstName" value="#{editingUser.firstName}")
+        .text-input 
+            label(for="lastName") نام خانوادگی: 
+            input(type="text" name="lastName" value="#{editingUser.lastName}")
+        .text-input 
+            label(for="address") نشانی: 
+            input(type="text" name="address" value="#{editingUser.address}")
+        .text-input 
+            label(for="school") نام مدرسه: 
+            input(type="text" name="school" value="#{editingUser.school}")
+        .text-input 
+            label(for="idNumber") کد ملی: 
+            input(type="text" name="idNumber" value="#{editingUser.idNumber}")
+        .text-input 
+            label(for="phone") تلفن: 
+            input(type="text" name="phone" value="#{editingUser.phone}")
+        .text-input 
+            label(for="educationNum") پایه تحصیلی: 
+            input(type="number" name="educationNum" value="#{editingUser.educationNum}")
+        input.submit(type="submit" value="ثبت")
+    
+    h1.title رمز عبور
+    form(action="/dashboard/admin-password-user" method="POST") 
+        input.hidden(type="text" name="userID" value="#{editingUser._id}")
+        .pass-input
+            label(for="firstName") رمز عبور: 
+            input(type="password" name="password" placeholder="رمز عبور")
+        .pass-input 
+            label(for="lastName") تایید رمز عبور: 
+            input(type="password" name="confirmpassword" placeholder="تایید رمز عبور")
+        input.submit(type="submit" value="ثبت")
+    
+    script(src="/js/edit-course.js") 

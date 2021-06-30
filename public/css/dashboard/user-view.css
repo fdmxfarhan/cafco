@@ -149,6 +149,33 @@
         margin-right: 0.5vw;
         
     }
+    .user-actions{
+        overflow: hidden
+    }
+    .user-actions a{
+        display: block;
+        float: right;
+        background-color: var(--blue);
+        color: white;
+        margin: 0 0.3vw;
+        text-decoration: none;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.4vw 1vw;
+        border-radius: 2vw;
+    }
+    .user-actions a:hover{
+        background-color: salmon;
+    }
+    .user-actions a.red{
+        background-color: red;
+    }
+    .user-actions a i{
+        padding-left: 0.5vw;
+    }
+    .user-actions a.red:hover{
+        background-color: salmon;
+    }
 }
 @media only screen and (max-width: 800px) {
     
