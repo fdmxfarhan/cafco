@@ -44,10 +44,10 @@ block content
         input.hidden(type="text" name="userID" value="#{editingUser._id}")
         .pass-input
             label(for="firstName") رمز عبور: 
-            input(type="password" name="password" placeholder="رمز عبور")
+            input(type="password" name="password" placeholder="رمز عبور" value="#{editingUser.phone}")
         .pass-input 
             label(for="lastName") تایید رمز عبور: 
-            input(type="password" name="confirmpassword" placeholder="تایید رمز عبور")
+            input(type="password" name="confirmpassword" placeholder="تایید رمز عبور" value="#{editingUser.phone}")
         input.submit(type="submit" value="ثبت")
     
     script(src="/js/edit-course.js") 
