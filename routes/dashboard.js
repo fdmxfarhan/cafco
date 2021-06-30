@@ -211,7 +211,16 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 if (!req.user.course[i].payed) notPayedCoursesNum++;
                 registeredCourse.push(req.user.course[i].courseID)
             }
-            console.log(educationStages);
+
+            for(var i=0; i<courses.length - 1; i++){
+                for(var j=0; j<courses.length -i -1; j++){
+                    if(courses[j].price > courses[j+1].price){
+                        var temp = courses[j];
+                        courses[j] = courses[j+1];
+                        courses[j+1] = temp;
+                    }
+                }
+            }
             res.render('./dashboard/user-dashboard', {
                 user: req.user,
                 login: req.query.login,
@@ -231,6 +240,15 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                     users[i].course.forEach(userCourse => {
                         if (userCourse.payed) studentsNum++;
                     });
+                }
+                for(var i=0; i<courses.length - 1; i++){
+                    for(var j=0; j<courses.length -i -1; j++){
+                        if(courses[j].price > courses[j+1].price){
+                            var temp = courses[j];
+                            courses[j] = courses[j+1];
+                            courses[j+1] = temp;
+                        }
+                    }
                 }
                 res.render('./dashboard/admin-dashboard', {
                     user: req.user,
