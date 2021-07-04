@@ -8,6 +8,7 @@ var Payment = require('../models/Payment');
 const mail = require('../config/mail');
 const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
+const bcrypt = require('bcryptjs');
 
 var isAnarestani = (phone) => {
     if(phone.slice(0, 5) == '09944' || phone.slice(0, 5) == '09945' || phone.slice(0, 5) == '09933' || phone.slice(0, 5) == '09932' || phone.slice(0, 5) == '09908' || phone.slice(0, 5) == '09940'){
@@ -211,7 +212,16 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 if (!req.user.course[i].payed) notPayedCoursesNum++;
                 registeredCourse.push(req.user.course[i].courseID)
             }
-            console.log(educationStages);
+
+            for(var i=0; i<courses.length - 1; i++){
+                for(var j=0; j<courses.length -i -1; j++){
+                    if(courses[j].price > courses[j+1].price){
+                        var temp = courses[j];
+                        courses[j] = courses[j+1];
+                        courses[j+1] = temp;
+                    }
+                }
+            }
             res.render('./dashboard/user-dashboard', {
                 user: req.user,
                 login: req.query.login,
@@ -231,6 +241,15 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                     users[i].course.forEach(userCourse => {
                         if (userCourse.payed) studentsNum++;
                     });
+                }
+                for(var i=0; i<courses.length - 1; i++){
+                    for(var j=0; j<courses.length -i -1; j++){
+                        if(courses[j].price > courses[j+1].price){
+                            var temp = courses[j];
+                            courses[j] = courses[j+1];
+                            courses[j+1] = temp;
+                        }
+                    }
                 }
                 res.render('./dashboard/admin-dashboard', {
                     user: req.user,
@@ -518,5 +537,44 @@ router.post('/admin-add-course-to-user', ensureAuthenticated, (req, res, next) =
         });
     }
 });
+
+
+router.get('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        User.findById(req.query.userID, (err, editingUser) => {
+            res.render('./dashboard/admin-edit-user', {
+                user: req.user,
+                editingUser,
+            });
+        });
+    }
+});
+
+router.post('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
+    const { userID, firstName, lastName, address, school, idNumber, phone, educationNum } = req.body;
+    if(req.user.role == 'admin'){
+        User.updateMany({_id: userID}, {$set: {firstName, lastName, address, school, idNumber, phone, educationNum}}, (err, doc) => {
+            req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
+            res.redirect(`/dashboard/admin-edit-user?userID=${userID}`);
+        });
+    }
+});
+
+router.post('/admin-password-user', ensureAuthenticated, (req, res, next) => {
+    const { userID, password, confirmpassword } = req.body;
+    if(password != confirmpassword) 
+        res.send('تایید رمز عبور صحیح نمی‌باشد');
+    else if(req.user.role == 'admin'){
+        bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
+            if(err) throw err;
+            User.updateMany({_id: userID}, {$set: {password: hash}}, (err, doc) => {
+                req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
+                res.redirect(`/dashboard/admin-edit-user?userID=${userID}`);
+            });
+        }));
+    }
+});
+
+
 
 module.exports = router;

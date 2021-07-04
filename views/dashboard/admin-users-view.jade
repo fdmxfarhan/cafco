@@ -58,11 +58,17 @@ block content
                         i.fa.fa-book
                         | پایه تحصیلی: 
                         .num= users[i].education
-                    -if(users[i].role == 'user')
-                        a(href="/dashboard/make-admin?userID=#{users[i]._id}") ادمین کردن 
-                    -else
-                        a(href="/dashboard/make-user?userID=#{users[i]._id}") یوزر کردن 
-                    a(href="/dashboard/remove-user?userID=#{users[i]._id}") حذف کاربر 
+                    .user-actions
+                        -if(users[i].role == 'user')
+                            a(href="/dashboard/make-admin?userID=#{users[i]._id}") تبدیل به ادمین
+                        -else
+                            a(href="/dashboard/make-user?userID=#{users[i]._id}") تبدیل به یوزر
+                        a(href="/dashboard/admin-edit-user?userID=#{users[i]._id}") 
+                            i.fa.fa-edit
+                            | ویرایش
+                        a.red(href="/dashboard/remove-user?userID=#{users[i]._id}") 
+                            i.fa.fa-trash
+                            | حذف کاربر 
 
                 .part
                     h1 دوره های ثبت نام شده (#{users[i].course.length}):
@@ -86,7 +92,8 @@ block content
                         form(action="/dashboard/admin-add-course-to-user" method="POST") 
                             select(name="courseID") 
                                 -for(var j=0; j<courses.length; j++)
-                                    option(value="#{courses[j]._id}")= courses[j].title
+                                    -if(courses[j].minAge <= users[i].educationNum && courses[j].maxAge >= users[i].educationNum)
+                                        option(value="#{courses[j]._id}")= courses[j].title
                             input.hidden(type="text" name="userID" value="#{users[i]._id}")
                             input.check(type="checkbox" name="payed" id="payed" value="پرداخت شده")
                             label(for="payed") پرداخت شده
