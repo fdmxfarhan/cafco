@@ -426,6 +426,7 @@ router.get('/course-list', ensureAuthenticated, (req, res, next) => {
                     users: usersList,
                     course,
                     courses,
+                    isAnarestani,
                 });
             });
         })
