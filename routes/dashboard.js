@@ -412,20 +412,23 @@ router.get('/user-courses-view', ensureAuthenticated, (req, res, next) => {
 
 router.get('/course-list', ensureAuthenticated, (req, res, next) => {
     Course.findById(req.query.courseID, (err, course) => {
-        User.find({}, (err, users) => {
-            var usersList = [];
-            users.forEach(usr => {
-                usr.course.forEach(crs => {
-                    if (crs.courseID == req.query.courseID)
-                        usersList.push(usr);
+        Course.find({}, (err, courses) => {
+            User.find({}, (err, users) => {
+                var usersList = [];
+                users.forEach(usr => {
+                    usr.course.forEach(crs => {
+                        if (crs.courseID == req.query.courseID)
+                            usersList.push(usr);
+                    });
+                });
+                res.render('./dashboard/admin-users-view', {
+                    user: req.user,
+                    users: usersList,
+                    course,
+                    courses,
                 });
             });
-            res.render('./dashboard/admin-users-view', {
-                user: req.user,
-                users: usersList,
-                course,
-            });
-        });
+        })
     });
 });
 
