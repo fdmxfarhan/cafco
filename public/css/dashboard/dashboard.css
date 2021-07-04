@@ -270,6 +270,17 @@
     h1.title .search button:hover{
         background-color: var(--hover);
     }
+
+
+    /* ---------------------- Flag ------------------------- */
+    .gray-inline{
+        display: inline;
+        color: gray;
+        font-size: 1.1vw;
+        font-weight: normal;
+        margin-right: 0.5vw;
+    }
+
 }
 @media only screen and (max-width: 800px) {
     .graph-cards-area{

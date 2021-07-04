@@ -77,7 +77,8 @@ block content
             .card(id="card#{i}") 
                 .image 
                     img(src="#{courses[i].cover}")
-                .title= courses[i].title
+                .title= courses[i].title 
+                    .gray-inline (#{courses[i].minAge} تا #{courses[i].maxAge})
                 .text= courses[i].description
                 .status= courses[i].status
                 -if(courses[i].students.length >= courses[i].capacity)
