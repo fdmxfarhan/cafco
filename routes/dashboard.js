@@ -319,6 +319,7 @@ router.get('/remove-user-course', ensureAuthenticated, (req, res, next) => {
         res.redirect('/dashboard');
     });
 });
+
 router.get('/remove-user-course-pay', ensureAuthenticated, (req, res, next) => {
     var courseList = req.user.course;
     courseList.splice(req.query.index, 1);
@@ -385,6 +386,7 @@ contain = (course, word) => {
     if(course.cover.search(word) != -1) return true;
     return false;
 };
+
 router.post('/courses', ensureAuthenticated, (req, res, next) => {
     Course.find({}, (err, courses) => {
         result = [];
@@ -442,6 +444,7 @@ router.get('/user-payments', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
+
 router.get('/admin-payments', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         Payment.find({}, (err, payments) => {
@@ -461,7 +464,6 @@ router.get('/discount', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 
 router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
@@ -542,7 +544,6 @@ router.post('/admin-add-course-to-user', ensureAuthenticated, (req, res, next) =
     }
 });
 
-
 router.get('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.findById(req.query.userID, (err, editingUser) => {
@@ -578,7 +579,6 @@ router.post('/admin-password-user', ensureAuthenticated, (req, res, next) => {
         }));
     }
 });
-
 
 
 module.exports = router;
