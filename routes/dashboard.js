@@ -155,6 +155,7 @@ function get_persian_month(month) {
             break;
     }
 }
+
 setInterval(() => {
     greg = new Date(Date.now());
     day = greg.getDate();
@@ -197,6 +198,19 @@ setInterval(() => {
     });
 }, 30 * 1000);
 
+var sortAlgorythm = (a, b) => {
+    if(a.startDate.year == b.startDate.year){
+        if(a.startDate.month == b.startDate.month){
+            if(a.startDate.day == b.startDate.day){
+                return a.price - b.price;
+            }
+            return a.startDate.day - b.startDate.day;
+        }
+        return a.startDate.month - b.startDate.month;    
+    }
+    return a.startDate.year - b.startDate.year;
+};
+
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if (req.user.role == 'user') {
         // age = getAge(req.user.birthday.year);
@@ -213,15 +227,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 registeredCourse.push(req.user.course[i].courseID)
             }
 
-            for(var i=0; i<courses.length - 1; i++){
-                for(var j=0; j<courses.length -i -1; j++){
-                    if(courses[j].price > courses[j+1].price){
-                        var temp = courses[j];
-                        courses[j] = courses[j+1];
-                        courses[j+1] = temp;
-                    }
-                }
-            }
+            courses = courses.sort(sortAlgorythm);
             res.render('./dashboard/user-dashboard', {
                 user: req.user,
                 login: req.query.login,
@@ -242,15 +248,8 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                         if (userCourse.payed) studentsNum++;
                     });
                 }
-                for(var i=0; i<courses.length - 1; i++){
-                    for(var j=0; j<courses.length -i -1; j++){
-                        if(courses[j].price > courses[j+1].price){
-                            var temp = courses[j];
-                            courses[j] = courses[j+1];
-                            courses[j+1] = temp;
-                        }
-                    }
-                }
+                
+                courses = courses.sort(sortAlgorythm);
                 res.render('./dashboard/admin-dashboard', {
                     user: req.user,
                     login: req.query.login,
