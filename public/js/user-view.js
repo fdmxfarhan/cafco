@@ -12,15 +12,23 @@ $(document).ready(function(){
         });
     });
     $('.close-popup').click(() => {
+        $('#add-user-popup').fadeOut(500);
         modal.fadeOut(500);
         userView.forEach(user => {
             user.popup.fadeOut(500);
         });
     });
     modal.click(() => {
+        $('#add-user-popup').fadeOut(500);
         modal.fadeOut(500);
         userView.forEach(user => {
             user.popup.fadeOut(500);
         });
     });
+
+
+    $('a.add-user').click(()=>{
+        modal.fadeIn(500);
+        $('#add-user-popup').fadeIn(500);
+    })
 });

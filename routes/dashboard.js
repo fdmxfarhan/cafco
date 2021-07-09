@@ -580,5 +580,53 @@ router.post('/admin-password-user', ensureAuthenticated, (req, res, next) => {
     }
 });
 
-
+router.post('/admin-adduser', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        const  {firstName, lastName, address, phone, school, birthDay, birthMonth, birthYear, education, idNumber, password, configpassword, courseList} = req.body;
+        User.findOne({idNumber: idNumber}, (err, user) => {
+            if(user) res.send('کد ملی قبلا ثبت شده');
+            else if(password != configpassword) res.send('تایید رمز عبور صحیح نمی‌باشد');
+            else{
+                const role = 'user', card = 0;
+                const fullname = firstName + ' ' + lastName;
+                var educatinoNum = 0;
+                     if(education == 'پیش دبستانی')                     educationNum = 0;
+                else if(education == 'اول ابتدایی')                     educationNum = 1;
+                else if(education == 'دوم ابتدایی')                     educationNum = 2;
+                else if(education == 'سوم ابتدایی')                     educationNum = 3;
+                else if(education == 'چهارم ابتدایی')                   educationNum = 4;
+                else if(education == 'پنجم ابتدایی')                    educationNum = 5;
+                else if(education == 'ششم ابتدایی')                     educationNum = 6;
+                else if(education == 'هفتم دوره اول دبیرستان')         educationNum = 7;
+                else if(education == 'هشتم دوره اول دبیرستان')         educationNum = 8;
+                else if(education == 'نهم دوره اول دبیرستان')          educationNum = 9;
+                else if(education == 'دهم دوره دوم دبیرستان')          educationNum = 10;
+                else if(education == 'یازدهم دوره دوم دبیرستان')       educationNum = 11;
+                else if(education == 'دوازدهم دوره دوم دبیرستان')      educationNum = 12;
+                else                                                     educationNum = 13;
+                Course.find({}, (err, courses) => {
+                    var registeredCourseList = [];
+                    if(courseList){
+                        for (let i = 0; i < courses.length; i++) {
+                            for (let j = 0; j < courseList.length; j++) {
+                                if(courseList[j] == courses[i]._id)
+                                    registeredCourseList.push({ courseID: courses[i]._id, course: courses[i], payed: true });
+                            }
+                        }
+                    }
+                    var newUser = new User({fullname, firstName, lastName, address, phone, school, idNumber, password, role, card, birthday: {day: birthDay, month: birthMonth, year: birthYear}, education, educationNum, course: registeredCourseList});
+                    bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if(err) throw err;
+                        newUser.password = hash;
+                        newUser.save()
+                            .then(user => {
+                                res.redirect('/dashboard/users-view');        
+                            }).catch(err => console.log(err));
+                        }) 
+                    );
+                });
+            }
+        })
+    }
+});
 module.exports = router;

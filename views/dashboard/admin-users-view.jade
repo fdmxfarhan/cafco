@@ -28,6 +28,9 @@ block content
                     td= users[i].course.length
                     td= users[i].role
             -}
+        a.add-user 
+                i.fa.fa-plus 
+                | افزودن کاربر جدید
     -for(var i=0; i<users.length; i++){
         .popup-area(id="user-view-popup#{i}")
             .popup
@@ -99,4 +102,70 @@ block content
                             label(for="payed") پرداخت شده
                             input.submit(type="submit" value="افزودن دوره")
     -}
+
+    .popup-area#add-user-popup
+        .popup
+            i.fa.fa-times.close-popup
+            h1.title.center افزودن کاربر جدید
+            form(action="/dashboard/admin-adduser" method="POST" autocomplete="off") 
+                .part
+                    .text-input-area
+                        i.fa.fa-pencil
+                        input.textinput(type="text" placeholder="نام" name="firstName")
+                    .text-input-area
+                        i.fa.fa-pencil
+                        input.textinput(type="text" placeholder="نام خانوادگی" name="lastName")
+                    .text-input-area
+                        i.fa.fa-map-marker
+                        input.textinput(type="text" placeholder="نشانی" name="address")
+                    .text-input-area
+                        i.fa.fa-phone
+                        input.textinput(type="text" placeholder="شماره تماس (پدر یا مادر)" name="phone")
+                    .text-input-area
+                        i.fa.fa-book
+                        input.textinput(type="text" placeholder="نام مدرسه" name="school")
+                    .date-input-area
+                        label(for="day") تاریخ تولد: 
+                        input(type="Number" name="birthDay" placeholder="روز")
+                        label(for="month") / 
+                        input(type="Number" name="birthMonth" placeholder="ماه")
+                        label(for="year") / 
+                        input(type="Number" name="birthYear" placeholder="سال" value="1380")
+                    .select-input-area
+                        label(for="education") پایه تحصیلی: 
+                        select(name="education") 
+                            option(value="پیش دبستانی") پیش دبستانی
+                            option(value="اول ابتدایی") اول ابتدایی
+                            option(value="دوم ابتدایی") دوم ابتدایی
+                            option(value="سوم ابتدایی") سوم ابتدایی
+                            option(value="چهارم ابتدایی") چهارم ابتدایی
+                            option(value="پنجم ابتدایی") پنجم ابتدایی
+                            option(value="ششم ابتدایی") ششم ابتدایی
+                            option(value="هفتم دوره اول دبیرستان") هفتم دوره اول دبیرستان
+                            option(value="هشتم دوره اول دبیرستان") هشتم دوره اول دبیرستان
+                            option(value="نهم دوره اول دبیرستان") نهم دوره اول دبیرستان
+                            option(value="دهم دوره دوم دبیرستان") دهم دوره دوم دبیرستان
+                            option(value="یازدهم دوره دوم دبیرستان") یازدهم دوره دوم دبیرستان
+                            option(value="دوازدهم دوره دوم دبیرستان") دوازدهم دوره دوم دبیرستان
+                            option(value="بزرگسال") بزرگسال
+                            
+                    .text-input-area
+                        i.fa.fa-user
+                        input.textinput(type="text" placeholder="کد ملی" name="idNumber" autocomplete="off")
+                    .text-input-area
+                        i.fa.fa-key
+                        input.textinput(type="password" placeholder="رمز عبور" name="password" autocomplete="off")
+                    .text-input-area
+                        i.fa.fa-check
+                        input.textinput(type="password" placeholder="تایید رمز عبور" name="configpassword" autocomplete="off")
+                .part 
+                    .course-checkbox-area 
+                        -for(var i=0; i<courses.length; i++){
+                            input(type="checkbox" name="courseList" value="#{courses[i]._id}")
+                            label(for="#{courses[i]._id}") #{courses[i].title}
+                                .gray-inline (#{courses[i].minAge} تا #{courses[i].maxAge})
+                            br
+                            
+                        -}
+                    button.submit(type="submit") ثبت نام
     script(src="/js/user-view.js") 
