@@ -30,5 +30,10 @@ $(document).ready(function(){
     $('a.add-user').click(()=>{
         modal.fadeIn(500);
         $('#add-user-popup').fadeIn(500);
-    })
+    });
+    $('a.add-user-icon').click(()=>{
+        modal.fadeIn(500);
+        $('#add-user-popup').fadeIn(500);
+    });
+
 });

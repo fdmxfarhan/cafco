@@ -283,6 +283,59 @@
     .popup-area#add-user-popup button.submit:hover{
         background-color: chocolate;
     }
+    a.add-user-icon{
+        background-color: var(--blue);
+        color: white;
+        border-radius: 50%;
+        padding: 0.3vw 0.6vw 0 0.6vw;
+        position: absolute;
+        top: 2.5vw;
+        left: 6%;
+        cursor: pointer;
+        transition-duration: 500ms;
+    }
+    a.add-user-icon:hover{
+        background-color: chocolate;
+    }
+    .popup-area.user-view{
+        right: 3vw;
+        width: 65%;
+        margin: 3vw 0;
+        /* position: relative; */
+        /* display: block; */
+    }
+    .popup-area.user-view .course-list-check-edit{
+        position: fixed;
+        top: 3vw;
+        left: 4vw;
+        width: 22vw;
+        min-height: 31vw;
+        background-color: white;
+        border-radius: 1vw;
+        padding: 2vw;
+    }
+    .popup-area.user-view .course-list-check-edit h1.title{
+        border: none;
+        margin: 0;
+        margin-bottom: 0.5vw;
+        font-size: 1.2vw;
+    }
+    .popup-area.user-view .course-list-check-edit input.submit{
+        border: none;
+        font-family: 'iransans';
+        font-size: 1vw;
+        background-color: var(--blue);
+        color: white;
+        padding: 0.3vw 2vw;
+        border-radius: 1.5vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+        margin-top: 0.5vw;
+    }
+    .popup-area.user-view .course-list-check-edit input.submit:hover{
+        background-color: chocolate;
+    }
+    .popup-area.user-view.visible{display: block;}
 }
 @media only screen and (max-width: 800px) {
     

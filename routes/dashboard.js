@@ -270,11 +270,14 @@ router.get('/users-view', ensureAuthenticated, (req, res, next) => {
     if (req.user.role == 'admin') {
         Course.find({}, (err, courses) => {
             User.find({}, (err, users) => {
+                var userID = false;
+                if(req.query.userID) userID = req.query.userID;
                 res.render('./dashboard/admin-users-view', {
                     user: req.user,
                     users,
                     isAnarestani,
                     courses,
+                    userID,
                 });
             });
         })
@@ -627,6 +630,26 @@ router.post('/admin-adduser', ensureAuthenticated, (req, res, next) => {
                 });
             }
         })
+    }
+});
+
+router.post('/user-course-list-edit', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        var {userID, courseList} = req.body;
+        Course.find({}, (err, courses) => {
+            var registeredCourseList = [];
+            if(courseList){
+                for (let i = 0; i < courses.length; i++) {
+                    for (let j = 1; j < courseList.length; j++) {
+                        if(courseList[j] == courses[i]._id)
+                            registeredCourseList.push({ courseID: courses[i]._id, course: courses[i], payed: true });
+                    }
+                }
+            }
+            User.updateMany({_id: userID}, {$set: {course: registeredCourseList}}, (err, doc) => {
+                res.redirect(`/dashboard/users-view?userID=${userID}`);
+            });
+        });
     }
 });
 module.exports = router;

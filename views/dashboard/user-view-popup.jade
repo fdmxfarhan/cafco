@@ -1,0 +1,86 @@
+.popup
+    i.fa.fa-times.close-popup
+    h1.title= users[i].fullname
+    .part
+        .item 
+            i.fa.fa-phone
+            | تلفن: 
+            a.phone(href="tel:#{users[i].phone}")= users[i].phone
+        .item 
+            i.fa.fa-user
+            | کد ملی: 
+            .num= users[i].idNumber
+        .item 
+            i.fa.fa-map-marker
+            | نشانی: 
+            .num= users[i].address
+        .item 
+            i.fa.fa-book
+            | نام مدرسه: 
+            .num= users[i].school
+        .item 
+            i.fa.fa-sitemap
+            | آدرس آی پی: 
+            .num= users[i].ipAddress
+        .item 
+            i.fa.fa-book
+            | پایه تحصیلی: 
+            .num= users[i].education
+        .user-actions
+            -if(users[i].role == 'user')
+                a(href="/dashboard/make-admin?userID=#{users[i]._id}") تبدیل به ادمین
+            -else
+                a(href="/dashboard/make-user?userID=#{users[i]._id}") تبدیل به یوزر
+            a(href="/dashboard/admin-edit-user?userID=#{users[i]._id}") 
+                i.fa.fa-edit
+                | ویرایش
+            a.red(href="/dashboard/remove-user?userID=#{users[i]._id}") 
+                i.fa.fa-trash
+                | حذف کاربر 
+
+    .part
+        h1 دوره های ثبت نام شده (#{users[i].course.length}):
+        .user-course-list-view
+            -for(var j=0; j<users[i].course.length; j++){
+                -var course = users[i].course[j].course;
+                .course 
+                    img(src="#{course.cover}", alt="cover")
+                    .info 
+                        h1= course.title
+                        h2 مدرس: #{course.teacher}
+                        .labels 
+                            .label.blue= course.status
+                            -if(users[i].course[j].payed)
+                                .label.green پرداخت شده
+                            -else
+                                .label.red پرداخت نشده
+                            
+            -}
+        //- .add-course-to-user 
+        //-     form(action="/dashboard/admin-add-course-to-user" method="POST") 
+        //-         select(name="courseID") 
+        //-             -for(var j=0; j<courses.length; j++)
+        //-                 -if(courses[j].minAge <= users[i].educationNum && courses[j].maxAge >= users[i].educationNum)
+        //-                     option(value="#{courses[j]._id}")= courses[j].title
+        //-         input.hidden(type="text" name="userID" value="#{users[i]._id}")
+        //-         input.check(type="checkbox" name="payed" id="payed" value="پرداخت شده")
+        //-         label(for="payed") پرداخت شده
+        //-         input.submit(type="submit" value="افزودن دوره")
+    
+.course-list-check-edit 
+    h1.title ویرایش دوره ها
+    form(action="/dashboard/user-course-list-edit" method="POST") 
+        input.hidden(type="text" name="userID" value="#{users[i]._id}")
+        input.hidden(type="checkbox" name="courseList" value="Nothing" checked)
+        -for(var j=0; j<courses.length; j++){
+            -if(courses[j].minAge <= users[i].educationNum && courses[j].maxAge >= users[i].educationNum){
+                -if(users[i].course.find(({courseID}) => courseID.toString() == courses[j]._id))
+                    input(type="checkbox" name="courseList" value="#{courses[j]._id}" checked)
+                -else
+                    input(type="checkbox" name="courseList" value="#{courses[j]._id}")
+                label(for="#{courses[j]._id}") #{courses[j].title}
+                    .gray-inline (#{courses[j].minAge} تا #{courses[j].maxAge})
+                br
+            -}
+        -}
+        input.submit(type="submit" value="ثبت")
