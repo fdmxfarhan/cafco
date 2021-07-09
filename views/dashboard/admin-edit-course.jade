@@ -61,4 +61,16 @@ block content
                         i.fa.fa-cloud-upload
                         | آپلود عکس جدید
                 input.submit(type="submit" value="ثبت")
+    .popup-area#upload-cover-popup
+        .popup
+            i.fa.fa-times.close-popup
+            h1.popup-title آپلود کاور
+            form(action="/upload/course-cover" enctype="multipart/form-data" method="POST") 
+                input.hidden(type="text" name="courseID" value="#{course._id}")
+                label(for="myFile") کاور (عکس):
+                .upload-area فایل خود را انتخاب کنید
+                    i.fa.fa-cloud-upload
+                    input.file(type="file" name="myFile")
+                input.submit(type="submit" value="ثبت")
+
     script(src="/js/edit-course.js") 

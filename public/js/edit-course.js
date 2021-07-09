@@ -11,5 +11,18 @@ $(document).ready(function(){
     $('.close-notif-msg').click(() => {
         $('.notif-msg').slideUp(500);
     });
+    $('#change').click(() => {
+        $('.black-modal').fadeIn(500);
+        $('#upload-cover-popup').fadeIn(500);
+    });
+    $('.black-modal').click(()=>{
+        $('.black-modal').fadeOut(500);
+        $('#upload-cover-popup').fadeOut(500);
+    });
+    $('.close-popup').click(()=>{
+        $('.black-modal').fadeOut(500);
+        $('#upload-cover-popup').fadeOut(500);
+    });
+    
 
 });

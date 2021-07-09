@@ -43,4 +43,18 @@ router.post('/course', ensureAuthenticated, upload.single('myFile'), (req, res, 
     }
 });
 
+router.post('/course-cover', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
+    const file = req.file;
+    const { courseID } = req.body;
+    if (!file) {
+        res.send('no file to upload');
+    } else {
+        var cover = file.destination.slice(6) + '/' + file.originalname;
+        Course.updateMany({_id: courseID}, {$set: {cover}}, (err, doc) => {
+            req.flash('success_msg', 'کاور با موفقیت آپلود و ذخیره شد.');
+            res.redirect(`/dashboard/admin-edit-course?courseID=${courseID}`);
+        });
+    }
+});
+
 module.exports = router;
