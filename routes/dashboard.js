@@ -5,6 +5,7 @@ const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Course = require('../models/Course');
 var Payment = require('../models/Payment');
+var Question = require('../models/Question');
 const mail = require('../config/mail');
 const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
@@ -651,4 +652,14 @@ router.post('/user-course-list-edit', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
+
+router.get('/api', ensureAuthenticated, (req, res, next) => {
+    Question.findOne({number: 1}, (err, question) => {
+        res.render('./dashboard/admin-api', {
+            user: req.user,
+            question,
+        });
+    })
+});
+
 module.exports = router;

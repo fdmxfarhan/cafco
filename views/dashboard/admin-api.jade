@@ -1,0 +1,23 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/css-circular-prog-bar.css")
+    link(rel="stylesheet", href="/css/dashboard/api.css")
+
+block content
+    h1.title سوالات
+    .api
+        -if(question){
+            .image 
+                img(src="#{question.picture}", alt="pic")
+        -}
+        form(action="/upload/api-question" enctype="multipart/form-data" method="POST") 
+            input.hidden(type="number" name="number" value="1")
+            //- label(for="myFile") کاور (عکس):
+            //- .upload-area فایل خود را انتخاب کنید
+            //-     i.fa.fa-cloud-upload
+            input.file(type="file" name="myFile")
+            input.submit(type="submit" value="ثبت")
+    script(src="/js/dashboard.js") 
+
+

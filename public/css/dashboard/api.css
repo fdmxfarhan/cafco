@@ -1,0 +1,33 @@
+@media only screen and (min-width: 800px) {
+    h1.title{
+        font-family: 'iransans';
+        font-size: 1.5vw;
+        color: var(--blue);
+        text-align: center;
+        width: 50%;
+        margin: 2vw auto;
+        margin-bottom: 1vw;
+        border-bottom: var(--blue) 0.1vw solid;
+
+    }
+    .api{
+        width: 90%;
+        margin: auto;
+    }
+    .image {
+        width: 100%;
+    }
+    .image img{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    
+}
+
+
+
+
+
+
