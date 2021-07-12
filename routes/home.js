@@ -7,4 +7,8 @@ router.get('/', (req, res, next) => {
     // res.render('home');
 });
 
+router.get('/api', (req, res, next) => {
+    res.send('Hello bitch');
+});
+
 module.exports = router;
