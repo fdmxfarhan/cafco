@@ -472,11 +472,17 @@ router.get('/course-list', ensureAuthenticated, (req, res, next) => {
         Course.find({}, (err, courses) => {
             User.find({}, (err, users) => {
                 var usersList = [];
+                var usersForThisCourse = [];
                 users.forEach(usr => {
+                    registered = false;
                     usr.course.forEach(crs => {
-                        if (crs.courseID == req.query.courseID)
+                        if (crs.courseID == req.query.courseID){
                             usersList.push(usr);
+                            registered = true;
+                        }
                     });
+                    if(!registered && course.minAge < usr.educationNum+1 && course.maxAge > usr.educationNum+1) 
+                        usersForThisCourse.push(usr);
                 });
                 res.render('./dashboard/admin-users-view', {
                     user: req.user,
@@ -484,6 +490,40 @@ router.get('/course-list', ensureAuthenticated, (req, res, next) => {
                     course,
                     courses,
                     isAnarestani,
+                    courseID: req.query.courseID,
+                    usersForThisCourse,
+                });
+            });
+        })
+    });
+});
+
+router.post('/course-list', ensureAuthenticated, (req, res, next) => {
+    var {search} = req.body;
+    Course.findById(req.body.courseID, (err, course) => {
+        Course.find({}, (err, courses) => {
+            User.find({}, (err, users) => {
+                var usersList = [];
+                var usersForThisCourse = [];
+                users.forEach(usr => {
+                    registered = false;
+                    usr.course.forEach(crs => {
+                        if (crs.courseID == req.body.courseID && searchUser(usr, search)){
+                            usersList.push(usr);
+                            registered = true;
+                        }
+                    });
+                    if(!registered && course.minAge < usr.educationNum+1 && course.maxAge > usr.educationNum+1) 
+                        usersForThisCourse.push(usr);
+                });
+                
+                res.render('./dashboard/admin-users-view', {
+                    user: req.user,
+                    users: usersList,
+                    course,
+                    courses,
+                    isAnarestani,
+                    usersForThisCourse,
                 });
             });
         })
@@ -711,6 +751,32 @@ router.get('/api', ensureAuthenticated, (req, res, next) => {
             user: req.user,
             question,
         });
+    })
+});
+
+router.post('/add-user-to-course', ensureAuthenticated, (req, res, next) => {
+    var {courseID, userID} = req.body;
+    Course.findById(courseID, (err, course) => {
+        User.findById(userID, (err, user) => {
+            var students = course.students;
+            if (err) console.log(err);
+            var courseList = user.course;
+            var registered = false;
+            courseList.forEach(course2 => {
+                if (course2.courseID == courseID) registered = true;
+            });
+            if (!registered) {
+                courseList.push({ courseID: courseID, course, payed: true });
+                User.updateMany({ idNumber: user.idNumber }, { $set: { course: courseList } }, (err, doc) => {
+                    students.push(user._id);
+                    Course.updateMany({_id: courseID}, {$set: {students: students}}, (err, doc) => {
+                        res.redirect(`/dashboard/course-list?courseID=${courseID}`);
+                    });
+                });
+            } else {
+                res.send('این دوره قبلا ثبت شده');
+            }
+        })
     })
 });
 

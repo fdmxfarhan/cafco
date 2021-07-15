@@ -42,14 +42,14 @@
         h1 دوره های ثبت نام شده (#{users[i].course.length}):
         .user-course-list-view
             -for(var j=0; j<users[i].course.length; j++){
-                -var course = users[i].course[j].course;
+                -var crs = users[i].course[j].course;
                 .course 
-                    img(src="#{course.cover}", alt="cover")
+                    img(src="#{crs.cover}", alt="cover")
                     .info 
-                        h1= course.title
-                        h2 مدرس: #{course.teacher}
+                        h1= crs.title
+                        h2 مدرس: #{crs.teacher}
                         .labels 
-                            .label.blue= course.status
+                            .label.blue= crs.status
                             -if(users[i].course[j].payed)
                                 .label.green پرداخت شده
                             -else

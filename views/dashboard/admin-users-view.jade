@@ -4,18 +4,27 @@ block styles
     link(rel="stylesheet", href="/css/dashboard/user-view.css")
 
 block content
-    -if(course)
+    -if(typeof course != 'undefined'){
         h1.title.center لیست کاربران دوره #{course.title}
-    -else
+        .search 
+            form(action="/dashboard/course-list" method="POST" id="form1") 
+                input.hidden(type="text" name="courseID" value="#{course._id}")
+                input(type="text" name="search" id="search" placeholder="جست و جو..." value="#{typeof search == 'undefined' ? '' : search}")
+                button(type="submit" form="form1")
+                    i.fa.fa-search
+            .preview#preview
+    -}else{
         h1.title.center لیست همه کاربران
+        .search 
+            form(action="/dashboard/users-view" method="POST" id="form1") 
+                input(type="text" name="search" id="search" placeholder="جست و جو..." value="#{typeof search == 'undefined' ? '' : search}")
+                button(type="submit" form="form1")
+                    i.fa.fa-search
+            .preview#preview
+    -}
     a.add-user-icon
         i.fa.fa-plus 
-    .search 
-        form(action="/dashboard/users-view" method="POST" id="form1") 
-            input(type="text" name="search" id="search" placeholder="جست و جو..." value="#{typeof search == 'undefined' ? '' : search}")
-            button(type="submit" form="form1")
-                i.fa.fa-search
-        .preview#preview
+    
     .user-list 
         table 
             tr 
@@ -36,9 +45,15 @@ block content
                     td= users[i].course.length
                     td= users[i].role
             -}
-        a.add-user 
-            i.fa.fa-plus 
-            | افزودن کاربر جدید
+        -if(typeof course != 'undefined'){
+            a.add-user2 
+                i.fa.fa-plus 
+                | افزودن کاربر جدید به این دوره
+        -}else{
+            a.add-user 
+                i.fa.fa-plus 
+                | افزودن کاربر جدید
+        -}
     -for(var i=0; i<users.length; i++){
         -if(userID == users[i]._id)
             script.
@@ -49,7 +64,21 @@ block content
             .popup-area.user-view.hidden(id="user-view-popup#{i}")
                 include user-view-popup
     -}
-
+    -if(typeof course != 'undefined'){
+        .popup-area#add-user-popup2
+            .popup
+                i.fa.fa-times.close-popup
+                h1.title.center افزودن کاربر جدید
+                form(action="/dashboard/add-user-to-course" method="POST" autocomplete="off") 
+                    input.hidden(type="text" name="courseID" value="#{course._id}")
+                    .select-input-area
+                        label(for="userID") نام کاربر: 
+                        select(name="userID") 
+                            -for(var i=0; i<usersForThisCourse.length; i++)
+                                option(value="#{usersForThisCourse[i]._id}")= usersForThisCourse[i].fullname
+                    button.submit(type="submit") ثبت نام
+    -}     
+                        
     .popup-area#add-user-popup
         .popup
             i.fa.fa-times.close-popup

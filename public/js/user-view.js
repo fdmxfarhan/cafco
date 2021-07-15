@@ -13,6 +13,7 @@ $(document).ready(function(){
     });
     $('.close-popup').click(() => {
         $('#add-user-popup').fadeOut(500);
+        $('#add-user-popup2').fadeOut(500);
         modal.fadeOut(500);
         userView.forEach(user => {
             user.popup.fadeOut(500);
@@ -20,6 +21,7 @@ $(document).ready(function(){
     });
     modal.click(() => {
         $('#add-user-popup').fadeOut(500);
+        $('#add-user-popup2').fadeOut(500);
         modal.fadeOut(500);
         userView.forEach(user => {
             user.popup.fadeOut(500);
@@ -30,6 +32,10 @@ $(document).ready(function(){
     $('a.add-user').click(()=>{
         modal.fadeIn(500);
         $('#add-user-popup').fadeIn(500);
+    });
+    $('a.add-user2').click(()=>{
+        modal.fadeIn(500);
+        $('#add-user-popup2').fadeIn(500);
     });
     $('a.add-user-icon').click(()=>{
         modal.fadeIn(500);
