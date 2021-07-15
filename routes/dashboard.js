@@ -481,7 +481,7 @@ router.get('/course-list', ensureAuthenticated, (req, res, next) => {
                             registered = true;
                         }
                     });
-                    if(!registered && course.minAge < usr.educationNum+1 && course.maxAge > usr.educationNum+1) 
+                    if(!registered && course.minAge < usr.educationNum+1 && course.maxAge > usr.educationNum-1) 
                         usersForThisCourse.push(usr);
                 });
                 res.render('./dashboard/admin-users-view', {
