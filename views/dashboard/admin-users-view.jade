@@ -11,8 +11,8 @@ block content
     a.add-user-icon
         i.fa.fa-plus 
     .search 
-        form(action="/dashboard/courses" method="POST" id="form1") 
-            input(type="text" name="search" id="search" placeholder="جست و جو..." value="#{search == 'undefined' ? '' : search}")
+        form(action="/dashboard/users-view" method="POST" id="form1") 
+            input(type="text" name="search" id="search" placeholder="جست و جو..." value="#{typeof search == 'undefined' ? '' : search}")
             button(type="submit" form="form1")
                 i.fa.fa-search
         .preview#preview

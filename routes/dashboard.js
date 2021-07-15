@@ -284,6 +284,50 @@ router.get('/users-view', ensureAuthenticated, (req, res, next) => {
     } else  res.send('permission denied');
 });
 
+var searchUser = (user, word) => {
+    if(user.fullname.search(word) != -1) return true;
+    if(user.firstName.search(word) != -1) return true;
+    if(user.lastName.search(word) != -1) return true;
+    if(user.phone.search(word) != -1) return true;
+    if(user.idNumber.search(word) != -1) return true;
+    if(user.role.search(word) != -1) return true;
+    if(user.address.search(word) != -1) return true;
+    if(user.education.search(word) != -1) return true;
+    for (let i = 0; i < user.course.length; i++) {
+        if(user.course[i].course.title.search(word) != -1) return true;
+        if(user.course[i].course.description.search(word) != -1) return true;
+        if(user.course[i].course.teacher.search(word) != -1) return true;
+        if(user.course[i].course.status.search(word) != -1) return true;
+        if(user.course[i].course.cover.search(word) != -1) return true;
+    }
+    return false;
+}
+
+router.post('/users-view', ensureAuthenticated, (req, res, next) => {
+    var {search} = req.body;
+    if (req.user.role == 'admin') {
+        Course.find({}, (err, courses) => {
+            User.find({}, (err, allUsers) => {
+                var userID = false;
+                if(req.body.userID) userID = req.body.userID;
+                users = [];
+                allUsers.forEach(user => {
+                    if(searchUser(user, search))
+                        users.push(user);
+                });
+                res.render('./dashboard/admin-users-view', {
+                    user: req.user,
+                    courses,
+                    users,
+                    isAnarestani,
+                    userID,
+                    search,
+                });
+            });
+        });
+    } else  res.send('permission denied');
+});
+
 router.get('/register-course', ensureAuthenticated, (req, res, next) => {
     Course.findById(req.query.courseID, (err, course) => {
         var students = course.students;
