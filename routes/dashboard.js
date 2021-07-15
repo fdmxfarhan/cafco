@@ -285,14 +285,22 @@ router.get('/users-view', ensureAuthenticated, (req, res, next) => {
 });
 
 var searchUser = (user, word) => {
-    if(user.fullname.search(word) != -1) return true;
-    if(user.firstName.search(word) != -1) return true;
-    if(user.lastName.search(word) != -1) return true;
-    if(user.phone.search(word) != -1) return true;
-    if(user.idNumber.search(word) != -1) return true;
-    if(user.role.search(word) != -1) return true;
-    if(user.address.search(word) != -1) return true;
-    if(user.education.search(word) != -1) return true;
+    if(user.fullname)
+        if(user.fullname.search(word) != -1) return true;
+    if(user.firstName)
+        if(user.firstName.search(word) != -1) return true;
+    if(user.lastName)
+        if(user.lastName.search(word) != -1) return true;
+    if(user.phone)
+        if(user.phone.search(word) != -1) return true;
+    if(user.idNumber)
+        if(user.idNumber.search(word) != -1) return true;
+    if(user.role)
+        if(user.role.search(word) != -1) return true;
+    if(user.address)
+        if(user.address.search(word) != -1) return true;
+    if(user.education)
+        if(user.education.search(word) != -1) return true;
     for (let i = 0; i < user.course.length; i++) {
         if(user.course[i].course.title.search(word) != -1) return true;
         if(user.course[i].course.description.search(word) != -1) return true;
