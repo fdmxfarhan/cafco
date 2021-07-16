@@ -353,6 +353,7 @@
         /* position: absolute;
         left: 1vw;
         bottom: 0.4vw; */
+        overflow: hidden;
         width: 80%;
         margin: auto;
         margin-bottom: 2vw;
@@ -384,7 +385,30 @@
     .search button:hover{
         background-color: var(--hover);
     }
+    .search form{
+        float: right;
+    }
 
+
+    .select-input-area{
+        /* display: inline-block; */
+        margin-top: 0.1vw;
+        margin-bottom: 0.5vw;
+        float: left;
+    }
+    .select-input-area select{
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.3vw 1vw;
+        border: none;
+        border-radius: 2vw;        
+        box-shadow: 0 0 0.3vw 0.1vw #00000010;
+        margin-bottom: 0.5vw;
+        width: 20vw;
+        margin: 0 0.3vw;
+        text-align: center; 
+    }
+    select:focus{outline: none;}
 
 
 }

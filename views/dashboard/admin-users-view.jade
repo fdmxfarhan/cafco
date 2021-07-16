@@ -13,6 +13,23 @@ block content
                 button(type="submit" form="form1")
                     i.fa.fa-search
             .preview#preview
+            .select-input-area
+                select(id="myInput" onChange="myFunction()") 
+                    option(value="همه پایه ها") همه پایه ها
+                    option(value="پیش دبستانی") پیش دبستانی
+                    option(value="اول ابتدایی") اول ابتدایی
+                    option(value="دوم ابتدایی") دوم ابتدایی
+                    option(value="سوم ابتدایی") سوم ابتدایی
+                    option(value="چهارم ابتدایی") چهارم ابتدایی
+                    option(value="پنجم ابتدایی") پنجم ابتدایی
+                    option(value="ششم ابتدایی") ششم ابتدایی
+                    option(value="هفتم دوره اول دبیرستان") هفتم دوره اول دبیرستان
+                    option(value="هشتم دوره اول دبیرستان") هشتم دوره اول دبیرستان
+                    option(value="نهم دوره اول دبیرستان") نهم دوره اول دبیرستان
+                    option(value="دهم دوره دوم دبیرستان") دهم دوره دوم دبیرستان
+                    option(value="یازدهم دوره دوم دبیرستان") یازدهم دوره دوم دبیرستان
+                    option(value="دوازدهم دوره دوم دبیرستان") دوازدهم دوره دوم دبیرستان
+                    option(value="بزرگسال") بزرگسال
     -}else{
         h1.title.center لیست همه کاربران
         .search 
@@ -21,12 +38,29 @@ block content
                 button(type="submit" form="form1")
                     i.fa.fa-search
             .preview#preview
+            .select-input-area
+                select(id="myInput" onChange="myFunction()") 
+                    option(value="همه پایه ها") همه پایه ها
+                    option(value="پیش دبستانی") پیش دبستانی
+                    option(value="اول ابتدایی") اول ابتدایی
+                    option(value="دوم ابتدایی") دوم ابتدایی
+                    option(value="سوم ابتدایی") سوم ابتدایی
+                    option(value="چهارم ابتدایی") چهارم ابتدایی
+                    option(value="پنجم ابتدایی") پنجم ابتدایی
+                    option(value="ششم ابتدایی") ششم ابتدایی
+                    option(value="هفتم دوره اول دبیرستان") هفتم دوره اول دبیرستان
+                    option(value="هشتم دوره اول دبیرستان") هشتم دوره اول دبیرستان
+                    option(value="نهم دوره اول دبیرستان") نهم دوره اول دبیرستان
+                    option(value="دهم دوره دوم دبیرستان") دهم دوره دوم دبیرستان
+                    option(value="یازدهم دوره دوم دبیرستان") یازدهم دوره دوم دبیرستان
+                    option(value="دوازدهم دوره دوم دبیرستان") دوازدهم دوره دوم دبیرستان
+                    option(value="بزرگسال") بزرگسال
     -}
     a.add-user-icon
         i.fa.fa-plus 
     
     .user-list 
-        table 
+        table(id="myTable")
             tr 
                 th ردیف
                 th نام و نام خانوادگی
@@ -44,6 +78,7 @@ block content
                     td= users[i].idNumber
                     td= users[i].course.length
                     td= users[i].role
+                    td.hidden= users[i].education
             -}
         -if(typeof course != 'undefined'){
             a.add-user2 
@@ -144,4 +179,26 @@ block content
                             
                         -}
                     button.submit(type="submit") ثبت نام
+    script.
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value;
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[6];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    //- alert(txtValue);
+                    if(txtValue == 'همه پایه ها'){
+                        tr[i].style.display = "";
+                    }if (txtValue.indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
+        }
     script(src="/js/user-view.js") 
