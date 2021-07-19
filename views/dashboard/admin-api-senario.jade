@@ -1,0 +1,35 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/api.css")
+
+block content
+    h1.title= workshop.title
+    .add-data
+        form(action="/upload/api-workshop" enctype="multipart/form-data" method="POST") 
+            input.hidden(type="text" name="workshopID" value="#{workshop._id}")
+            input.text(type="text" name="title" placeholder="عنوان")
+            .upload-area
+                i.fa.fa-cloud-upload
+                | آپلود فایل
+                input.file(type="file" name="myFile")
+            input.text(type="text" name="answer" placeholder="پاسخ")
+            input.submit(type="submit" value="افزودن سوال")
+    .senario-view 
+        -for(var i=0; i<workshop.data.length; i++){
+            .question
+                -if(workshop.data[i].type == 'image')
+                    img(src="#{workshop.data[i].file}", alt="file")
+                .num سوال شماره #{i+1}
+                .title عنوان: #{workshop.data[i].title}
+                .ans پاسخ: 
+                    .green #{workshop.data[i].answer}
+                .action 
+                    a(href="/dashboard/api-remove-question?workshopID=#{workshop._id}&index=#{i}") 
+                        i.fa.fa-trash.delete
+            
+        -}
+
+    script(src="/js/api.js") 
+
+

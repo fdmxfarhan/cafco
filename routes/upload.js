@@ -8,7 +8,7 @@ const { ensureAuthenticated } = require('../config/auth');
 const User = require('../models/User');
 const Course = require('../models/Course');
 const mkdirp = require('mkdirp');
-const Question = require('../models/Question');
+const Workshop = require('../models/Workshop');
 
 router.use(bodyparser.urlencoded({ extended: true }));
 
@@ -58,25 +58,21 @@ router.post('/course-cover', ensureAuthenticated, upload.single('myFile'), (req,
     }
 });
 
-router.post('/api-question', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
+router.post('/api-Workshop', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
     const file = req.file;
-    const { number } = req.body;
+    const { workshopID, title, answer } = req.body;
     if (!file) {
         res.send('no file to upload');
     } else {
         var picture = file.destination.slice(6) + '/' + file.originalname;
-        Question.findOne({number}, (err, question) => {
-            if(question){
-                Question.updateMany({number}, {$set: {picture}}, (err, doc) => {
-                    res.redirect('/dashboard/api');
-                })
-            }else{
-                var newQuestion = new Question({picture, number});
-                newQuestion.save().then(doc => {
-                    res.redirect('/dashboard/api')
-                }).catch(err => {if(err) console.log(err);});
-            }
-        })
+        Workshop.findById(workshopID, (err, workshop) => {
+            var data = workshop.data;
+            var type = file.mimetype.split('/')[0];
+            data.push({workshopID, title, answer, file: picture, type});
+            Workshop.updateMany({_id: workshopID}, {$set: {data}}, (err, doc) => {
+                res.redirect(`/dashboard/api-senario?id=${workshopID}`);
+            });
+        });
     }
 });
 

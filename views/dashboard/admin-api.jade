@@ -1,23 +1,29 @@
 extends layout
 
 block styles
-    link(rel="stylesheet", href="/css/css-circular-prog-bar.css")
     link(rel="stylesheet", href="/css/dashboard/api.css")
 
 block content
-    h1.title سوالات
+    h1.title سناریوها
+    .add-senario2
+        form(action="/dashboard/api-add-senario" method="POST") 
+            input.hidden(type="number" name="senarioNum" value="#{workshop.length}")
+            input.text(type="text" name="title" placeholder="عنوان سناریو...")
+            input.submit(type="submit" value="افزودن سناریو جدید")
     .api
-        -if(question){
-            .image 
-                img(src="#{question.picture}", alt="pic")
+        -for(var i=0; i<workshop.length; i++){
+            a(href="/dashboard/api-senario?id=#{workshop[i]._id}") 
+                .senario 
+                    h1
+                        i.fa.fa-paperclip
+                        | #{workshop[i].title}
+                    .num تعداد سوالات: #{workshop[i].data.length}
+            
         -}
-        form(action="/upload/api-question" enctype="multipart/form-data" method="POST") 
-            input.hidden(type="number" name="number" value="1")
-            //- label(for="myFile") کاور (عکس):
-            //- .upload-area فایل خود را انتخاب کنید
-            //-     i.fa.fa-cloud-upload
-            input.file(type="file" name="myFile")
-            input.submit(type="submit" value="ثبت")
-    script(src="/js/dashboard.js") 
+    //- .popup-area#add-senario
+    //-     .popup
+    //-         i.fa.fa-times.close-popup
+    //-         h1.popup-title افزودن سناریو جدید
+    script(src="/js/api.js") 
 
 

@@ -5,7 +5,7 @@ const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Course = require('../models/Course');
 var Payment = require('../models/Payment');
-var Question = require('../models/Question');
+var Workshop = require('../models/Workshop');
 const mail = require('../config/mail');
 const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
@@ -745,15 +745,6 @@ router.post('/user-course-list-edit', ensureAuthenticated, (req, res, next) => {
     }
 });
 
-router.get('/api', ensureAuthenticated, (req, res, next) => {
-    Question.findOne({number: 1}, (err, question) => {
-        res.render('./dashboard/admin-api', {
-            user: req.user,
-            question,
-        });
-    })
-});
-
 router.post('/add-user-to-course', ensureAuthenticated, (req, res, next) => {
     var {courseID, userID} = req.body;
     Course.findById(courseID, (err, course) => {
@@ -778,6 +769,50 @@ router.post('/add-user-to-course', ensureAuthenticated, (req, res, next) => {
             }
         })
     })
+});
+
+router.get('/api', ensureAuthenticated, (req, res, next) => {
+    Workshop.find({}, (err, workshop) => {
+        res.render('./dashboard/admin-api', {
+            user: req.user,
+            workshop,
+        });
+    })
+});
+
+router.post('/api-add-senario', ensureAuthenticated, (req, res, next) => {
+    const {senarioNum, title} = req.body;
+    if(req.user.role == 'admin'){
+        var newSenario = new Workshop({senarioNum, title, questionNum: 0, data: []});
+        newSenario.save().then(doc => {
+            // res.redirect(`/dashboard/api-senario?id=${newSenario._id}`);
+            res.redirect(`/dashboard/api`);
+        }).catch(err => {if(err) console.log(err);});
+    }
+});
+
+router.get('/api-senario', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        Workshop.findById(req.query.id, (err, workshop) => {
+            res.render('./dashboard/admin-api-senario', {
+                user: req.user,
+                workshop
+            });
+        });
+    }
+});
+
+router.get('/api-remove-question', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        Workshop.findById(req.query.workshopID, (err, workshop) => {
+            var data = workshop.data;
+            data.splice(parseInt(req.query.index), 1);
+
+            Workshop.updateMany({_id: req.query.workshopID}, {$set: {data}}, (err, doc) => {
+                res.redirect(`/dashboard/api-senario?id=${req.query.workshopID}`);
+            });
+        });
+    }
 });
 
 module.exports = router;

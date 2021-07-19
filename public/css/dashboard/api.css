@@ -12,13 +12,202 @@
     }
     .api{
         width: 90%;
+        margin: 1vw auto;
+        overflow: hidden;
+        padding: 1vw;
+    }
+    .api .add-senario{
+        background-color: salmon;
+        float: right;
+        border-radius: 1vw;
+        padding: 1vw;
+        color: white;
+        text-align: center;
+        height: 13vw;
+        width: 13vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+    }
+    .api .add-senario:hover{
+        background-color: rgb(255, 196, 0);
+    }
+    .api .add-senario i{
+        font-size: 5vw;
+        margin: 0;
+        margin-top: 2vw;
+    }
+    .api .add-senario h1{
+        font-size: 1.4vw;
+    }
+    .add-senario2{
+        width: 90%;
         margin: auto;
     }
-    .image {
+    .add-senario2 input.text{
+        border: none;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.3vw 2vw;
+        border-top-right-radius: 1vw;
+        border-bottom-right-radius: 1vw;
+    }
+    .add-senario2 input.submit{
+        color: white;
+        background-color: var(--blue);
+        border: none;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.3vw 2vw;
+        border-top-left-radius: 1vw;
+        border-bottom-left-radius: 1vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+    }
+    .add-senario2 input.submit:hover{
+        background-color: salmon;
+    }
+    input:focus{outline: none;}
+
+    .api .senario{
+        background-color: white;
+        float: right;
+        border-radius: 1vw;
+        width: 23%;
+        height: 7vw;
+        margin-left: 1%;
+        margin-bottom: 1vw;
+        border: white 0.2vw solid;
+    }
+    .api .senario:hover{
+        border: var(--blue) 0.2vw solid;
+    }
+    .api .senario h1{
+        color: var(--blue);
+        margin: 0;
+        padding: 1vw 2vw;
+        padding-bottom: 0;
+        font-family: 'iransans';
+        font-size: 1.3vw;
+    }
+    .api .senario h1 i{
+        padding-left: 1vw;
+        font-size: 1.5vw;
+    }
+    .api .senario .num{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: lightgray;
+        padding: 1vw 2vw;
+    }
+    .api .senario .num.gray{
+        color: gray;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
+    }
+    .add-data{
+        width: 90%;
+        margin: auto;
+    }
+    .add-data input.text{
+        box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
+        background-color: white;
+        border: none;
+        border-radius: 1vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.4vw 2vw;
+        margin-left: 2vw;
+        width: 13vw;
+    }
+    .add-data input.file{
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.5vw 0;
+        background-color: lightblue;
+        opacity: 0;
+        cursor: pointer;
+    }
+    .add-data .upload-area{
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
+        background-color: white;
+        display: inline;
+        border-radius: 1vw;
+        color: var(--blue);
+        padding: 0.3vw 6vw;
+        margin-left: 2vw;
+    }
+    .add-data .upload-area i{
+        padding-left: 1vw;
+    }
+    .add-data input.submit{
+        background-color: var(--blue);
+        color: white;
+        border: none;
+        border-radius: 1vw;
+        padding: 0.4vw 2vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        cursor: pointer;
+    }
+    .add-data input.submit:hover{
+        background-color: salmon;
+    }
+    .senario-view {
+        width: 90%;
+        margin: 2vw auto;
+        overflow: hidden;
+    }
+    .senario-view .question{
+        position: relative;
+        background-color: white;
+        border-radius: 1vw;
+        width: 30%;
+        overflow: hidden;
+        text-align: right;
+        float: right;
+        margin-left: 2%;
+        margin-bottom: 1.5vw;
+    }
+    .senario-view .question img{
         width: 100%;
     }
-    .image img{
-        width: 100%;
+    .senario-view .num{
+        padding: 0 1vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        color: var(--blue);
+        font-weight: bold;
+    }
+    .senario-view .title{
+        padding: 0 1vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        color: gray;
+    }
+    .senario-view .ans{
+        padding: 0 1vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        color: gray;
+    }
+    .senario-view .ans .green{
+        color: lime;
+        display: inline;
+    }
+    .senario-view .action{
+        position: absolute;
+        left: 1.5vw;
+        bottom: 1vw;
+        font-size: 1.5vw;
+    }
+    .senario-view .action i.delete{
+        color: orangered;
+
+    }
+    .senario-view .action i.delete:hover{
+        color: salmon;
     }
 }
 
