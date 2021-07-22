@@ -9,6 +9,9 @@
                     .text-input 
                         i.fa.fa-pencil 
                         input(type="text" name="title" placeholder="عنوان دوره" required)
+                    .text-input 
+                        i.fa.fa-pencil 
+                        input(type="text" name="undertitle" placeholder="زیر عنوان")
                     textarea#txt-area(name="description" placeholder="توضیحات ..." required)
                     .text-input 
                         i.fa.fa-user 
@@ -43,9 +46,18 @@
                     .text-input 
                         i.fa.fa-dollar 
                         input(type="Number" name="price" placeholder="هزینه دوره (ریال)" required)
+                    .text-input 
+                        i.fa.fa-link 
+                        input(type="text" name="link" placeholder="لینک ورود" required)
+                    .text-input 
+                        i.fa.fa-play
+                        input(type="text" name="video" placeholder="ویدئو معرفی" required)
                     label(for="myFile") کاور (عکس):
                     .upload-area فایل خود را انتخاب کنید
                         i.fa.fa-cloud-upload
                         input.file(type="file" name="myFile")
                     input.submit(type="submit" value="ثبت")
-            
+
+
+
+

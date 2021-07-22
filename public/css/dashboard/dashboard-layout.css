@@ -293,7 +293,7 @@ body {
     .popup-area .two-side-cont .part .text-input {
         border-radius: 2vw;
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
-        margin-bottom: 1.5vw;
+        margin-bottom: 1vw;
     }
     .popup-area .two-side-cont .part .text-input i {
         font-size: 1.2vw;

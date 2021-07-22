@@ -55,13 +55,21 @@ block content
                         .value-bar
             -}
         .card 
-            .title تعداد دوره ها
+            .title تعداد کاربران
             //- .number 100
-            .progress-circle.over50.p85
-                span 100
-                .left-half-clipper
-                    .first50-bar
-                    .value-bar
+            -if(users.length <= 50){
+                .progress-circle(class="p#{users.length}")
+                    span= users.length
+                    .left-half-clipper
+                        .first50-bar
+                        .value-bar
+            -}else{
+                .progress-circle.over50(class="p#{users.length}")
+                    span= users.length
+                    .left-half-clipper
+                        .first50-bar
+                        .value-bar
+            -}
         
     //- h1.title دوره های من
     //- .product-cards-area
@@ -79,6 +87,7 @@ block content
                     img(src="#{courses[i].cover}")
                 .title= courses[i].title 
                     .gray-inline (#{courses[i].minAge} تا #{courses[i].maxAge})
+                .undertitle= courses[i].undertitle 
                 .text= courses[i].description
                 .status= courses[i].status
                 -if(courses[i].students.length >= courses[i].capacity)

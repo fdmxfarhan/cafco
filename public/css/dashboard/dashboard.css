@@ -82,8 +82,16 @@
         color: var(--brown);
         font-weight: bold;
         width: 90%;
-        margin: auto;
+        margin: 0 auto;
         font-size: 1.2vw;
+    }
+    .product-cards-area .card .undertitle{
+        color: gray;
+        font-weight: normal;
+        width: 90%;
+        margin: 0 auto;
+        margin-bottom: 0.3vw;
+        font-size: 1vw;
     }
     .product-cards-area .card .text{
         color: rgb(90, 90, 90);
@@ -216,6 +224,14 @@
     }
     .product-cards-area .course .labels .label.green{background-color: rgb(42, 228, 42);}
     .product-cards-area .course .labels .label.red{background-color: salmon;}
+    .product-cards-area .course .labels .label.blue{background-color: var(--blue);}
+    .product-cards-area .course .labels .label.blue a{
+        text-decoration: none;
+        color: white;
+    }
+    .product-cards-area .course .labels .label.blue a:hover{
+        text-decoration: underline;
+    }
     .product-cards-area .course .labels .label{
         float: left;
         margin: 0 0.5vw;
@@ -463,6 +479,14 @@
     }
     .product-cards-area .course .labels .label.green{background-color: rgb(42, 228, 42);}
     .product-cards-area .course .labels .label.red{background-color: salmon;}
+    .product-cards-area .course .labels .label.blue{background-color: var(--blue);}
+    .product-cards-area .course .labels .label.blue a{
+        text-decoration: none;
+        color: white;
+    }
+    .product-cards-area .course .labels .label.blue a:hover{
+        text-decoration: underline;
+    }
     .product-cards-area .course .labels .label{
         float: left;
         margin: 0 0.5vw;

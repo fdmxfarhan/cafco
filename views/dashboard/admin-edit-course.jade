@@ -21,6 +21,9 @@ block content
                 .text-input 
                     i.fa.fa-pencil 
                     input(type="text" name="title" placeholder="عنوان دوره" value="#{course.title}" required)
+                .text-input 
+                    i.fa.fa-pencil 
+                    input(type="text" name="undertitle" placeholder="زیر عنوان" value="#{course.undertitle}" required)
                 textarea#txt-area(name="description" placeholder="توضیحات ..." required) #{course.description}
                 .text-input 
                     i.fa.fa-user 
@@ -28,6 +31,7 @@ block content
                 .text-input 
                     i.fa.fa-user 
                     input(type="Number" name="session" placeholder="تعداد جلسات" value="#{course.session}" required)
+                input.submit(type="submit" value="ثبت")
             .break-side 
             .part 
                 .age-input
@@ -55,12 +59,14 @@ block content
                 .text-input 
                     i.fa.fa-dollar 
                     input(type="Number" name="price" placeholder="هزینه دوره (ریال)" value="#{course.price}" required)
+                .text-input 
+                    i.fa.fa-link 
+                    input(type="text" name="link" placeholder="لینک ورود" value="#{course.link == 'undefined'? '': course.link}" required)
                 .cover-img-edit
                     img.cover(src="#{course.cover}", alt="cover")
                     #change 
                         i.fa.fa-cloud-upload
                         | آپلود عکس جدید
-                input.submit(type="submit" value="ثبت")
     .popup-area#upload-cover-popup
         .popup
             i.fa.fa-times.close-popup

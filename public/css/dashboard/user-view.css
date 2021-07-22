@@ -390,13 +390,13 @@
     }
 
 
-    .select-input-area{
+    .select-input-area.filter{
         /* display: inline-block; */
         margin-top: 0.1vw;
         margin-bottom: 0.5vw;
         float: left;
     }
-    .select-input-area select{
+    .select-input-area.filter select{
         font-family: 'iransans';
         font-size: 1.1vw;
         padding: 0.3vw 1vw;

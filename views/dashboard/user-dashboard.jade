@@ -73,6 +73,10 @@ block content
                                 .label.red پرداخت
                         -}
                         .label.green= user.course[i].course.status
+                        -if(user.course[i].payed && user.course[i].course.link && user.course[i].course.link != 'undefined'){
+                            .label.blue
+                                a(href="#{user.course[i].course.link}" target='_blank') ورود
+                        -}
             -}
         -}
 
@@ -86,6 +90,7 @@ block content
                     .image 
                         img(src="#{courses[i].cover}")
                     .title= courses[i].title
+                    .undertitle= courses[i].undertitle
                     .text= courses[i].description
                     .status= courses[i].status
                     -if(courses[i].students.length >= courses[i].capacity)

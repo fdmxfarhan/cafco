@@ -26,7 +26,7 @@ var upload = multer({ storage: storage });
 
 router.post('/course', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
     const file = req.file;
-    const { title, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price } = req.body;
+    const { video, title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, link } = req.body;
 
     if (!file) {
         res.send('no file to upload');
@@ -34,7 +34,10 @@ router.post('/course', ensureAuthenticated, upload.single('myFile'), (req, res, 
         var cover = file.destination.slice(6) + '/' + file.originalname;
         var startDate = { day, month, year };
         var endDate = { day: endDay, month: endMonth, year: endYear };
-        const newCourse = new Course({ title, description, teacher, session, minAge, maxAge, startDate, capacity, price, cover, endDate });
+        splited = video.split('/');
+        video = splited[splited.length - 1];
+        if(video == '') video = splited[splited.length - 2];
+        const newCourse = new Course({ title, undertitle, description, teacher, session, minAge, maxAge, startDate, capacity, price, cover, endDate, link });
         newCourse.save()
             .then(course => {
                 res.redirect(req.body.redirect);

@@ -5,6 +5,10 @@ var CourseSchema = new mongoose.Schema({
     discount: Number, //percent
     haveDiscount: Boolean,
     title: String,
+    undertitle: {
+        type: String,
+        default: '',
+    },
     description: String,
     teacher: String,
     startDate: Object,
@@ -24,6 +28,15 @@ var CourseSchema = new mongoose.Schema({
         type: [Object],
         default: [],
     },
+    link: {
+        type: String,
+        default: 'undefined',
+    },
+    video: {
+        type: String,
+        default: 'undefined',
+    },
+    
 });
 
 var Course = mongoose.model('Course', CourseSchema);

@@ -249,10 +249,10 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                         if (userCourse.payed) studentsNum++;
                     });
                 }
-                
                 courses = courses.sort(sortAlgorythm);
                 res.render('./dashboard/admin-dashboard', {
                     user: req.user,
+                    users,
                     login: req.query.login,
                     courses,
                     studentsNum,
@@ -573,9 +573,9 @@ router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
 });
 
 router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
-    const { title, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID } = req.body;
+    const { title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID, link } = req.body;
     if(req.user.role == 'admin'){
-        Course.updateMany({_id: courseID}, {$set: {title, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID}}, (err, doc) => {
+        Course.updateMany({_id: courseID}, {$set: {title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID, link}}, (err, doc) => {
             req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
             res.redirect(`/dashboard/admin-edit-course?courseID=${courseID}`);
         });
