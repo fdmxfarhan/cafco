@@ -73,13 +73,36 @@
         float: right;
         border-radius: 1vw;
         width: 23%;
-        height: 7vw;
+        /* height: 7vw; */
         margin-left: 1%;
         margin-bottom: 1vw;
         border: white 0.2vw solid;
+        overflow: hidden;
+        /* padding-bottom: 1vw; */
     }
     .api .senario:hover{
         border: var(--blue) 0.2vw solid;
+    }
+    .api .actions{
+        text-align: left;
+        direction: ltr;
+        padding: 0 1vw;
+    }
+    .api .actions a{
+        text-decoration: none;
+        font-size: 1.5vw;
+        margin-left: 0.5vw;
+        transition-duration: 500ms;
+    }
+    .api .actions a:hover, .api .actions a.red:hover, .api .actions a.blue:hover{
+        color: var(--hover);
+        /* font-size: 1.6vw; */
+    }
+    .api .actions a.red{
+        color: var(--red);
+    }
+    .api .actions a.blue{
+        color: var(--blue);
     }
     .api .senario h1{
         color: var(--blue);
@@ -97,7 +120,8 @@
         font-family: 'iransans';
         font-size: 1vw;
         color: lightgray;
-        padding: 1vw 2vw;
+        padding: 0 2vw;
+        margin-bottom: 0.5vw;
     }
     .api .senario .num.gray{
         color: gray;

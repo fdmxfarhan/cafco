@@ -12,18 +12,18 @@ block content
             input.submit(type="submit" value="افزودن سناریو جدید")
     .api
         -for(var i=0; i<workshop.length; i++){
-            a(href="/dashboard/api-senario?id=#{workshop[i]._id}") 
-                .senario 
-                    h1
-                        i.fa.fa-paperclip
-                        | #{workshop[i].title}
-                    .num تعداد سوالات: #{workshop[i].data.length}
-            
+            .senario 
+                h1
+                    i.fa.fa-paperclip
+                    | #{workshop[i].title}
+                .num تعداد سوالات: #{workshop[i].data.length}
+                .num زمان پاسخگویی: #{timeToString(workshop[i].time)}
+                .actions
+                    a.link.red(href="/dashboard/api-remove-senario?id=#{workshop[i]._id}") 
+                        i.fa.fa-trash
+                    a.link.blue(href="/dashboard/api-senario?id=#{workshop[i]._id}") 
+                        i.fa.fa-eye 
         -}
-    //- .popup-area#add-senario
-    //-     .popup
-    //-         i.fa.fa-times.close-popup
-    //-         h1.popup-title افزودن سناریو جدید
     script(src="/js/api.js") 
 
 

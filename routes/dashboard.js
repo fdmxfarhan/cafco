@@ -11,6 +11,10 @@ const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
 const bcrypt = require('bcryptjs');
 
+var timeToString = (time) => {
+    return(`${time.hour < 10 ? '0'+ time.hour : time.hour}:${time.minute < 10 ? '0' + time.minute : time.minute}:${time.second < 10 ? '0' + time.second : time.second}`)
+}
+
 var isAnarestani = (phone) => {
     if(phone.slice(0, 5) == '09944' || phone.slice(0, 5) == '09945' || phone.slice(0, 5) == '09933' || phone.slice(0, 5) == '09932' || phone.slice(0, 5) == '09908' || phone.slice(0, 5) == '09940'){
         return true;
@@ -776,6 +780,7 @@ router.get('/api', ensureAuthenticated, (req, res, next) => {
         res.render('./dashboard/admin-api', {
             user: req.user,
             workshop,
+            timeToString,
         });
     })
 });
@@ -811,6 +816,14 @@ router.get('/api-remove-question', ensureAuthenticated, (req, res, next) => {
             Workshop.updateMany({_id: req.query.workshopID}, {$set: {data}}, (err, doc) => {
                 res.redirect(`/dashboard/api-senario?id=${req.query.workshopID}`);
             });
+        });
+    }
+});
+
+router.get('/api-remove-senario', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        Workshop.deleteOne({_id: req.query.id}, (err) => {
+            res.redirect(`/dashboard/api`);
         });
     }
 });
