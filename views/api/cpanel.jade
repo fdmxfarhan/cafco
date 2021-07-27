@@ -1,14 +1,11 @@
 extends cpanel-layout
 
 block content 
-    h1#title
-    button(onclick="clicked()" ) say
-    .message 
-        .text فلان اتفاق افتاد
-        .time 10:39
-        .actions
-            a.delete
-                i.fa.fa-trash
+    .messages-area#messages-container
+        .message 
+            .text فلان اتفاق افتاد
+            .time 10:39
+        
     script.
         var clicked = () => {
             var socket = io();

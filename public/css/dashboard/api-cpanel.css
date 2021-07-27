@@ -143,6 +143,28 @@ body{
     padding-left: 0.5vw;
 }
 
-
-
-
+.message {
+    background-color: var(--side-hover);
+    width: 90%;
+    margin: 0.5vw 0;
+    padding: 0.5vw 1vw;
+    border-radius: 1vw;
+}
+.message .text{
+    font-family: 'iransans';
+    font-size: 1.1vw;
+    color: white;
+}
+.message .time{
+    color: var(--medium-slate-blue);
+    font-family: 'iransans';
+    font-size: 0.9vw;
+    margin: 0;
+}
+.messages-area{
+    height: 70vh;
+    overflow-y: scroll;
+    width: 90%;
+    margin: auto;
+    margin-top: 1vw;
+}
