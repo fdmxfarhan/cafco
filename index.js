@@ -129,18 +129,18 @@ var httpsServer = https.createServer(credentials, app);
 const io = require('socket.io')(httpsServer);
 io.on("connection", socket => {
     console.log("a user connected :D");
-    socket.on("popup", msg => {
+    socket.on("log", msg => {
       console.log(msg);
-      io.emit("popup", msg);
+      io.emit("log", msg);
     });
 });
 
 const io2 = require('socket.io')(httpServer);
 io2.on("connection", socket => {
     console.log("a user connected :D");
-    socket.on("popup", msg => {
+    socket.on("log", msg => {
       console.log(msg);
-      io2.emit("popup", msg);
+      io2.emit("log", msg);
     });
 });
 
