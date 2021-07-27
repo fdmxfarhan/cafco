@@ -127,6 +127,22 @@ var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
 const io = require('socket.io')(httpsServer);
+io.on("connection", socket => {
+    console.log("a user connected :D");
+    socket.on("popup", msg => {
+      console.log(msg);
+      io.emit("popup", msg);
+    });
+});
+
+const io2 = require('socket.io')(httpServer);
+io2.on("connection", socket => {
+    console.log("a user connected :D");
+    socket.on("popup", msg => {
+      console.log(msg);
+      io2.emit("popup", msg);
+    });
+});
 
 
 httpsServer.listen(443);

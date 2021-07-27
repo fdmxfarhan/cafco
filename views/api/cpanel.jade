@@ -1,0 +1,17 @@
+extends cpanel-layout
+
+block content 
+    h1#title
+    button(onclick="clicked()" ) say
+    .message 
+        .text فلان اتفاق افتاد
+        .time 10:39
+        .actions
+            a.delete
+                i.fa.fa-trash
+    script.
+        var clicked = () => {
+            var socket = io();
+            socket.emit(`popup`, 'hello');
+        }
+    script(src="/js/chat.js") 

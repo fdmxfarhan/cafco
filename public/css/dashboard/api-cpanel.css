@@ -1,0 +1,148 @@
+/* --------- Declarations ----------- */
+@font-face{
+    font-family: 'iransans';
+    src: url('iransans.ttf');
+}
+
+:root {
+    /* CSS HEX */
+    --oxford-blue: rgba(20, 27, 45, 0.8);
+    --side-hover: rgb(63, 75, 105);
+    --space-cadet: rgba(31, 41, 64, 0.7);
+    --medium-slate-blue: #696FFBff;
+    --caribbean-green: #4CCEACff;
+    --english-vermillion: rgb(230, 82, 79);
+
+}
+
+.green-bg{background-color: var(--caribbean-green);}
+.red-bg{background-color: var(--english-vermillion);}
+.red{color: var(--english-vermillion);}
+
+body{
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-family: 'iransans';
+    direction: rtl;
+    background-image: url('/img/api/blurred.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.api-panel{
+    width: 90%;
+    height: 90vh;
+    margin: 2vw auto;
+    background-color: var(--space-cadet);
+    border-radius: 2vw;
+    overflow: hidden;
+}
+
+.api-panel .sidebar{
+    float: right;
+    color: white;
+    width: 25%;
+    margin: 0 2vw;
+}
+.api-panel .container{
+    float: right;
+    color: white;
+    width: 65%;
+    margin: 0 2vw;
+    height: 80vh;
+    background-color: var(--oxford-blue);
+    border-radius: 1.5vw;
+    margin-top: 2vw;
+    box-shadow: 0 0 0.9vw 0.1vw rgba(255, 255, 255, 0.192);
+}
+.api-panel .sidebar .devices, .api-panel .sidebar .navigation{
+    background-color: var(--oxford-blue);
+    width: 100%;
+    border-radius: 1.5vw;
+    margin-top: 2vw;
+    box-shadow: 0 0 0.9vw 0.1vw rgba(255, 255, 255, 0.192);
+    padding-bottom: 1vw;
+}
+
+.api-panel .sidebar h1.title{
+    font-family: 'iransans';
+    font-size: 1.3vw;
+    padding: 0.8vw 0;
+    border-bottom: white 0.1vw solid;
+    text-align: center;
+    width: 80%;
+    margin: 0.5vw auto;
+}
+
+.api-panel .sidebar .devices .links{
+    height: 12vw;
+    overflow-y: scroll;
+    width: 95%;
+    margin: auto;
+    margin-bottom: 1.5vw;
+}
+
+.api-panel .sidebar .devices .links .device{
+    position: relative;
+    color: white;
+    display: block;
+    text-decoration: none;
+    font-family: 'iransans';
+    font-size: 1.2vw;
+    padding: 0.6vw 1vw;
+    transition-duration: 500ms;
+}
+.api-panel .sidebar .devices .links .device:hover{
+    background-color: var(--side-hover);
+}
+.api-panel .sidebar .devices .links .device i.icon{
+    padding-left: 0.5vw;
+    font-size: 1.5vw;
+}
+
+
+.api-panel .sidebar .devices .links .device .actions{
+    position: absolute;
+    top: 0.5vw;
+    left: 1vw;
+}
+.api-panel .sidebar .devices .links .device .actions a{
+    padding: 0 1vw;
+    margin-right: 0.5vw;
+    border-radius: 0.5vw;
+    font-size: 1.1vw;
+    color: white;
+    text-decoration: none;
+    transition-duration: 500ms;
+}
+.api-panel .sidebar .devices .links .device .actions a:hover{
+    background-color: salmon;
+}
+
+
+.api-panel .sidebar .navigation .links a{
+    position: relative;
+    color: white;
+    display: block;
+    text-decoration: none;
+    font-family: 'iransans';
+    font-size: 1.2vw;
+    padding: 0.4vw 2vw;
+    transition-duration: 500ms;
+}
+.api-panel .sidebar .navigation .links a.red{
+    color: var(--english-vermillion);
+}
+.api-panel .sidebar .navigation .links a:hover{
+    background-color: var(--side-hover);
+}
+.api-panel .sidebar .navigation .links a i{
+    font-size: 0.4vw;
+    padding-left: 0.5vw;
+}
+
+
+
+

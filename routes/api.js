@@ -12,4 +12,12 @@ router.get('/', (req, res, next) => {
     });
 });
 
+router.get('/cpanel', (req, res, next) => {
+    res.render('./api/cpanel');
+});
+
+
+
+
+
 module.exports = router;
