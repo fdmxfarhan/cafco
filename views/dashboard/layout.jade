@@ -68,10 +68,11 @@ html
                             i.fa.fa-dollar
                             | مالی
                         .break 
-                        a.sidebar-nav-link(href="/dashboard/api") 
-                            i.fa.fa-tv
-                            | کشف الاسرار
-                        
+                        -if(req.user.idNumber == '2581340517' || req.user.idNumber == '1818571668'){
+                            a.sidebar-nav-link(href="/dashboard/api") 
+                                i.fa.fa-tv
+                                | کشف الاسرار
+                        -}
                         //- a.sidebar-nav-link(href="#") 
                         //-     i.fa.fa-gears
                         //-     | تنظیمات
