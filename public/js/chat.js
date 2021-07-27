@@ -15,7 +15,8 @@ socket.on(`log`, (msg) => {
     time.textContent = `${now.getHours()}:${now.getMinutes()}`;
 
     message.appendChild(text);
+    message.appendChild(time);
     messageContainer.appendChild(message);
     messageContainer.scrollTo(0,1000000000);
-    alert(msg);
+    
 })
