@@ -5,10 +5,5 @@ block content
         .message 
             .text فلان اتفاق افتاد
             .time 10:39
-        
-    script.
-        var clicked = () => {
-            var socket = io();
-            socket.emit(`popup`, 'hello');
-        }
+    
     script(src="/js/chat.js") 

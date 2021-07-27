@@ -17,4 +17,5 @@ socket.on(`log`, (msg) => {
     message.appendChild(text);
     messageContainer.appendChild(message);
     messageContainer.scrollTo(0,1000000000);
+    alert(msg);
 })
