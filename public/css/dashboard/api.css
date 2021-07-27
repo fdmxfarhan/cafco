@@ -51,7 +51,7 @@
         border-top-right-radius: 1vw;
         border-bottom-right-radius: 1vw;
     }
-    .add-senario2 input.submit{
+    .add-senario2 input.submit2{
         color: white;
         background-color: var(--blue);
         border: none;
@@ -63,7 +63,7 @@
         cursor: pointer;
         transition-duration: 500ms;
     }
-    .add-senario2 input.submit:hover{
+    .add-senario2 input.submit2:hover{
         background-color: salmon;
     }
     input:focus{outline: none;}
@@ -93,6 +93,7 @@
         font-size: 1.5vw;
         margin-left: 0.5vw;
         transition-duration: 500ms;
+        cursor: pointer;
     }
     .api .actions a:hover, .api .actions a.red:hover, .api .actions a.blue:hover{
         color: var(--hover);
@@ -232,6 +233,65 @@
     }
     .senario-view .action i.delete:hover{
         color: salmon;
+    }
+    form .text-input {
+        border-radius: 2vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        margin-bottom: 1vw;
+    }
+    form .text-input i {
+        font-size: 1.2vw;
+        color: var(--blue);
+        padding: 0.5vw 1vw;
+    }
+    form .text-input input {
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.4vw 1vw;
+        border: none;
+        width: 80%;
+    }
+    form .text-input input:focus {
+        outline: none;
+    }
+    .popup .part{width: 50%; margin: auto;}
+    .time-input{
+        border: none;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
+        border-radius: 1.5vw;
+        width: 70%;
+        margin: auto;
+        margin-top: 1vw;
+        margin-bottom: 2vw;
+        text-align: center;
+    }
+    .time-input input{
+        border: none;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        width: 20%;
+        text-align: center;
+        padding: 0.4vw 1vw;
+        border-bottom: transparent 0.1vw solid;
+    }
+    .time-input input:focus{
+        outline: none;
+        border-bottom: var(--blue) 0.1vw solid;
+    }
+    input.submit{
+        border: none;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        background-color: var(--blue);
+        color: white;
+        padding: 0.5vw 4vw;
+        border-radius: 1vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+        margin-top: 1vw;
+    }
+    input.submit:hover {
+        background-color: chocolate;
     }
 }
 

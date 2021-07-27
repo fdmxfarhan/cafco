@@ -9,7 +9,7 @@ block content
         form(action="/dashboard/api-add-senario" method="POST") 
             input.hidden(type="number" name="senarioNum" value="#{workshop.length}")
             input.text(type="text" name="title" placeholder="عنوان سناریو...")
-            input.submit(type="submit" value="افزودن سناریو جدید")
+            input.submit2(type="submit" value="افزودن سناریو جدید")
     .api
         -for(var i=0; i<workshop.length; i++){
             .senario 
@@ -23,7 +23,32 @@ block content
                         i.fa.fa-trash
                     a.link.blue(href="/dashboard/api-senario?id=#{workshop[i]._id}") 
                         i.fa.fa-eye 
+                    a.link.blue(id='edit-senario-btn#{i}')
+                        i.fa.fa-edit
+                    
         -}
+    -for(var i=0; i<workshop.length; i++){
+        .popup-area(id="edit-senario#{i}")
+            .popup
+                i.fa.fa-times.close-popup
+                h1.popup-title= workshop[i].title
+                form.center(action="/dashboard/admin-edit-senario" method="POST") 
+                    input.hidden(type="text" name="workshopID" value="#{workshop[i]._id}")
+                    .part
+                        .text-input 
+                            i.fa.fa-pencil 
+                            input(type="text" name="title" placeholder="عنوان دوره" value="#{workshop[i].title}" required)
+                        label زمان پاسخ گویی 
+                        .time-input 
+                            input(type="number" name="second" placeholder="ثانیه")
+                            | :
+                            input(type="number" name="minute" placeholder="دقیقه")
+                            | :
+                            input(type="number" name="hour" placeholder="ساعت")
+                        input.submit(type="submit" value="ثبت")
+                            
+    -}
+
     script(src="/js/api.js") 
 
 

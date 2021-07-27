@@ -828,4 +828,13 @@ router.get('/api-remove-senario', ensureAuthenticated, (req, res, next) => {
     }
 });
 
+router.post('/admin-edit-senario', ensureAuthenticated, (req, res, next) => {
+    const {workshopID, title, second, minute, hour} = req.body;
+    if(req.user.role == 'admin'){
+        Workshop.updateMany({_id: workshopID}, {$set: {title, time: {hour, minute, second}}}, (err, doc) => {
+            res.redirect('/dashboard/api');
+        });
+    }
+})
+
 module.exports = router;
