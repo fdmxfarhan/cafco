@@ -2,7 +2,7 @@ var socket = io();
 // alert('hello');
 var messageContainer = document.getElementById('messages-container');
 
-socket.on(`log`, (msg) => {
+socket.on('log', (msg) => {
     var message = document.createElement('div');
     var text = document.createElement('div');
     var time = document.createElement('div');

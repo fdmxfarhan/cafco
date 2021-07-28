@@ -4,6 +4,7 @@ const { ensureAuthenticated } = require('../config/auth');
 var Workshop = require('../models/Workshop');
 
 router.get('/', (req, res, next) => {
+    
     Workshop.find({}, (err, workshop) => {
         if(workshop)
             res.send(workshop);
