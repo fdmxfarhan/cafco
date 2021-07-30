@@ -777,11 +777,14 @@ router.post('/add-user-to-course', ensureAuthenticated, (req, res, next) => {
 
 router.get('/api', ensureAuthenticated, (req, res, next) => {
     Workshop.find({}, (err, workshop) => {
-        res.render('./dashboard/admin-api', {
-            user: req.user,
-            workshop,
-            timeToString,
-        });
+        User.find({role: 'admin'}, (err, users) => {
+            res.render('./dashboard/admin-api', {
+                user: req.user,
+                workshop,
+                timeToString,
+                users,
+            });
+        })
     })
 });
 
@@ -836,5 +839,15 @@ router.post('/admin-edit-senario', ensureAuthenticated, (req, res, next) => {
         });
     }
 })
+
+router.post('/api-edit-admins', ensureAuthenticated, (req, res, next) => {
+    var admins = req.body.admins;
+    if(req.user.role == 'admin'){
+        for(var i=0; i<admins.length; i++){
+            User.updateMany({_id: admins[i]}, {$set: {kashfolasrar: true}}, (err, doc) => {if(err) console.log(err)})
+        }
+        res.redirect('/dashboard/api')
+    }
+});
 
 module.exports = router;

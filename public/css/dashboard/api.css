@@ -303,6 +303,21 @@
     input.submit:hover {
         background-color: chocolate;
     }
+    .edit-admins{
+        color: var(--blue);
+        font-size: 1.3vw;
+        position: absolute;
+        top: 6vw;
+        left: 4vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+    }
+    .edit-admins:hover{
+        color: var(--hover);
+    }
+    .edit-admins i{
+        padding-left: 0.5vw;
+    }
 }
 
 @media only screen and (max-width: 800px) {

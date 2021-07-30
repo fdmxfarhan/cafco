@@ -9,11 +9,16 @@ $(document).ready(function(){
     });
     $('.black-modal').click(() => {
         $('.black-modal').fadeOut(500);
+        $('#admins').fadeOut(500);
         popups.forEach(popup => {popup.view.fadeOut(500)});
     });
     $('.close-popup').click(() => {
         $('.black-modal').fadeOut(500);
+        $('#admins').fadeOut(500);
         popups.forEach(popup => {popup.view.fadeOut(500)});
     });
-    
+    $('.edit-admins').click(() => {
+        $('.black-modal').fadeIn(500);
+        $('#admins').fadeIn(500);
+    })
 });

@@ -10,6 +10,9 @@ block content
             input.hidden(type="number" name="senarioNum" value="#{workshop.length}")
             input.text(type="text" name="title" placeholder="عنوان سناریو...")
             input.submit2(type="submit" value="افزودن سناریو جدید")
+    .edit-admins
+        i.fa.fa-user-secret
+        | ادمین ها
     .api
         -for(var i=0; i<workshop.length; i++){
             .senario 
@@ -49,6 +52,21 @@ block content
                             
     -}
 
+    .popup-area#admins
+        .popup
+            i.fa.fa-times.close-popup
+            h1.popup-title دسترسی کاربران
+            form(action="/dashboard/api-edit-admins" method="POST") 
+                input.hidden(type="checkbox" name="admins" value="undefined" checked)
+                -for(var i=0; i<users.length; i++){
+                    -if(users[i].kashfolasrar)
+                        input(type="checkbox" name="admins" value="#{users[i]._id}" checked)
+                    -else
+                        input(type="checkbox" name="admins" value="#{users[i]._id}")
+                    label(for="#{users[i]._id}") #{users[i].fullname}
+                    br
+                -}
+                input.submit(type="submit" value="ثبت")
     script(src="/js/api.js") 
 
 

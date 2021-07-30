@@ -31,6 +31,10 @@ var UserSchema = new mongoose.Schema({
     type: Object,
     default: {day: 0, month: 0, year: 0},
   },
+  kashfolasrar: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 var User = mongoose.model('User', UserSchema);
