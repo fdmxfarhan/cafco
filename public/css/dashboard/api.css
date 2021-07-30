@@ -8,7 +8,6 @@
         margin: 2vw auto;
         margin-bottom: 1vw;
         border-bottom: var(--blue) 0.1vw solid;
-
     }
     .api{
         width: 90%;
@@ -143,6 +142,17 @@
         margin-left: 2vw;
         width: 13vw;
     }
+    .add-data select{
+        box-shadow: 0 0 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
+        background-color: white;
+        border: none;
+        border-radius: 1vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        padding: 0.3vw 2vw;
+        margin-left: 2vw;
+        width: 13vw;
+    }
     .add-data input.file{
         position: absolute;
         top: 0;
@@ -195,7 +205,7 @@
         margin-left: 2%;
         margin-bottom: 1.5vw;
     }
-    .senario-view .question img{
+    .senario-view .question img, .senario-view .question video{
         width: 100%;
     }
     .senario-view .num{

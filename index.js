@@ -130,17 +130,44 @@ const io = require('socket.io')(httpsServer);
 io.on("connection", socket => {
     console.log("a user connected :D");
     socket.on("log", msg => {
-      console.log(msg);
-      io.emit("log", msg);
+        console.log(msg);
+        io.emit("log", msg);
     });
+
+    socket.on("lock", msg => {
+        console.log(msg);
+        io.emit("lock", msg);
+    });
+    socket.on("popup", msg => {
+        console.log(msg);
+        io.emit("popup", msg);
+    });
+    socket.on("leave", msg => {
+        console.log(msg);
+        io.emit("leave", msg);
+    });
+
+    
 });
 
 const io2 = require('socket.io')(httpServer);
 io2.on("connection", socket => {
     console.log("a user connected :D");
     socket.on("log", msg => {
-      console.log(msg);
-      io2.emit("log", msg);
+        console.log(msg);
+        io2.emit("log", msg);
+    });
+    socket.on("lock", msg => {
+        console.log(msg);
+        io2.emit("lock", msg);
+    });
+    socket.on("popup", msg => {
+        console.log(msg);
+        io2.emit("popup", msg);
+    });
+    socket.on("leave", msg => {
+        console.log(msg);
+        io2.emit("leave", msg);
     });
 });
 
@@ -164,11 +191,11 @@ seo.setConfig({
 // Set the default tags
 seo.setDefaults({
     // html: "<a href='https://www.instagram.com/junior_cup/'>Follow me on instagram</a>" // Special property to insert html in the body (interesting to insert links)
-    title: "جونیورکاپ", // Page title
+    title: "کلبه آفرینش فکر", // Page title
     // All the other properties will be inserted as a meta property
     description: {
-        en: "juniorcup",
-        fa: "جونیور کاپ"
+        en: "cafco",
+        fa: "کلبه آفرینش فکر"
     },
     image: "https://juniorcup.ir/images/landing/Juniorcup2021b-min.jpg"
 });

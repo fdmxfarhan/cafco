@@ -8,7 +8,11 @@ block content
     .add-data
         form(action="/upload/api-workshop" enctype="multipart/form-data" method="POST") 
             input.hidden(type="text" name="workshopID" value="#{workshop._id}")
-            input.text(type="text" name="title" placeholder="عنوان")
+            select(name="title") 
+                option(value="سوال عکس") سوال عکس
+                option(value="سوال ویدئو") سوال ویدئو
+                option(value="عکس روی دوربین") عکس روی دوربین
+                option(value="باسخ عکس") باسخ عکس
             .upload-area
                 i.fa.fa-cloud-upload
                 | آپلود فایل
@@ -20,14 +24,15 @@ block content
             .question
                 -if(workshop.data[i].type == 'image')
                     img(src="#{workshop.data[i].file}", alt="file")
+                -else if(workshop.data[i].type == 'video')
+                    video(src="#{workshop.data[i].file}" controls) 
                 .num سوال شماره #{i+1}
-                .title عنوان: #{workshop.data[i].title}
+                .title نوع سوال: #{workshop.data[i].title}
                 .ans پاسخ: 
                     .green #{workshop.data[i].answer}
                 .action 
                     a(href="/dashboard/api-remove-question?workshopID=#{workshop._id}&index=#{i}") 
                         i.fa.fa-trash.delete
-            
         -}
 
     script(src="/js/api.js") 

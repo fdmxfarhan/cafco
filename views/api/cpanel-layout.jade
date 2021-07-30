@@ -16,54 +16,33 @@ html
             .sidebar 
                 .devices
                     h1.title دستگاه ها
-                    .links
-                        .device
-                            i.fa.fa-mobile-phone.icon
-                            | دستگاه شماره 1
-                            .actions 
-                                a.green-bg(href="") 
-                                    i.fa.fa-comment
-                                a.red-bg(href="") 
-                                    i.fa.fa-lock
-                        .device
-                            i.fa.fa-mobile-phone.icon
-                            | دستگاه شماره 1
-                            .actions 
-                                a.green-bg(href="") 
-                                    i.fa.fa-comment
-                                a.red-bg(href="") 
-                                    i.fa.fa-lock
-                        .device
-                            i.fa.fa-mobile-phone.icon
-                            | دستگاه شماره 1
-                            .actions 
-                                a.green-bg(href="") 
-                                    i.fa.fa-comment
-                                a.red-bg(href="") 
-                                    i.fa.fa-lock
-                        .device
-                            i.fa.fa-mobile-phone.icon
-                            | دستگاه شماره 1
-                            .actions 
-                                a.green-bg(href="") 
-                                    i.fa.fa-comment
-                                a.red-bg(href="") 
-                                    i.fa.fa-lock
+                    .links#devices-area
+                        //- .device
+                        //-     i.fa.fa-mobile-phone.icon
+                        //-     | دستگاه شماره 1
+                        //-     .actions 
+                        //-         a.green-bg
+                        //-             i.fa.fa-comment
+                        //-         a.red-bg
+                        //-             i.fa.fa-lock
                 .navigation 
                     h1.title گزینه ها
                     .links
-                        a.link(href="") 
-                            i.fa.fa-circle
-                            | مشاهده گزارشات
-                        a.link(href="") 
+                        //- a.link(href="") 
+                        //-     i.fa.fa-circle
+                        //-     | مشاهده گزارشات
+                        a.link#send-to-all
                             i.fa.fa-circle
                             | ارسال پیام به همه
-                        a.link(href="") 
+                        a.link#lock-all
                             i.fa.fa-circle
                             | قفل کردن همه
-                        a.link.red(href="") 
+                        a.link.hidden#unlock-all
                             i.fa.fa-circle
-                            | اتمام بازی
-                        
+                            | باز کردن همه
+                        //- a.link.red(href="") 
+                        //-     i.fa.fa-circle
+                        //-     | اتمام بازی
+                input.message-box(type="text" id="message-box" placeholder="متن پیام")
             .container 
                 block content

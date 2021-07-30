@@ -18,6 +18,7 @@
 .green-bg{background-color: var(--caribbean-green);}
 .red-bg{background-color: var(--english-vermillion);}
 .red{color: var(--english-vermillion);}
+.hidden{display: none;}
 
 body{
     margin: 0;
@@ -119,6 +120,7 @@ body{
     color: white;
     text-decoration: none;
     transition-duration: 500ms;
+    cursor: pointer;
 }
 .api-panel .sidebar .devices .links .device .actions a:hover{
     background-color: salmon;
@@ -134,6 +136,7 @@ body{
     font-size: 1.2vw;
     padding: 0.4vw 2vw;
     transition-duration: 500ms;
+    cursor: pointer;
 }
 .api-panel .sidebar .navigation .links a.red{
     color: var(--english-vermillion);
@@ -170,4 +173,20 @@ body{
     width: 90%;
     margin: auto;
     margin-top: 1vw;
+}
+.sidebar input.message-box{
+    background-color: var(--oxford-blue);
+    border: none;
+    border-radius: 1vw;
+    font-family: 'iransans';
+    font-size: 1.2vw;
+    padding: 0.4vw 5%;
+    display: block;
+    width: 90%;
+    margin-top: 2vw;
+    box-shadow: 0 0 0.9vw 0.1vw rgba(255, 255, 255, 0.192);
+    color: white;
+}
+.sidebar input.message-box:focus{
+    outline: none;
 }
