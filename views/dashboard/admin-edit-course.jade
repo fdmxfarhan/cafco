@@ -23,7 +23,7 @@ block content
                     input(type="text" name="title" placeholder="عنوان دوره" value="#{course.title}" required)
                 .text-input 
                     i.fa.fa-pencil 
-                    input(type="text" name="undertitle" placeholder="زیر عنوان" value="#{course.undertitle}" required)
+                    input(type="text" name="undertitle" placeholder="زیر عنوان" value="#{course.undertitle}")
                 textarea#txt-area(name="description" placeholder="توضیحات ..." required) #{course.description}
                 .text-input 
                     i.fa.fa-user 
@@ -61,7 +61,7 @@ block content
                     input(type="Number" name="price" placeholder="هزینه دوره (ریال)" value="#{course.price}" required)
                 .text-input 
                     i.fa.fa-link 
-                    input(type="text" name="link" placeholder="لینک ورود" value="#{course.link == 'undefined'? '': course.link}" required)
+                    input(type="text" name="link" placeholder="لینک ورود" value="#{course.link == 'undefined'? '': course.link}")
                 .cover-img-edit
                     img.cover(src="#{course.cover}", alt="cover")
                     #change 

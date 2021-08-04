@@ -28,6 +28,7 @@ block content
                     img(src="#{courses[i].cover}")
                 .title= courses[i].title
                     .gray-inline (#{courses[i].minAge} تا #{courses[i].maxAge})
+                .undertitle= courses[i].undertitle 
                 .text= courses[i].description
                 .price #{dot(courses[i].price/10)} تومان
         -}

@@ -1,0 +1,145 @@
+/* --------- Declarations ----------- */
+
+@font-face {
+    font-family: 'iransans';
+    src: url('../iransans.ttf');
+}
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes goRight {
+    from {
+        margin-right: 3vw;
+    }
+    to {
+        margin-right: 0;
+    }
+}
+@keyframes goUp {
+    from {
+        margin-top: 5vw;
+    }
+    to {
+        margin-top: 0.5vw;
+    }
+}
+:root {
+    /* --purple: #8305be; */
+    --background: #404548;
+    --brown: #3e2917;
+    --blue: #1971e4;
+    --green: #18d112;
+    --yellow: #febf18;
+    --hover: #ff7b00;
+    --dark: #050507;
+    --light: white;
+    --kerem: #eec278;
+    --red: #ff0000;
+    --text: rgb(100, 100, 100);
+}
+body {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    font-family: 'iransans';
+    direction: rtl;
+    background-color: white;
+}
+.black-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+.black-modal2 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+.transparent-modal {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.dashboard {
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+.hidden {
+    display: none;
+}
+.visible{
+    display: block;
+}
+.center {
+    text-align: center;
+}
+
+@media only screen and (min-width: 800px) {
+    .class-container{
+        overflow: hidden;
+        width: 100%;
+        height: 100vh;
+    }
+    .class-container .sideBar {
+        background-color: var(--background);
+        width: 20%;
+        float: right;
+        height: 100vh;
+    }
+    .class-container .iframe-area{
+        width: 80%;
+        float: right;
+    }
+    .class-container .iframe-area iframe{
+        width: 100%;
+        height: 100vh;
+    }
+    .class-container .sideBar img.avatar{
+        width: 25%;
+        float: right;
+    }
+    .class-container .sideBar .user-info{
+        padding: 2vw;
+        overflow: hidden;
+    }
+    .class-container .sideBar .user-info .titles{
+        float: right;
+        width: 70%;
+        margin-right: 5%;
+    }
+    .class-container .sideBar .user-info .titles h1.title{
+        font-family: 'iransans';
+        font-size: 1.4vw;
+        margin: 0;
+        color: var(--blue);
+    }
+    .class-container .sideBar .user-info .titles h1.class-name{
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        margin: 0;
+        /* margin-top: 0.5vw; */
+        color: var(--yellow);
+    }
+    
+}

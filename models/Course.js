@@ -36,7 +36,7 @@ var CourseSchema = new mongoose.Schema({
         type: String,
         default: 'undefined',
     },
-    
+    eventHandler: String,
 });
 
 var Course = mongoose.model('Course', CourseSchema);

@@ -11,6 +11,7 @@ var createError = require('createerror');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport'); 
+var Course = require('./models/Course');
 
 
 // routs requirement
@@ -20,6 +21,7 @@ var dashboardRoute = require('./routes/dashboard');
 var uploadRoute = require('./routes/upload');
 var paymentRoute = require('./routes/payment');
 var apiRoute = require('./routes/api');
+var classRoute = require('./routes/class');
 
 
 // Mongo DB connect
@@ -95,6 +97,7 @@ app.use('/users', usersRoute);
 app.use('/dashboard', dashboardRoute);
 app.use('/payment', paymentRoute);
 app.use('/api', apiRoute);
+app.use('/class', classRoute);
 
 
 
@@ -147,6 +150,14 @@ io.on("connection", socket => {
         io.emit("leave", msg);
     });
 
+    Course.find({}, (err, courses) => {
+        for (let i = 0; i < courses.length; i++) {
+            socket.on(`${courses[i]._id}`, msg => {
+                console.log(msg);
+                io2.emit(`${courses[i]._id}`, msg);
+            });
+        }
+    });
     
 });
 
@@ -169,7 +180,17 @@ io2.on("connection", socket => {
         console.log(msg);
         io2.emit("leave", msg);
     });
+    
+    Course.find({}, (err, courses) => {
+        for (let i = 0; i < courses.length; i++) {
+            socket.on(`${courses[i]._id}`, msg => {
+                console.log(msg);
+                io2.emit(`${courses[i]._id}`, msg);
+            });
+        }
+    });
 });
+
 
 
 httpsServer.listen(443);
