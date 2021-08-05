@@ -172,7 +172,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
             });
         })
     }
-    else if(req.user.role == 'admin'){
+    else if(req.user.role == 'teacher'){
         Course.findById(req.query.courseID, (err, course) => {
             res.render('./class/user-class', {
                 user: req.user,

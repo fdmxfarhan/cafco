@@ -31,8 +31,10 @@
 :root {
     /* --purple: #8305be; */
     --background: #404548;
+    --boxborder: #66666C;
+    --boxbackground: #2B2F32;
     --brown: #3e2917;
-    --blue: #1971e4;
+    --blue: #19b5e4;
     --green: #18d112;
     --yellow: #febf18;
     --hover: #ff7b00;
@@ -94,7 +96,7 @@ body {
 .center {
     text-align: center;
 }
-
+input:focus{outline: none;}
 @media only screen and (min-width: 800px) {
     .class-container{
         overflow: hidden;
@@ -106,7 +108,11 @@ body {
         width: 20%;
         float: right;
         height: 100vh;
+        overflow-y: scroll;
     }
+    .class-container .sideBar::-webkit-scrollbar {
+        display: none;
+    }      
     .class-container .iframe-area{
         width: 80%;
         float: right;
@@ -120,7 +126,7 @@ body {
         float: right;
     }
     .class-container .sideBar .user-info{
-        padding: 2vw;
+        padding: 1.3vw 2vw;
         overflow: hidden;
     }
     .class-container .sideBar .user-info .titles{
@@ -141,5 +147,79 @@ body {
         /* margin-top: 0.5vw; */
         color: var(--yellow);
     }
-    
+    .box{
+        border: var(--boxborder) 0.7vw solid;
+        background-color: var(--boxbackground);
+        width: 80%;
+        margin: 0 auto;
+        padding: 0;
+        padding-bottom: 1vw;
+    }
+    .box h1.box-title{
+        background-color: var(--boxborder);
+        margin: 0;
+        color: white;
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        margin-top: -0.5vw;
+        font-weight: normal;
+    }
+    .box h1.box-title i{
+        padding-left: 1vw;
+    }
+    .box h1.title{
+        color: var(--blue);
+        font-family: 'iransans';
+        font-size: 1.2vw;
+        padding: 1vw;
+        padding-bottom: 0.5vw;
+    }
+    .box input.number{
+        background-color: var(--boxborder);
+        color: white;
+        padding: 0.2vw 1vw;
+        width: 40%;
+        border: none;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(255, 255, 255, 0.2);
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        margin-right: 1vw;
+    }
+    .box input.number::placeholder{
+        color: rgb(163, 163, 163);
+    }
+    .box .submit-button{
+        background-color: var(--blue);
+        display: inline;
+        color: white;
+        padding: 0.2vw 1vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(255, 255, 255, 0.2);
+        margin-right: 0.5vw;
+        cursor: pointer;
+    }
+    .box .submit-button:hover{
+        background-color: lightblue;
+    }
+    .box .answers{
+        padding: 1vw;
+    }
+    .box .ans{margin-bottom: 0.3vw;}
+    .box .ans label.radio{
+        color: white;
+    }
+    .box .score{
+        margin-bottom: 0.5vw;
+        margin-right: 1vw;
+    }
+    .box .score i{
+        width: 1vw;
+    }
+    .box .score i.green{
+        color: rgb(0, 255, 0);
+    }
+    .box .score i.red{
+        color: rgb(247, 41, 41);
+    }
 }

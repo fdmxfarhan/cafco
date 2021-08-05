@@ -244,7 +244,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 educationStages,
             });
         });
-    } else if (req.user.role = 'admin') {
+    } else if (req.user.role == 'admin') {
         Course.find({}, (err, courses) => {
             User.find({}, (err, users) => {
                 var studentsNum = 0;
@@ -265,6 +265,20 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                     registeredCourse: [],
                     educationStages,
                 });
+            });
+        });
+    }
+    else {
+        Course.find({}, (err, courses) => {
+            courses = courses.sort(sortAlgorythm);
+            res.render('./dashboard/teacher-dashboard', {
+                user: req.user,
+                login: req.query.login,
+                courses,
+                dot,
+                anarestani: false,
+                registeredCourse: [],
+                educationStages,
             });
         });
     }
@@ -590,6 +604,14 @@ router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
 router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.updateMany({_id: req.query.userID}, {$set: {role: 'admin'}}, (err, doc) => {
+            res.redirect('/dashboard/users-view')
+        })
+    }
+});
+
+router.get('/change-role', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        User.updateMany({_id: req.query.userID}, {$set: {role: req.query.role}}, (err, doc) => {
             res.redirect('/dashboard/users-view')
         })
     }

@@ -409,7 +409,28 @@
         text-align: center; 
     }
     select:focus{outline: none;}
-
+    .role-choose {
+        overflow: hidden;
+        margin-top: 1vw;
+    }
+    .role-choose a{
+        display: block;
+        float: right;
+        /* background-color: var(--blue); */
+        color: var(--blue);
+        margin: 0 0.3vw;
+        text-decoration: none;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.4vw 1vw;
+        border-radius: 2vw;
+        border: var(--blue) 0.1vw solid;
+        transition-duration: 500ms;
+    }
+    .role-choose a.active,.role-choose a:hover{
+        background-color: var(--blue);
+        color: white;
+    }
 
 }
 @media only screen and (max-width: 800px) {

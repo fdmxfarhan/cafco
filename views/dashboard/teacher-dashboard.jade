@@ -1,0 +1,53 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/css-circular-prog-bar.css")
+    link(rel="stylesheet", href="/css/dashboard/dashboard.css")
+
+block content
+    .message-area
+        -if(login){
+            .success-msg
+                i.fa.fa-times.close-success-msg
+                ul 
+                    li به پنل کاربری خود خوش آمدید
+        -}
+    h1.title لیست دوره ها
+    .product-cards-area 
+        -for(var i=0; i<courses.length; i++){
+            .course 
+                .cover-img 
+                    img(src="#{courses[i].cover}", alt="cover")
+                .info 
+                    .title= courses[i].title
+                    .subtitle مدرس: #{courses[i].teacher}
+                    .subtitle زمان شروع: #{courses[i].startDate.year}/#{courses[i].startDate.month}/#{courses[i].startDate.day}
+                .labels 
+                    .label.green= courses[i].status
+                    -if(courses[i].link && courses[i].link != 'undefined'){
+                        .label.blue
+                            a(href="/class?link=#{courses[i].link}&courseID=#{courses[i]._id}") ورود
+                    -}
+            //- .card(id="card#{i}") 
+                .image 
+                    img(src="#{courses[i].cover}")
+                .title= courses[i].title 
+                    .gray-inline (#{courses[i].minAge} تا #{courses[i].maxAge})
+                .undertitle= courses[i].undertitle 
+                .text= courses[i].description
+                .status= courses[i].status
+                -if(courses[i].students.length >= courses[i].capacity)
+                    .filled ظرفیت تکمیل شده
+                -else if(courses[i].price == 0)
+                    .price رایگان
+                -else 
+                    .price #{dot(courses[i].price/10)} تومان
+                    
+        -}
+
+    include add-course
+    
+    include course-view
+    script(src="/js/dashboard.js") 
+
+

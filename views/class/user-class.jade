@@ -13,6 +13,8 @@ html
         script(src="/socket.io/socket.io.js")
         block styles
     body
+        .hidden#courseID= course._id
+        .hidden#userName= user.fullname
         .class-container 
             .sideBar 
                 .user-info
@@ -20,9 +22,37 @@ html
                     .titles
                         h1.title= user.fullname 
                         h1.class-name= course.title
+                .box
+                    h1.box-title
+                        i.fa.fa-pencil
+                        | پاسخ به سوالات 
+                    h1.title گزینه ها
+                    input.number(type="number" id="answerNum" placeholder="تعداد")
+                    .submit-button ثبت
+                    .answers#answers
+                        .ans 
+                            input.radio(type="radio" id="answer1" name="answer")
+                            label.radio(for="answer1") گزینه 1
+                        .ans 
+                            input.radio(type="radio" id="answer2" name="answer")
+                            label.radio(for="answer2") گزینه 2
+                        .ans 
+                            input.radio(type="radio" id="answer3" name="answer")
+                            label.radio(for="answer3") گزینه 3
+                        .ans 
+                            input.radio(type="radio" id="answer4" name="answer")
+                            label.radio(for="answer4") گزینه 4
+                    h1.title امتیازات
+                    .score
+                        i.fa.fa-check.green
+                        input.number(type="number" id="answerNum" placeholder="درست")
+                    .score
+                        i.fa.fa-times.red
+                        input.number(type="number" id="answerNum" placeholder="غلط")
+                    
             .iframe-area
                 iframe(src="#{link}", frameborder="0") 
-
+            
         script(src="/js/class.js") 
 
 

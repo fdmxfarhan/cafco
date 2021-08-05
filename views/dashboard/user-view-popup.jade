@@ -27,17 +27,26 @@
             | پایه تحصیلی: 
             .num= users[i].education
         .user-actions
-            -if(users[i].role == 'user')
-                a(href="/dashboard/make-admin?userID=#{users[i]._id}") تبدیل به ادمین
-            -else
-                a(href="/dashboard/make-user?userID=#{users[i]._id}") تبدیل به یوزر
             a(href="/dashboard/admin-edit-user?userID=#{users[i]._id}") 
                 i.fa.fa-edit
                 | ویرایش
             a.red(href="/dashboard/remove-user?userID=#{users[i]._id}") 
                 i.fa.fa-trash
                 | حذف کاربر 
-
+        .role-choose 
+            -if(users[i].role == 'user')
+                a.active(href="/dashboard/change-role?userID=#{users[i]._id}&role=user") user
+            -else
+                a(href="/dashboard/change-role?userID=#{users[i]._id}&role=user") user
+            -if(users[i].role == 'admin')
+                a.active(href="/dashboard/change-role?userID=#{users[i]._id}&role=admin") admin
+            -else
+                a(href="/dashboard/change-role?userID=#{users[i]._id}&role=admin") admin
+            -if(users[i].role == 'teacher')
+                a.active(href="/dashboard/change-role?userID=#{users[i]._id}&role=teacher") teacher
+            -else
+                a(href="/dashboard/change-role?userID=#{users[i]._id}&role=teacher") teacher
+            
     .part
         h1 دوره های ثبت نام شده (#{users[i].course.length}):
         .user-course-list-view
