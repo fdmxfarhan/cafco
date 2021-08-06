@@ -154,6 +154,8 @@ input:focus{outline: none;}
         margin: 0 auto;
         padding: 0;
         padding-bottom: 1vw;
+        margin-bottom: 1vw;
+        /* margin-top: 1vw; */
     }
     .box h1.box-title{
         background-color: var(--boxborder);
@@ -173,6 +175,8 @@ input:focus{outline: none;}
         font-size: 1.2vw;
         padding: 1vw;
         padding-bottom: 0.5vw;
+        margin-bottom: 0;
+        margin-top: 0;
     }
     .box input.number{
         background-color: var(--boxborder);
@@ -204,6 +208,7 @@ input:focus{outline: none;}
     }
     .box .answers{
         padding: 1vw;
+        padding-bottom: 0;
     }
     .box .ans{margin-bottom: 0.3vw;}
     .box .ans label.radio{
@@ -222,4 +227,41 @@ input:focus{outline: none;}
     .box .score i.red{
         color: rgb(247, 41, 41);
     }
+    .box .bar-area{
+        position: relative;
+        direction: ltr;
+        height: 0.7vw;
+        width: 75%;
+        margin: 1.1vw auto;
+        background-color: lightgray;
+        border-radius: 0.3vw;
+    }
+    .box .bar-area .bar{
+        background-color: var(--blue);
+        height: 0.7vw;
+        width: 0%;
+        border-radius: 0.3vw;
+        transition-duration: 500ms;
+    }
+    .box .bar-area .question{
+        color: white;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        left: -1.5vw;
+        top: -0.4vw;
+    }
+    .box .bar-area .number{
+        top: -0.4vw;
+        right: -1.5vw;
+        color: white;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+    }
+    #bars{margin-top: 2vw;}
 }
