@@ -152,7 +152,7 @@ io.on("connection", socket => {
         courses.forEach(course => {
             socket.on(`${course._id}`, msg => {
                 console.log(course.title, msg);
-                io2.emit(`${course._id}`, msg);
+                io.emit(`${course._id}`, msg);
             });
         });
         // for (let i = 0; i < courses.length; i++) {
