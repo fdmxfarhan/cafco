@@ -593,7 +593,9 @@ router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
 router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
     const { title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID, link } = req.body;
     if(req.user.role == 'admin'){
-        Course.updateMany({_id: courseID}, {$set: {title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID, link}}, (err, doc) => {
+        var startDate = { day, month, year };
+        var endDate = { day: endDay, month: endMonth, year: endYear };
+        Course.updateMany({_id: courseID}, {$set: {title, undertitle, description, teacher, session, minAge, maxAge, startDate, endDate, capacity, price, courseID, link}}, (err, doc) => {
             req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
             res.redirect(`/dashboard/admin-edit-course?courseID=${courseID}`);
         });
