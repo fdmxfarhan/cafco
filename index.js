@@ -151,18 +151,18 @@ io.on("connection", socket => {
     Course.find({}, (err, courses) => {
         for (let i = 0; i < courses.length; i++) {
             socket.on(`${courses[i]._id}`, msg => {
-                console.log(msg);
+                console.log(courses[i].title, msg);
                 io2.emit(`${courses[i]._id}`, msg);
-                if(msg.state == 'save')
-                {
-                    for (let i = 0; i < msg.studentAnswers.length; i++) {
-                        var newAnswer = new Answer({
-                            answer: msg.studentAnswers[i].answer,
-                            userName: msg.studentAnswers[i].userName,
+                // if(msg.state == 'save')
+                // {
+                //     for (let i = 0; i < msg.studentAnswers.length; i++) {
+                //         var newAnswer = new Answer({
+                //             answer: msg.studentAnswers[i].answer,
+                //             userName: msg.studentAnswers[i].userName,
                             
-                        })
-                    }
-                }
+                //         })
+                //     }
+                // }
             });
         }
     });
@@ -192,18 +192,18 @@ io2.on("connection", socket => {
     Course.find({}, (err, courses) => {
         for (let i = 0; i < courses.length; i++) {
             socket.on(`${courses[i]._id}`, msg => {
-                console.log(msg);
+                console.log(courses[i].title, msg);
                 io2.emit(`${courses[i]._id}`, msg);
-                if(msg.state == 'save')
-                {
-                    for (let i = 0; i < msg.studentAnswers.length; i++) {
-                        var newAnswer = new Answer({
-                            answer: msg.studentAnswers[i].answer,
-                            userName: msg.studentAnswers[i].userName,
+                // if(msg.state == 'save')
+                // {
+                //     for (let i = 0; i < msg.studentAnswers.length; i++) {
+                //         var newAnswer = new Answer({
+                //             answer: msg.studentAnswers[i].answer,
+                //             userName: msg.studentAnswers[i].userName,
                             
-                        })
-                    }
-                }
+                //         })
+                //     }
+                // }
             });
         }
     });
