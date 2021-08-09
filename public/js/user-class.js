@@ -5,8 +5,8 @@ $(document).ready(function(){
     var socket = io();
     var answeredBefore = false;
     var lastAnswer;
+    alert(courseID);
     socket.on(courseID, (msg) => {
-        alert('message received')
         if(msg.state == 'change-ans')
         {
             answeredBefore = false;
