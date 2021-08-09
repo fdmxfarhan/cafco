@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    let iframe = window.document.getElementById("mainIframe");
+    let iframe = document.getElementById("mainIframe");
     iframe.allow="autoplay;fullscreen;speaker;microphone;camera;display-capture;";
     var answers = document.getElementById('answers');
     var bars = document.getElementById('bars');
