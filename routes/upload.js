@@ -26,7 +26,7 @@ var upload = multer({ storage: storage });
 
 router.post('/course', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
     const file = req.file;
-    const { video, title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, link } = req.body;
+    var { video, title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, link } = req.body;
 
     if (!file) {
         res.send('no file to upload');

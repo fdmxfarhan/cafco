@@ -34,7 +34,8 @@ var UserSchema = new mongoose.Schema({
   kashfolasrar: {
     type: Boolean,
     default: false,
-  }
+  },
+  score: Number,
 });
 
 var User = mongoose.model('User', UserSchema);

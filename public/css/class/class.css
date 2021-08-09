@@ -37,7 +37,7 @@
     --blue: #19b5e4;
     --green: #18d112;
     --yellow: #febf18;
-    --hover: #ff7b00;
+    --hover: #a281fa;
     --dark: #050507;
     --light: white;
     --kerem: #eec278;
@@ -264,4 +264,42 @@ input:focus{outline: none;}
         position: absolute;
     }
     #bars{margin-top: 2vw;}
+    .button-end{
+        background-color: var(--blue);
+        /* display: inline; */
+        color: white;
+        padding: 0.2vw 0;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(255, 255, 255, 0.2);
+        cursor: pointer;
+        text-align: center;
+        width: 90%;
+        margin: 5%;
+    }
+    .button-end:hover{
+        background-color: var(--hover);
+    }
 }
+@media only screen and (max-width: 800px) {
+    .class-container{
+        overflow: hidden;
+        width: 100%;
+        height: 100vh;
+    }
+    .class-container .sideBar {
+        display: none;
+    }
+    .class-container .iframe-area{
+        width: 100%;
+    }
+    .class-container .iframe-area iframe{
+        width: 100%;
+        height: 100vh;
+    }
+}
+
+
+
+
+

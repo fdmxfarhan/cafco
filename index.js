@@ -12,7 +12,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport'); 
 var Course = require('./models/Course');
-
+var Answer = require('./models/Answer');
 
 // routs requirement
 var homeRoute = require('./routes/home');
@@ -23,13 +23,11 @@ var paymentRoute = require('./routes/payment');
 var apiRoute = require('./routes/api');
 var classRoute = require('./routes/class');
 
-
 // Mongo DB connect
 mongoose.connect('mongodb://localhost/register', {useNewUrlParser: true, useUnifiedTopology: true}, (err) =>{
     if(err) throw err;
     else console.log('Database connected :)');
 });
-
 
 // express session middleware
 const{
@@ -155,6 +153,16 @@ io.on("connection", socket => {
             socket.on(`${courses[i]._id}`, msg => {
                 console.log(msg);
                 io2.emit(`${courses[i]._id}`, msg);
+                if(msg.state == 'save')
+                {
+                    for (let i = 0; i < msg.studentAnswers.length; i++) {
+                        var newAnswer = new Answer({
+                            answer: msg.studentAnswers[i].answer,
+                            userName: msg.studentAnswers[i].userName,
+                            
+                        })
+                    }
+                }
             });
         }
     });
@@ -186,6 +194,16 @@ io2.on("connection", socket => {
             socket.on(`${courses[i]._id}`, msg => {
                 console.log(msg);
                 io2.emit(`${courses[i]._id}`, msg);
+                if(msg.state == 'save')
+                {
+                    for (let i = 0; i < msg.studentAnswers.length; i++) {
+                        var newAnswer = new Answer({
+                            answer: msg.studentAnswers[i].answer,
+                            userName: msg.studentAnswers[i].userName,
+                            
+                        })
+                    }
+                }
             });
         }
     });

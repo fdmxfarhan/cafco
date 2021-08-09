@@ -49,5 +49,17 @@ $(document).ready(function(){
                 });
             });
         }
+        else if(msg.state == 'save')
+        {
+            if(lastAnswer == msg.rightAnswer)
+            {
+                alert('پاسخ شما درست بود.');
+            }
+            else
+            {
+                alert('پاسخ شما نادرست بود.');
+            }
+            
+        }
     });
 });

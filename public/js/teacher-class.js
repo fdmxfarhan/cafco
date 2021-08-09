@@ -6,7 +6,12 @@ $(document).ready(function(){
     var sum = 0;
     var answerNum = 4;
     var socket = io();
+    var studentAnswers = [];
+    var rightAnswer = 'undefined';
     $('.submit-button').click(() => {
+        sum = 0;
+        studentAnswers = [];
+        rightAnswer = 'undefined';
         while (answers.childNodes.length > 0) {
             answers.removeChild(answers.childNodes[0]);
         }
@@ -14,6 +19,7 @@ $(document).ready(function(){
             bars.removeChild(bars.childNodes[0]);
         }
         answerNum = parseInt($('input.number').val());
+        var inputs = [];
         for(var i=0; i < answerNum; i++)
         {
             var ans = document.createElement('div');
@@ -30,6 +36,7 @@ $(document).ready(function(){
             ans.appendChild(input);
             ans.appendChild(label);
             answers.appendChild(ans);
+            inputs.push(input);
 
             var barArea = document.createElement('div');
             var question = document.createElement('div');
@@ -48,12 +55,23 @@ $(document).ready(function(){
             barArea.appendChild(bar);
             bars.appendChild(barArea);
         }
+        inputs.forEach(input => {
+            input.addEventListener('change',() => {
+                rightAnswer = parseInt(input.id.slice(6, 1000));
+            });
+        });
         socket.emit(courseID, {state: 'change-ans',answerNum, userName});
+    });
+    $('.button-end').click(() => {
+        var scoreRight = parseInt($('#score-right').val());
+        var scoreWrong = parseInt($('#score-wrong').val());
+        socket.emit(courseID, {state: 'save', studentAnswers, scoreRight, scoreWrong, rightAnswer});
     });
     socket.on(courseID, (msg) => {
         if(msg.state == 'student-ans')
         {
             sum += 1;
+            studentAnswers.push(msg);
             var number = document.getElementById('number' + msg.answer);
             number.textContent = parseInt(number.textContent) + 1;
             for(var i=0; i<answerNum; i++){
@@ -64,6 +82,9 @@ $(document).ready(function(){
         }
         else if(msg.state == 'student-change')
         {
+            for (let i = 0; i < studentAnswers.length; i++) {
+                if(msg.userName == studentAnswers[i].userName) studentAnswers[i].answer = msg.answer;
+            }
             var number = document.getElementById('number' + msg.answer);
             var lastNumber = document.getElementById('number' + msg.lastAnswer);
             number.textContent = parseInt(number.textContent) + 1;
@@ -75,5 +96,4 @@ $(document).ready(function(){
             }
         }
     });
-
 });
