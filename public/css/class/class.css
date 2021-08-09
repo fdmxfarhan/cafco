@@ -109,6 +109,7 @@ input:focus{outline: none;}
         float: right;
         height: 100vh;
         overflow-y: scroll;
+        position: relative;
     }
     .class-container .sideBar::-webkit-scrollbar {
         display: none;
@@ -280,6 +281,35 @@ input:focus{outline: none;}
     .button-end:hover{
         background-color: var(--hover);
     }
+    .sideBar .score-area{ 
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--background);
+        color: lightgreen;
+        font-family: 'iransans';
+        font-size: 1.5vw;
+        overflow: hidden;
+        display: inline-flex;
+    }
+    .sideBar .score-area .score-label{ 
+        font-size: 1vw;
+        display: inline;
+        color: rgb(243, 243, 243);
+        margin-right: 0.5vw;
+    }
+    .sideBar .score-area .score{ 
+        font-size: 1.1vw;
+        display: inline;
+        color: var(--blue);
+    }
+    .sideBar .score-area .score2{ 
+        font-size: 1.1vw;
+        display: inline;
+        color: rgb(197, 197, 197);
+    }
+    
 }
 @media only screen and (max-width: 800px) {
     .class-container{
