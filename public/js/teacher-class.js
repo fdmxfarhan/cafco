@@ -1,15 +1,4 @@
-function getLocalStream() {
-    navigator.mediaDevices.getUserMedia({video: false, audio: true}).then( stream => {
-        window.localStream = stream; // A
-        window.localAudio.srcObject = stream; // B
-        window.localAudio.autoplay = true; // C
-    }).catch( err => {
-        console.log("u got an error:" + err)
-    });
-}
-
 $(document).ready(function(){
-    getLocalStream();
     var answers = document.getElementById('answers');
     var bars = document.getElementById('bars');
     var courseID = document.getElementById('courseID').textContent;
