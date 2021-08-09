@@ -10,6 +10,8 @@ html
         meta(name="theme-color" content="#febf18")
         link(rel="stylesheet", href="/css/class/class.css")
         script(src="/socket.io/socket.io.js")
+        meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")
+        meta(name="mobile-web-app-capable" content="yes")
         block styles
     body
         .hidden#courseID= course._id
@@ -67,7 +69,7 @@ html
                             .bar#bar4
                     .button-end ثبت پاسخ ها
             .iframe-area
-                iframe(src="#{link}", frameborder="0" allow="autoplay;fullscreen;speaker;microphone;camera;display-capture") 
+                iframe(src="#{link}" width="100%" height="100%" frameborder="0" allowFullScreen="true" allow="autoplay;fullscreen;speaker;microphone;camera;display-capture") 
             
         script(src="/js/teacher-class.js") 
 
