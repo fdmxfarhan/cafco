@@ -209,11 +209,11 @@ var sortAlgorythm = (a, b) => {
             if(a.startDate.day == b.startDate.day){
                 return a.price - b.price;
             }
-            return a.startDate.day - b.startDate.day;
+            return b.startDate.day - a.startDate.day;
         }
-        return a.startDate.month - b.startDate.month;    
+        return b.startDate.month - a.startDate.month;
     }
-    return a.startDate.year - b.startDate.year;
+    return b.startDate.year - a.startDate.year;
 };
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
