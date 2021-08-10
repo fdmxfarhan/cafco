@@ -22,6 +22,7 @@ var uploadRoute = require('./routes/upload');
 var paymentRoute = require('./routes/payment');
 var apiRoute = require('./routes/api');
 var classRoute = require('./routes/class');
+const User = require('./models/User');
 
 // Mongo DB connect
 mongoose.connect('mongodb://localhost/register', {useNewUrlParser: true, useUnifiedTopology: true}, (err) =>{
@@ -153,6 +154,10 @@ io.on("connection", socket => {
             socket.on(`${course._id}`, msg => {
                 console.log(course.title, msg);
                 io.emit(`${course._id}`, msg);
+                if(msg.state == 'save')
+                {
+                    // User.find
+                }
             });
         });
         // for (let i = 0; i < courses.length; i++) {

@@ -1,8 +1,9 @@
 $(document).ready(function(){
-    var answers = document.getElementById('answers');
+    var answers  = document.getElementById('answers');
     var courseID = document.getElementById('courseID').textContent;
     var userName = document.getElementById('userName').textContent;
-    var socket = io();
+    var userID   = document.getElementById('userID').textContent;
+    var socket   = io();
     var answeredBefore = false;
     var lastAnswer;
     socket.on(courseID, (msg) => {
@@ -38,12 +39,12 @@ $(document).ready(function(){
                     answer = parseInt(input.id.slice(6, 1000));
                     if(!answeredBefore)
                     {
-                        socket.emit(courseID, {state: 'student-ans', userName, answer});
+                        socket.emit(courseID, {state: 'student-ans', userName, answer, userID});
                         answeredBefore = true;
                     }
                     else
                     {
-                        socket.emit(courseID, {state: 'student-change', userName, answer, lastAnswer})
+                        socket.emit(courseID, {state: 'student-change', userName, answer, userID, lastAnswer})
                     }
                     lastAnswer = answer;
                 });

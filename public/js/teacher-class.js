@@ -10,8 +10,8 @@ function getLocalStream() {
 
 $(document).ready(function(){
     getLocalStream();
-    let iframe = document.getElementById("mainIframe");
-    iframe.allow="autoplay;fullscreen;speaker;microphone;camera;display-capture;";
+    // var iframe = document.getElementById("mainIframe");
+    // iframe.allow="autoplay;fullscreen;speaker;microphone;camera;display-capture";
     var answers = document.getElementById('answers');
     var bars = document.getElementById('bars');
     var courseID = document.getElementById('courseID').textContent;
