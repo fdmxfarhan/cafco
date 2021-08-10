@@ -303,11 +303,13 @@ input:focus{outline: none;}
         font-size: 1.1vw;
         display: inline;
         color: var(--blue);
+        direction: ltr;
     }
     .sideBar .score-area .score2{ 
         font-size: 1.1vw;
         display: inline;
         color: rgb(197, 197, 197);
+        direction: ltr;
     }
     
 }
