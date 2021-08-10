@@ -3,6 +3,8 @@ $(document).ready(function(){
     var courseID = document.getElementById('courseID').textContent;
     var userName = document.getElementById('userName').textContent;
     var userID   = document.getElementById('userID').textContent;
+    var todayScore = document.getElementById('todayScore');
+    var totalScore = document.getElementById('totalScore');
     var socket   = io();
     var answeredBefore = false;
     var lastAnswer;
@@ -54,10 +56,14 @@ $(document).ready(function(){
         {
             if(lastAnswer == msg.rightAnswer)
             {
+                todayScore.textContent = parseInt(todayScore.textContent) + Math.abs(msg.scoreRight);
+                totalScore.textContent = parseInt(totalScore.textContent) + Math.abs(msg.scoreRight);
                 alert('پاسخ شما درست بود.');
             }
             else
             {
+                todayScore.textContent = parseInt(todayScore.textContent) - Math.abs(msg.scoreWrong);
+                totalScore.textContent = parseInt(totalScore.textContent) - Math.abs(msg.scoreWrong);
                 alert('پاسخ شما نادرست بود.');
             }
             

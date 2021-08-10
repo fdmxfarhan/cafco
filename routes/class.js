@@ -160,17 +160,66 @@ function get_persian_month(month) {
             break;
     }
 }
+var isToday = (date) => {
+    var now = new Date();
+    if(now.getDate() == date.getDate() && now.getMonth() == date.getMonth() && now.getYear() == date.getYear()) return true;
+    return false;
+};
 
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'user'){
-        Course.findById(req.query.courseID, (err, course) => {
-            res.render('./class/user-class', {
-                user: req.user,
-                course,
-                link: req.query.link,
-
+        User.find({}, (err, users) => {
+            var todayCnt = 0, totalCnt = 0, todayAvg = 0, totalAvg = 0;
+            for(var t=0; t<users.length; t++)
+            {
+                var usr = users[t];
+                for (var i = 0; i < usr.course.length; i++) {
+                    if(usr.course[i].courseID == req.query.courseID){
+                        if(usr.course[i].answer){
+                            var answer = usr.course[i].answer;
+                            for (var j = 0; j < answer.length; j++) {
+                                if(isToday(answer[j].date)){
+                                    todayAvg += answer[j].score;
+                                    todayCnt++;
+                                }
+                                totalAvg += answer[j].score;
+                                totalCnt++;
+                            }
+                        }
+                    }
+                }
+            }
+            if(todayCnt != 0 && totalCnt != 0){
+                todayAvg /= todayCnt;
+                totalAvg /= totalCnt;
+            }
+            var todayScore = 0;
+            var totalScore = 0;
+            for (var i = 0; i < req.user.course.length; i++) {
+                if(req.user.course[i].courseID == req.query.courseID){
+                    if(req.user.course[i].answer){
+                        var answer = req.user.course[i].answer;
+                        for (var j = 0; j < answer.length; j++) {
+                            if(isToday(answer[j].date)){
+                                todayScore = answer[j].score;
+                            }
+                            totalScore += answer[j].score;
+                        }
+                    }
+                }
+            }
+            Course.findById(req.query.courseID, (err, course) => {
+                res.render('./class/user-class', {
+                    user: req.user,
+                    course,
+                    link: req.query.link,
+                    todayScore,
+                    totalScore,
+                    todayAvg,
+                    totalAvg,
+                });
             });
-        })
+        });
     }
     else if(req.user.role == 'teacher'){
         Course.findById(req.query.courseID, (err, course) => {

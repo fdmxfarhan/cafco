@@ -66,7 +66,7 @@ $(document).ready(function(){
             barArea.appendChild(question);
             barArea.appendChild(number);
             barArea.appendChild(bar);
-            bars.appendChild(barArea);
+            bars.appendChild(barArea); 
         }
         inputs.forEach(input => {
             input.addEventListener('change',() => {
@@ -79,6 +79,58 @@ $(document).ready(function(){
         var scoreRight = parseInt($('#score-right').val());
         var scoreWrong = parseInt($('#score-wrong').val());
         socket.emit(courseID, {state: 'save', studentAnswers, scoreRight, scoreWrong, rightAnswer});
+        alert('اطلاعات ثبت شد.');
+        socket.emit(courseID, {state: 'change-ans',answerNum, userName});
+        sum = 0;
+        studentAnswers = [];
+        rightAnswer = 'undefined';
+        while (answers.childNodes.length > 0) {
+            answers.removeChild(answers.childNodes[0]);
+        }
+        while (bars.childNodes.length > 0) {
+            bars.removeChild(bars.childNodes[0]);
+        }
+        var inputs = [];
+        for(var i=0; i < answerNum; i++)
+        {
+            var ans = document.createElement('div');
+            var input = document.createElement('input');
+            var label = document.createElement('label');
+            ans.classList.add('ans');
+            input.classList.add('radio');
+            label.classList.add('radio');
+            input.setAttribute("type", "radio");
+            input.setAttribute("name", "answer");
+            input.setAttribute("id", "answer" + (i+1));
+            label.setAttribute("for", "answer" + (i+1));
+            label.textContent = "گزینه " + (i + 1);
+            ans.appendChild(input);
+            ans.appendChild(label);
+            answers.appendChild(ans);
+            inputs.push(input);
+
+            var barArea = document.createElement('div');
+            var question = document.createElement('div');
+            var number = document.createElement('div');
+            var bar = document.createElement('div');
+            barArea.classList.add('bar-area');
+            question.classList.add('question');
+            number.classList.add('number');
+            number.setAttribute("id", "number" + (i+1));
+            bar.classList.add('bar');
+            bar.setAttribute("id", "bar" + (i+1));
+            question.textContent = (i + 1).toString();
+            number.textContent = '0';
+            barArea.appendChild(question);
+            barArea.appendChild(number);
+            barArea.appendChild(bar);
+            bars.appendChild(barArea); 
+        }
+        inputs.forEach(input => {
+            input.addEventListener('change',() => {
+                rightAnswer = parseInt(input.id.slice(6, 1000));
+            });
+        });
     });
     socket.on(courseID, (msg) => {
         if(msg.state == 'student-ans')

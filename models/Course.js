@@ -37,6 +37,10 @@ var CourseSchema = new mongoose.Schema({
         default: 'undefined',
     },
     eventHandler: String,
+    answers: {
+        type: [Object],
+        default: [],
+    }
 });
 
 var Course = mongoose.model('Course', CourseSchema);

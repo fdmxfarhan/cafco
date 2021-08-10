@@ -125,6 +125,12 @@ app.use(function(err, req, res, next) {
     });
 });
 
+var isToday = (date) => {
+    var now = new Date();
+    if(now.getDate() == date.getDate() && now.getMonth() == date.getMonth() && now.getYear() == date.getYear()) return true;
+    return false;
+};
+
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
@@ -156,26 +162,53 @@ io.on("connection", socket => {
                 io.emit(`${course._id}`, msg);
                 if(msg.state == 'save')
                 {
-                    // User.find
+                    for(var i=0; i<msg.studentAnswers.length; i++)
+                    {
+                        var score = 0;
+                        if(msg.rightAnswer == msg.studentAnswers[i].answer) score = Math.abs(msg.scoreRight);
+                        else score = -Math.abs(msg.scoreWrong);
+                        User.findById(msg.studentAnswers[i].userID, (err, user) => {
+                            var courseIndex = -1;
+                            for(var j=0; j<user.course.length; j++){
+                                if(user.course[j].courseID == course._id.toString()) {
+                                    courseIndex = j;
+                                }
+                            }
+                            var date = new Date();
+                            if(courseIndex == -1) console.log('course not found');
+                            else if(user.course[courseIndex].answer)
+                            {
+                                var wasToday = false
+                                for(var j=0; j<user.course[courseIndex].answer.length; j++)
+                                {
+                                    if(isToday(user.course[courseIndex].answer[j].date))
+                                    {
+                                        var newCourse = user.course;
+                                        newCourse[courseIndex].answer[j].score += score;
+                                        User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+                                        wasToday = true;
+                                    }
+                                }
+                                if(!wasToday)
+                                {
+                                    var newCourse = user.course;
+                                    newAnswer = newCourse[courseIndex].answer;
+                                    newAnswer.push({date, score});
+                                    newCourse[courseIndex].answer = newAnswer;
+                                    User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+                                }
+                            }
+                            else
+                            {
+                                var newCourse = user.course;
+                                newCourse[courseIndex].answer = [{date, score}];
+                                User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+                            }
+                        });
+                    }
                 }
             });
         });
-        // for (let i = 0; i < courses.length; i++) {
-        //     socket.on(`${courses[i]._id}`, msg => {
-        //         console.log(courses[i].title, msg);
-        //         io2.emit(`${courses[i]._id}`, msg);
-        //         // if(msg.state == 'save')
-        //         // {
-        //         //     for (let i = 0; i < msg.studentAnswers.length; i++) {
-        //         //         var newAnswer = new Answer({
-        //         //             answer: msg.studentAnswers[i].answer,
-        //         //             userName: msg.studentAnswers[i].userName,
-                            
-        //         //         })
-        //         //     }
-        //         // }
-        //     });
-        // }
     });
     
 });
@@ -205,24 +238,55 @@ io2.on("connection", socket => {
             socket.on(`${course._id}`, msg => {
                 console.log(course.title, msg);
                 io2.emit(`${course._id}`, msg);
+                if(msg.state == 'save')
+                {
+                    for(var i=0; i<msg.studentAnswers.length; i++)
+                    {
+                        var score = 0;
+                        if(msg.rightAnswer == msg.studentAnswers[i].answer) score = Math.abs(msg.scoreRight);
+                        else score = -Math.abs(msg.scoreWrong);
+                        User.findById(msg.studentAnswers[i].userID, (err, user) => {
+                            var courseIndex = -1;
+                            for(var j=0; j<user.course.length; j++){
+                                if(user.course[j].courseID == course._id.toString()) {
+                                    courseIndex = j;
+                                }
+                            }
+                            var date = new Date();
+                            if(courseIndex == -1) console.log('course not found');
+                            else if(user.course[courseIndex].answer)
+                            {
+                                var wasToday = false
+                                for(var j=0; j<user.course[courseIndex].answer.length; j++)
+                                {
+                                    if(isToday(user.course[courseIndex].answer[j].date))
+                                    {
+                                        var newCourse = user.course;
+                                        newCourse[courseIndex].answer[j].score += score;
+                                        User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+                                        wasToday = true;
+                                    }
+                                }
+                                if(!wasToday)
+                                {
+                                    var newCourse = user.course;
+                                    newAnswer = newCourse[courseIndex].answer;
+                                    newAnswer.push({date, score});
+                                    newCourse[courseIndex].answer = newAnswer;
+                                    User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+                                }
+                            }
+                            else
+                            {
+                                var newCourse = user.course;
+                                newCourse[courseIndex].answer = [{date, score}];
+                                User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+                            }
+                        });
+                    }
+                }
             });
         });
-        // for (let i = 0; i < courses.length; i++) {
-        //     socket.on(`${courses[i]._id}`, msg => {
-        //         console.log(courses[i].title, msg);
-        //         io2.emit(`${courses[i]._id}`, msg);
-        //         // if(msg.state == 'save')
-        //         // {
-        //         //     for (let i = 0; i < msg.studentAnswers.length; i++) {
-        //         //         var newAnswer = new Answer({
-        //         //             answer: msg.studentAnswers[i].answer,
-        //         //             userName: msg.studentAnswers[i].userName,
-                            
-        //         //         })
-        //         //     }
-        //         // }
-        //     });
-        // }
     });
 });
 

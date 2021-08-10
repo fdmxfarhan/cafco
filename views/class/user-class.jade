@@ -19,13 +19,13 @@ html
             .sideBar 
                 .score-area
                     .score-label امتیاز امروز: 
-                        .score 100
+                        .score#todayScore= todayScore
                         | /
-                        .score2 130
+                        .score2= todayAvg
                     .score-label امتیاز کل: 
-                        .score 140
+                        .score#totalScore= totalScore
                         | /
-                        .score2 100
+                        .score2= totalAvg
                 .user-info
                     img.avatar(src="/img/avatar/2.png", alt="avatar")
                     .titles
