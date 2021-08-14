@@ -35,6 +35,10 @@ var UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  teacherCourseID: {
+    type: [String],
+    default: [],
+  },
 });
 
 var User = mongoose.model('User', UserSchema);

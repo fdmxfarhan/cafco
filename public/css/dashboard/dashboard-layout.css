@@ -285,11 +285,17 @@ body {
         display: inline;
     }
     .popup-area .two-side-cont .part {
-
         float: right;
         width: 46%;
         margin: 1%;
     }
+    .popup-area .two-side-cont .part.desc {
+        width: 60%;
+    }
+    .popup-area .two-side-cont .part.img-part {
+        width: 30%;
+    }
+    
     .popup-area .two-side-cont .part .text-input {
         border-radius: 2vw;
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
@@ -447,10 +453,10 @@ body {
     }
     .popup-area .action a {
         float: right;
-        padding: 0.3vw 1vw;
+        padding: 0.2vw 0.5vw;
         text-decoration: none;
         border-radius: 1.5vw;
-        margin-left: 1vw;
+        margin-left: 0.3vw;
         background-color: rgb(81, 212, 81);
         color: white;
         transition-duration: 500ms;
@@ -460,7 +466,7 @@ body {
         background-color: rgb(0, 255, 0);
     }
     .popup-area .action a i {
-        padding-left: 1vw;
+        padding-left: 0.4vw;
     }
     .popup-area .action a.remove {
         background-color: salmon;
@@ -478,8 +484,8 @@ body {
         background-color: white;
         border: var(--blue) 0.2vw solid;
         color: var(--blue);
-        padding: 0.1vw 1vw;
-        font-size: 1vw;
+        padding: 0.1vw 0.5vw;
+        font-size: 0.9vw;
     }
     .popup-area .action a.status.active {
         background-color: var(--blue);

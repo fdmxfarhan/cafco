@@ -40,7 +40,12 @@ var CourseSchema = new mongoose.Schema({
     answers: {
         type: [Object],
         default: [],
-    }
+    },
+    teachersID: {
+        type: [String],
+        default: [],
+    },
+
 });
 
 var Course = mongoose.model('Course', CourseSchema);
