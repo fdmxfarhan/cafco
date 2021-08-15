@@ -46,7 +46,6 @@
     --red: #ff0000;
     --text: rgb(100, 100, 100);
 }
-
 body {
     margin: 0;
     padding: 0;
@@ -56,7 +55,6 @@ body {
     direction: rtl;
     background-color: white;
 }
-
 .black-modal {
     display: none;
     position: fixed;
@@ -67,7 +65,6 @@ body {
     height: 100%;
     z-index: 10;
 }
-
 .black-modal2 {
     display: none;
     position: fixed;
@@ -78,7 +75,6 @@ body {
     height: 100%;
     z-index: 10;
 }
-
 .transparent-modal {
     display: none;
     position: absolute;
@@ -88,21 +84,17 @@ body {
     height: 100%;
     z-index: 1;
 }
-
 .dashboard {
     overflow: hidden;
     padding: 0;
     margin: 0;
 }
-
 .hidden {
     display: none;
 }
-
 .visible{
     display: block;
 }
-
 .center {
     text-align: center;
 }

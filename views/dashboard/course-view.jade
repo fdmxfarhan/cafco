@@ -28,6 +28,18 @@
                             i.fa.fa-check
                             | ثبت نام
                     -}
+                    -if(user.role == 'admin'){
+                        form(action="/dashboard/add-teacher-to-course" method='POST') 
+                            input.hidden(type="text" name='courseID' value='#{courses[i]._id}')
+                            input.hidden(type="text" name='index' value='#{i}')
+                            select(name="teacherID") 
+                                -for(var j=0; j<users.length; j++){
+                                    -if(users[j].role == 'teacher'){
+                                        option(value="#{users[j]._id}")= users[j].fullname
+                                    -}
+                                -}
+                            input.submit(type="submit" value="افزودن")
+                    -}
                 //- .break-side 
                 .part.img-part
                     .cover-image 
@@ -59,6 +71,5 @@
                                 a.status.active(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=پایان یافته") پایان یافته
                             -else
                                 a.status(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=پایان یافته") پایان یافته
-                            
                     -}
 -}
