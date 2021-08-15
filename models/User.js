@@ -35,7 +35,7 @@ var UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  teacherCourseID: {
+  teacherCourses: {
     type: [String],
     default: [],
   },

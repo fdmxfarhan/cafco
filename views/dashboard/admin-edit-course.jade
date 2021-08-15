@@ -17,11 +17,11 @@ block content
     .two-side-cont
         form(action="/dashboard/admin-edit-course" method="POST") 
             input.hidden(type="text" name="courseID" value="#{course._id}")
-            .part 
-                .text-input 
-                    i.fa.fa-pencil 
+            .part
+                .text-input
+                    i.fa.fa-pencil
                     input(type="text" name="title" placeholder="عنوان دوره" value="#{course.title}" required)
-                .text-input 
+                .text-input
                     i.fa.fa-pencil 
                     input(type="text" name="undertitle" placeholder="زیر عنوان" value="#{course.undertitle}")
                 textarea#txt-area(name="description" placeholder="توضیحات ..." required) #{course.description}
@@ -62,6 +62,14 @@ block content
                 .text-input 
                     i.fa.fa-link 
                     input(type="text" name="link" placeholder="لینک ورود" value="#{course.link == 'undefined'? '': course.link}")
+                .text-input 
+                    i.fa.fa-play
+                    input(type="text" name="video" placeholder="ویدئو معرفی" value="#{course.video == 'undefined'? '': 'https://www.aparat.com/v/' + course.video}")
+                -if(course.usePanel)
+                    input.check(type="checkbox" name="usePanel" id="usePanel" checked)
+                -else
+                    input.check(type="checkbox" name="usePanel" id="usePanel")
+                label(for="usePanel") استفاده از پنل ویژه
                 .cover-img-edit
                     img.cover(src="#{course.cover}", alt="cover")
                     #change 

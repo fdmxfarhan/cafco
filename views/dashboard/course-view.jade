@@ -29,16 +29,23 @@
                             | ثبت نام
                     -}
                     -if(user.role == 'admin'){
-                        form(action="/dashboard/add-teacher-to-course" method='POST') 
+                        .teachers 
+                            -for(var j=0; j<users.length; j++){
+                                -if(courses[i].teachers.indexOf(users[j]._id) != -1){
+                                    .teacher= users[j].fullname
+                                        i.fa.fa-trash
+                                -}
+                            -}
+                        form.add-teacher(action="/dashboard/add-teacher-to-course" method='POST') 
                             input.hidden(type="text" name='courseID' value='#{courses[i]._id}')
                             input.hidden(type="text" name='index' value='#{i}')
                             select(name="teacherID") 
                                 -for(var j=0; j<users.length; j++){
-                                    -if(users[j].role == 'teacher'){
+                                    -if(users[j].role == 'teacher' && courses[i].teachers.indexOf(users[j]._id) == -1){
                                         option(value="#{users[j]._id}")= users[j].fullname
                                     -}
                                 -}
-                            input.submit(type="submit" value="افزودن")
+                            input.submit-small(type="submit" value="افزودن")
                     -}
                 //- .break-side 
                 .part.img-part

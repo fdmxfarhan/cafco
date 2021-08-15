@@ -591,16 +591,20 @@ router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
 });
 
 router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
-    const { title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID, link } = req.body;
+    var { usePanel, video, title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID, link } = req.body;
+    if(usePanel) usePanel = true;
+    else         usePanel = false;
+    splited = video.split('/');
+    video = splited[splited.length - 1];
+    if(video == '') video = splited[splited.length - 2];
     if(req.user.role == 'admin'){
         var startDate = { day, month, year };
         var endDate = { day: endDay, month: endMonth, year: endYear };
-        Course.updateMany({_id: courseID}, {$set: {title, undertitle, description, teacher, session, minAge, maxAge, startDate, endDate, capacity, price, courseID, link}}, (err, doc) => {
+        Course.updateMany({_id: courseID}, {$set: {usePanel, video, title, undertitle, description, teacher, session, minAge, maxAge, startDate, endDate, capacity, price, courseID, link}}, (err, doc) => {
             req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
             res.redirect(`/dashboard/admin-edit-course?courseID=${courseID}`);
         });
     }
-    
 });
 
 router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
@@ -873,5 +877,25 @@ router.post('/api-edit-admins', ensureAuthenticated, (req, res, next) => {
         res.redirect('/dashboard/api')
     }
 });
+
+router.post('/add-teacher-to-course', ensureAuthenticated, (req, res, next) => {
+    if(!req.body.teacherID) res.redirect('/dashboard');
+    else if(req.user.role == 'admin'){
+        Course.findById(req.body.courseID, (err, course) => {
+            var teachers = course.teachers;
+            teachers.push(req.body.teacherID);
+            Course.updateMany({_id: req.body.courseID}, {$set: {teachers}}, (err, doc) => {
+                User.findById(req.body.teacherID, (err, user) => {
+                    var teacherCourses = user.teacherCourses;
+                    teacherCourses.push(req.body.courseID);
+                    User.updateMany({_id: req.body.teacherID}, {$set: {teacherCourses}}, (err, doc) => {
+                        res.redirect('/dashboard');
+                    })
+                });
+            });
+        });
+    }
+});
+
 
 module.exports = router;

@@ -41,11 +41,14 @@ var CourseSchema = new mongoose.Schema({
         type: [Object],
         default: [],
     },
-    teachersID: {
+    teachers: {
         type: [String],
         default: [],
     },
-
+    usePanel: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 var Course = mongoose.model('Course', CourseSchema);
