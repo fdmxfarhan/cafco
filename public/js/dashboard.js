@@ -16,6 +16,8 @@ $(document).ready(function(){
         $('#add-course').fadeOut(500);
         for(var i=0;i<100; i++)
             $(`#course-view${i}`).fadeOut(500);
+        for(var i=0;i<100; i++)
+            $(`#course-video${i}`).fadeOut(500);
     });
     $('.close-popup').click(() => {
         $('.black-modal').fadeOut(500);
@@ -34,5 +36,16 @@ $(document).ready(function(){
         });
     });
 
-
+    var videos = [];
+    for(var i=0; i<500; i++){
+        videos.push({video: $(`#course-video${i}`), btn: $(`#course-video-btn${i}`)});
+    }
+    videos.forEach(video => {
+        video.btn.click(() => {
+            for(var i=0;i<100; i++)
+                $(`#course-view${i}`).fadeOut(100);
+            video.video.fadeIn(500);
+            $('.black-modal').fadeIn(500);
+        });
+    });
 });

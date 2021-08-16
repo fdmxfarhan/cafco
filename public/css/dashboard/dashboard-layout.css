@@ -535,6 +535,34 @@ body {
     .part.desc .teachers .teacher i:hover{
         color: var(--hover);
     }
+    .course-video-btn{
+        display: inline;
+        color: var(--blue);
+        cursor: pointer;
+        transition-duration: 500ms;
+    }
+    .course-video-btn:hover{
+        color: darkblue;
+    }
+    .course-video{
+        position: fixed;
+        top: 4vw;
+        left: 10%;
+        width: 80%;
+        z-index: 100;
+        display: none;
+    }
+    .course-video iframe{
+        width: 100%;
+        height: 80vh;
+    }
+    .course-video .close-video{
+        position: absolute;
+        top: -1vw;
+        left: -2vw;
+    }
+
+
 
 }
 

@@ -7,7 +7,12 @@
                 .part.desc 
                     .text= courses[i].description
                     ul
-                        li مدرس: #{courses[i].teacher}
+                        -if(courses[i].video != 'undefined'){
+                            li مدرس: 
+                                .course-video-btn(id="course-video-btn#{i}") #{courses[i].teacher}
+                        -}else {
+                            li مدرس: #{courses[i].teacher}
+                        -}
                         li زمان شروع: #{courses[i].startDate.year}/#{courses[i].startDate.month}/#{courses[i].startDate.day}
                         -if(courses[i].minAge == courses[i].maxAge)
                             li پایه تحصیلی: #{educationStages[courses[i].minAge]}
@@ -79,4 +84,11 @@
                             -else
                                 a.status(href="/dashboard/set-course-status?courseID=#{courses[i]._id}&status=پایان یافته") پایان یافته
                     -}
+    -if(courses[i].video != 'undefined'){
+        .course-video(id="course-video#{i}")
+            i.fa.fa-times.close-video
+            iframe(src="https://www.aparat.com/video/video/embed/videohash/#{courses[i].video}/vt/frame" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true")
+    -}
+        
+
 -}
