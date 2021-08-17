@@ -80,6 +80,14 @@ html
                         //- a.sidebar-nav-link(href="#") 
                         //-     i.fa.fa-gears
                         //-     | تنظیمات
+                    -}else if(user.role == 'teacher'){
+                        a.sidebar-nav-link(href="/dashboard") 
+                            i.fa.fa-user 
+                            | داشبورد
+                        .break 
+                        a.sidebar-nav-link(href="#") 
+                            i.fa.fa-gears
+                            | تنظیمات
                     -}
                 a.logout(href="/users/logout") 
                     i.fa.fa-power-off

@@ -26,6 +26,9 @@ block content
                     .labels 
                         .label.green= courses[i].status
                         -if(courses[i].link && courses[i].link != 'undefined'){
+                            -if(courses[i].usePanel)
+                                a(href="/class/report?courseID=#{courses[i]._id}") 
+                                    .label.red گزارشات
                             .label.blue
                                 //- -var index = courses.map(e => e._id.toString()).indexOf(user.course[i].courseID.toString())
                                 -if(courses[i].usePanel)

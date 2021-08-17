@@ -1,0 +1,58 @@
+@media only screen and (min-width: 800px) {
+    h1.title.center{
+        font-family: 'iransans';
+        font-size: 1.5vw;
+        color: var(--blue);
+        border-bottom: lightgray 0.1vw solid;
+        width: 50%;
+        margin: auto;
+        margin-top: 1.5vw;
+    }
+    .users-report{
+        margin: 2vw 0;
+    }
+    .dropdown-btn {
+        background-color: rgb(68, 185, 224);
+        width: 90%;
+        margin: auto;
+        border-radius: 1vw;
+        color: white;
+        position: relative;
+        padding: 0.5vw 1vw;
+        cursor: pointer;
+        margin-top: 1vw;
+    }
+    .dropdown-btn:hover{
+        background-color: rgb(233, 137, 68);
+    }
+    .dropdown-btn i{
+        position: absolute;
+        top: 0.8vw;
+        left: 1vw;
+    }
+    .dropdown-cont{
+        width: 90%;
+        margin: 0.5vw auto;
+        display: none;
+    }
+    .dropdown-cont table{
+        width: 100%;
+        text-align: center;
+    }
+    .dropdown-cont table th{
+        /* background-color: rgb(102, 196, 228); */
+        color: var(--blue);
+        border-bottom: var(--blue) 0.2vw solid;
+        font-family: 'iransans';
+        font-size: 1.2vw;
+    }
+    .dropdown-cont table td{
+        color: var(--text);
+        border-bottom: lightgray 0.1vw solid;
+        font-family: 'iransans';
+        font-size: 1.2vw;
+    }
+
+
+
+}

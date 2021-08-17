@@ -141,7 +141,7 @@ io.on("connection", socket => {
         console.log(msg);
         io.emit("log", msg);
     });
-
+    
     socket.on("lock", msg => {
         console.log(msg);
         io.emit("lock", msg);
@@ -154,7 +154,44 @@ io.on("connection", socket => {
         console.log(msg);
         io.emit("leave", msg);
     });
-
+    socket.on("avg", msg => {
+        console.log(msg);
+        Course.findById(msg.courseID, (err, course) => {
+            User.find({}, (err, allUsers) => {
+                var users = [];
+                allUsers.forEach(usr => {
+                    if(usr.course.map(e => e.courseID.toString()).indexOf(msg.courseID.toString()) != -1)
+                        users.push(usr);
+                });
+                var sum = 0, cnt = 0, totalSum = 0, totalCnt = 0;
+                for (let i = 0; i < users.length; i++) {
+                    const usr = users[i];
+                    var courseIndex = usr.course.map(e => e.courseID.toString()).indexOf(msg.courseID.toString());
+                    if(courseIndex != -1){
+                        var answers = usr.course[courseIndex].answer;
+                        if(answers){
+                            for(var j=0; j<answers.length; j++){
+                                var now = (new Date()).getTime();
+                                if((now - answers[j].date.getTime()) < 1000*60*60*24){
+                                    sum+= answers[j].score;
+                                    cnt++;
+                                }
+                                totalSum+= answers[j].score;
+                                totalCnt++;
+                            }
+                        }
+                    }
+                }
+                var dayAvg = 0;
+                if(cnt != 0) dayAvg = sum/cnt;
+                var totalAvg = 0;
+                if(totalCnt != 0) totalAvg = totalSum/totalCnt;
+                console.log({dayAvg, totalSum});
+                io.emit("newAvg", {dayAvg, totalSum});
+            });
+        });
+        
+    });
     Course.find({}, (err, courses) => {
         courses.forEach(course => {
             socket.on(`${course._id}`, msg => {
@@ -232,7 +269,44 @@ io2.on("connection", socket => {
         console.log(msg);
         io2.emit("leave", msg);
     });
-    
+    socket.on("avg", msg => {
+        console.log(msg);
+        Course.findById(msg.courseID, (err, course) => {
+            User.find({}, (err, allUsers) => {
+                var users = [];
+                allUsers.forEach(usr => {
+                    if(usr.course.map(e => e.courseID.toString()).indexOf(msg.courseID.toString()) != -1)
+                        users.push(usr);
+                });
+                var sum = 0, cnt = 0, totalSum = 0, totalCnt = 0;
+                for (let i = 0; i < users.length; i++) {
+                    const usr = users[i];
+                    var courseIndex = usr.course.map(e => e.courseID.toString()).indexOf(msg.courseID.toString());
+                    if(courseIndex != -1){
+                        var answers = usr.course[courseIndex].answer;
+                        if(answers){
+                            for(var j=0; j<answers.length; j++){
+                                var now = (new Date()).getTime();
+                                if((now - answers[j].date.getTime()) < 1000*60*60*24){
+                                    sum+= answers[j].score;
+                                    cnt++;
+                                }
+                                totalSum+= answers[j].score;
+                                totalCnt++;
+                            }
+                        }
+                    }
+                }
+                var dayAvg = 0;
+                if(cnt != 0) dayAvg = sum/cnt;
+                var totalAvg = 0;
+                if(totalCnt != 0) totalAvg = totalSum/totalCnt;
+                console.log({dayAvg, totalAvg});
+                io2.emit("newAvg", {dayAvg, totalAvg});
+            });
+        });
+        
+    });
     Course.find({}, (err, courses) => {
         courses.forEach(course => {
             socket.on(`${course._id}`, msg => {

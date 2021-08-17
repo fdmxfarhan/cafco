@@ -17,7 +17,7 @@ $(document).ready(function(){
     var courseID = document.getElementById('courseID').textContent;
     var userName = document.getElementById('userName').textContent;
     var sum = 0;
-    var answerNum = 4;
+    var answerNum = 0;
     var socket = io();
     var studentAnswers = [];
     var rightAnswer = 'undefined';
@@ -76,9 +76,14 @@ $(document).ready(function(){
         socket.emit(courseID, {state: 'change-ans',answerNum, userName});
     });
     $('.button-end').click(() => {
+        if(rightAnswer == 'undefined') {
+            alert('پاسخ صحیح انتخاب نشده');
+            return;
+        }
         var scoreRight = parseInt($('#score-right').val());
         var scoreWrong = parseInt($('#score-wrong').val());
         socket.emit(courseID, {state: 'save', studentAnswers, scoreRight, scoreWrong, rightAnswer});
+        socket.emit("avg", {courseID: courseID});
         alert('اطلاعات ثبت شد.');
         socket.emit(courseID, {state: 'change-ans',answerNum, userName});
         sum = 0;
@@ -159,6 +164,9 @@ $(document).ready(function(){
                 number = document.getElementById('number' + (i+1));
                 bar.style.width = `${(parseInt(number.textContent)/sum)*100}%`;
             }
+        }
+        else if(msg.state == 'newUser'){
+            socket.emit(courseID, {state: 'change-ans',answerNum, userName});
         }
     });
 });

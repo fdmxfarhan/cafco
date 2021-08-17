@@ -5,14 +5,24 @@ $(document).ready(function(){
     var userID   = document.getElementById('userID').textContent;
     var todayScore = document.getElementById('todayScore');
     var totalScore = document.getElementById('totalScore');
+    var todayAvg = document.getElementById('todayAvg');
+    var totalAvg = document.getElementById('totalAvg');
     var socket   = io();
     var answeredBefore = false;
     var lastAnswer;
+    socket.emit("avg", {courseID: courseID});
+    socket.emit(courseID, {state: 'newUser', userName});
+
+    socket.on('newAvg', (msg) => {
+        todayAvg.textContent = msg.dayAvg;
+        totalAvg.textContent = msg.totalAvg;
+    })
     socket.on(courseID, (msg) => {
         if(msg.state == 'change-ans')
         {
             answeredBefore = false;
             answerNum = msg.answerNum;
+            lastAnswer = 'undefined';
             while (answers.childNodes.length > 0) {
                 answers.removeChild(answers.childNodes[0]);
             }
@@ -54,6 +64,7 @@ $(document).ready(function(){
         }
         else if(msg.state == 'save')
         {
+            if(lastAnswer == 'undefined') return;
             if(lastAnswer == msg.rightAnswer)
             {
                 todayScore.textContent = parseInt(todayScore.textContent) + Math.abs(msg.scoreRight);
@@ -66,7 +77,7 @@ $(document).ready(function(){
                 totalScore.textContent = parseInt(totalScore.textContent) - Math.abs(msg.scoreWrong);
                 alert('پاسخ شما نادرست بود.');
             }
-            
+            socket.emit("avg", {courseID: courseID});
         }
     });
 });

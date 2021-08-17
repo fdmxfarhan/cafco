@@ -296,6 +296,55 @@
         font-weight: normal;
         margin-right: 0.5vw;
     }
+    .cards-area{
+        overflow: hidden;
+        width: 90%;
+        margin: auto;
+        padding: 1vw;
+    }
+    .cards-area .personel-card{
+        background-color: white;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        width: 23%;
+        margin-left: 1%;
+        margin-bottom: 1vw;
+        float: right;
+        border-radius: 1vw;
+        position: relative;
+        border: white 0.2vw solid;
+        transition-duration: 500ms;
+        min-height: 5.7vw;
+    }
+    .cards-area .personel-card:hover{
+        border: var(--blue) 0.2vw solid;
+    }
+    .cards-area .personel-card img{
+        width: 4vw;
+        position: absolute;
+        left: 1vw;
+        top: 1vw;
+    }
+    .cards-area .personel-card h1.name{
+        color: var(--blue);
+        font-family: 'iransans';
+        font-size: 1.3vw;
+        padding: 0.5vw 1vw;
+        margin: 0;
+    }
+    .cards-area .personel-card h2.name{
+        color: rgb(141, 141, 141);
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0 1vw;
+        margin: 0;
+        margin-bottom: 0.5vw;
+    }
+    .cards-area .personel-card .time{
+        color: rgb(170, 170, 170);
+        font-family: 'iransans';
+        padding: 0 1vw;
+        font-size: 1vw;
+    }
 }
 @media only screen and (max-width: 800px) {
     .graph-cards-area{

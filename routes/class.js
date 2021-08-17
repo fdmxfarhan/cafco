@@ -99,9 +99,9 @@ function gregorian_to_jalali(g_y, g_m, g_d) {
 
 function get_year_month_day(date) {
     var convertDate;
-    var y = date.substr(0, 4);
-    var m = date.substr(5, 2);
-    var d = date.substr(8, 2);
+    var y = parseInt(date.substr(0, 4));
+    var m = parseInt(date.substr(5, 2));
+    var d = parseInt(date.substr(8, 2));
     convertDate = gregorian_to_jalali(y, m, d);
     return convertDate;
 }
@@ -233,5 +233,103 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     }
 });
 
+router.get('/report', ensureAuthenticated, (req, res, next) => {
+    var {courseID} = req.query;
+
+    var getAvg = (users, date) => {
+        var sum = 0, cnt = 0;
+        for (let i = 0; i < users.length; i++) {
+            const usr = users[i];
+            var courseIndex = usr.course.map(e => e.courseID.toString()).indexOf(courseID.toString());
+            if(courseIndex != -1){
+                var answers = usr.course[courseIndex].answer;
+                if(answers){
+                    for(var j=0; j<answers.length; j++){
+                        if((date.getTime() - answers[j].date.getTime()) < 1000*60*60*24){
+                            sum+= answers[j].score;
+                            cnt++;
+                        }
+                    }
+                }
+            }
+        }
+        if(cnt == 0) return 0;
+        return sum/cnt;
+    };
+    var getMax = (users, date) => {
+        var max = 0, cnt = 0;
+        for (let i = 0; i < users.length; i++) {
+            const usr = users[i];
+            var courseIndex = usr.course.map(e => e.courseID.toString()).indexOf(courseID.toString());
+            if(courseIndex != -1){
+                var answers = usr.course[courseIndex].answer;
+                if(answers){
+                    for(var j=0; j<answers.length; j++){
+                        if((date.getTime() - answers[j].date.getTime()) < 1000*60*60*24){
+                            if(max < answers[j].score)
+                                max = answers[j].score;
+                        }
+                    }
+                }
+            }
+        }
+        return max;
+    }
+    var getMin = (users, date) => {
+        var min = 9999, cnt = 0;
+        for (let i = 0; i < users.length; i++) {
+            const usr = users[i];
+            var courseIndex = usr.course.map(e => e.courseID.toString()).indexOf(courseID.toString());
+            if(courseIndex != -1){
+                var answers = usr.course[courseIndex].answer;
+                if(answers){
+                    for(var j=0; j<answers.length; j++){
+                        if((date.getTime() - answers[j].date.getTime()) < 1000*60*60*24){
+                            if(min > answers[j].score)
+                                min = answers[j].score;
+                        }
+                    }
+                }
+            }
+        }
+        return min;
+    }
+    if(req.user.role == 'teacher' || req.user.role == 'admin'){
+        Course.findById(courseID, (err, course) => {
+            User.find({}, (err, allUsers) => {
+                var users = [];
+                allUsers.forEach(usr => {
+                    if(usr.course.map(e => e.courseID.toString()).indexOf(courseID.toString()) != -1)
+                        users.push(usr);
+                })
+                res.render('./class/report', {
+                    user: req.user,
+                    users,
+                    course,
+                    getAvg,
+                    getMax,
+                    getMin,
+                    gregorian_to_jalali,
+                    get_year_month_day
+                })
+            })
+        });
+    }
+});
+
+// router.get('/report-user', ensureAuthenticated, (req, res, next) => {
+//     var {courseID, userID} = req.query;
+//     if(req.user.role == 'teacher' || req.user.role == 'admin'){
+//         Course.findById(courseID, (err, course) => {
+//             User.findById(userID, (err, reportUser) => {
+//                 res.render('./class/report-user', {
+//                     user: req.user,
+//                     reportUser,
+//                     course,
+//                 })
+//             })
+//         });
+//     }
+// });
 
 module.exports = router;

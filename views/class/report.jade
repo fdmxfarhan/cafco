@@ -1,0 +1,40 @@
+extends ../dashboard/layout
+
+block styles
+    link(rel="stylesheet", href="/css/class/report.css")
+
+block content
+    h1.title.center گزارش دوره #{course.title}
+    
+    .users-report
+        -for(var i=0; i< users.length; i++){
+            .dropdown-btn(id="dropdown-btn#{i}")
+                .title= users[i].fullname
+                i.fa.fa-chevron-down
+            .dropdown-cont(id="dropdown-cont#{i}")
+                table 
+                    tr 
+                        th جلسه
+                        th تاریخ
+                        th امتیاز
+                        th میانگین
+                        th بیشترین
+                        th کمترین
+                    -var courseIndex = users[i].course.map(e => e.courseID.toString()).indexOf(course._id.toString());
+                    -if(courseIndex != -1){
+                        -var answers = users[i].course[courseIndex].answer;
+                        -if(answers){
+                            -for(var j=0; j<answers.length; j++){
+                                -var date = get_year_month_day(answers[j].date.toISOString())
+                                tr 
+                                    td= j+1
+                                    td #{date[0]}/#{date[1]}/#{date[2]}
+                                    td= answers[j].score
+                                    td= getAvg(users, answers[j].date)
+                                    td= getMax(users, answers[j].date)
+                                    td= getMin(users, answers[j].date)
+                            -}
+                        -}
+                    -}
+        -}
+    script(src="/js/class-report.js") 
