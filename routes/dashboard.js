@@ -440,13 +440,16 @@ router.get('/set-course-status', ensureAuthenticated, (req, res, next) => {
 
 router.get('/courses', ensureAuthenticated, (req, res, next) => {
     Course.find({}, (err, courses) => {
-        res.render('./dashboard/admin-courses', {
-            user: req.user,
-            courses,
-            dot,
-            anarestani: false,
-            registeredCourse: [],
-            educationStages,
+        User.find({}, (err, users) => {
+            res.render('./dashboard/admin-courses', {
+                user: req.user,
+                courses,
+                users,
+                dot,
+                anarestani: false,
+                registeredCourse: [],
+                educationStages,
+            });
         });
     });
 });
