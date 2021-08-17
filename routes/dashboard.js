@@ -897,5 +897,26 @@ router.post('/add-teacher-to-course', ensureAuthenticated, (req, res, next) => {
     }
 });
 
+router.get('/remove-teacher-from-course', ensureAuthenticated, (req, res, next) => {
+    var {courseID, teacherID} = req.query;
+    if(req.user.role == 'admin'){
+        Course.findById(courseID, (err, course) => {
+            var teachers = course.teachers;
+            var index = teachers.indexOf(teacherID.toString());
+            teachers.splice(index, 1);
+            Course.updateMany({_id: courseID}, {$set: {teachers}}, (err, doc) => {
+                User.findById(teacherID, (err, user) => {
+                    var teacherCourses = user.teacherCourses;
+                    var index = teacherCourses.indexOf(courseID.toString());
+                    teacherCourses.splice(index, 1);
+                    User.updateMany({_id: teacherID}, {$set: {teacherCourses}}, (err, doc) => {
+                        res.redirect('/dashboard');
+                    })
+                });
+            });
+        });
+    }
+});
+
 
 module.exports = router;

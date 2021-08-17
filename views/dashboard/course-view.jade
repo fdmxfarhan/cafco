@@ -38,7 +38,8 @@
                             -for(var j=0; j<users.length; j++){
                                 -if(courses[i].teachers.indexOf(users[j]._id) != -1){
                                     .teacher= users[j].fullname
-                                        i.fa.fa-trash
+                                        a(href="/dashboard/remove-teacher-from-course?teacherID=#{users[j]._id}&courseID=#{courses[i]._id}") 
+                                            i.fa.fa-trash
                                 -}
                             -}
                         form.add-teacher(action="/dashboard/add-teacher-to-course" method='POST') 
