@@ -21,6 +21,7 @@ var isAnarestani = (phone) => {
     }
     return false;
 }
+
 var educationStages = [
     'پیش دبستانی',
     'اول ابتدایی',
@@ -693,18 +694,27 @@ router.post('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
             res.redirect(`/dashboard/admin-edit-user?userID=${userID}`);
         });
     }
+    else{
+        User.updateMany({_id: userID}, {$set: {firstName, lastName, address, school, idNumber, phone, educationNum}}, (err, doc) => {
+            req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
+            res.redirect(`/dashboard/settings?userID=${userID}`);
+        });
+    }
 });
 
 router.post('/admin-password-user', ensureAuthenticated, (req, res, next) => {
     const { userID, password, confirmpassword } = req.body;
     if(password != confirmpassword) 
         res.send('تایید رمز عبور صحیح نمی‌باشد');
-    else if(req.user.role == 'admin'){
+    else{
         bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
             if(err) throw err;
             User.updateMany({_id: userID}, {$set: {password: hash}}, (err, doc) => {
                 req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
-                res.redirect(`/dashboard/admin-edit-user?userID=${userID}`);
+                if(req.user.role == 'admin')
+                    res.redirect(`/dashboard/admin-edit-user?userID=${userID}`);
+                else 
+                    res.redirect(`/dashboard/settings?userID=${userID}`);
             });
         }));
     }
@@ -921,5 +931,11 @@ router.get('/remove-teacher-from-course', ensureAuthenticated, (req, res, next) 
     }
 });
 
+router.get('/settings', ensureAuthenticated, (req, res, next) => {
+    res.render('./dashboard/user-settings', {
+        user: req.user,
+        
+    });
+});
 
 module.exports = router;

@@ -43,10 +43,10 @@ html
                         //- a.sidebar-nav-link(href="#") 
                         //-     i.fa.fa-bell
                         //-     | اعلان ها
-                        //- .break 
-                        //- a.sidebar-nav-link(href="#") 
-                        //-     i.fa.fa-gears
-                        //-     | تنظیمات
+                        .break 
+                        a.sidebar-nav-link(href="/dashboard/settings") 
+                            i.fa.fa-gears
+                            | تنظیمات
                     -}else if(user.role == 'admin'){
                         a.sidebar-nav-link(href="/dashboard") 
                             i.fa.fa-user 
