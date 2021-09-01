@@ -1,15 +1,15 @@
-function getLocalStream() {
-    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then( stream => {
-        window.localStream = stream; // A
-        window.localAudio.srcObject = stream; // B
-        window.localAudio.autoplay = true; // C
-    }).catch( err => {
-        console.log("u got an error:" + err)
-    });
-}
+// function getLocalStream() {
+//     navigator.mediaDevices.getUserMedia({video: true, audio: true}).then( stream => {
+//         window.localStream = stream; // A
+//         window.localAudio.srcObject = stream; // B
+//         window.localAudio.autoplay = true; // C
+//     }).catch( err => {
+//         console.log("u got an error:" + err)
+//     });
+// }
 
 $(document).ready(function(){
-    getLocalStream();
+    // getLocalStream();
     // var iframe = document.getElementById("mainIframe");
     // iframe.allow="autoplay;fullscreen;speaker;microphone;camera;display-capture";
     var answers = document.getElementById('answers');
