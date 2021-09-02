@@ -97,7 +97,7 @@ body {
     text-align: center;
 }
 input:focus{outline: none;}
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 400px) {
     .class-container{
         overflow: hidden;
         width: 100%;
@@ -313,7 +313,7 @@ input:focus{outline: none;}
     }
     
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 400px) {
     .class-container{
         overflow: hidden;
         width: 100%;

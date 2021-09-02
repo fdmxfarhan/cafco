@@ -61,7 +61,7 @@ block content
                     input(type="Number" name="price" placeholder="هزینه دوره (ریال)" value="#{course.price}" required)
                 .text-input 
                     i.fa.fa-link 
-                    input(type="text" name="link" placeholder="لینک ورود" value="#{course.link == 'undefined'? '': course.link}")
+                    input(type="text" name="link" placeholder="لینک ورود" value="#{course.link == 'undefined'? 'https://www.skyroom.online/ch/cafco/': course.link}")
                 .text-input 
                     i.fa.fa-play
                     input(type="text" name="video" placeholder="ویدئو معرفی" value="#{course.video == 'undefined'? '': 'https://www.aparat.com/v/' + course.video}")
