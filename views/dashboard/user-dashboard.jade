@@ -76,10 +76,12 @@ block content
                         -if(user.course[i].payed && user.course[i].course.link && user.course[i].course.link != 'undefined'){
                             .label.blue
                                 -var index = courses.map(e => e._id.toString()).indexOf(user.course[i].courseID.toString())
-                                -if(courses[index].usePanel)
-                                    a(href="/class?link=#{user.course[i].course.link}&courseID=#{user.course[i].course._id}" target='_blank') ورود
-                                -else
-                                    a(href="#{user.course[i].course.link}" target='_blank') ورود
+                                -if(index != -1){
+                                    -if(courses[index].usePanel)
+                                        a(href="/class?link=#{user.course[i].course.link}&courseID=#{user.course[i].course._id}" target='_blank') ورود
+                                    -else
+                                        a(href="#{user.course[i].course.link}" target='_blank') ورود
+                                -}
                         -}
             -}
         -}
