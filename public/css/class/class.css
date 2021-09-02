@@ -109,6 +109,7 @@ input:focus{outline: none;}
         float: right;
         height: 100vh;
         overflow-y: scroll;
+        /* overflow-x: visible; */
         position: relative;
     }
     .class-container .sideBar::-webkit-scrollbar {
@@ -310,6 +311,19 @@ input:focus{outline: none;}
         display: inline;
         color: rgb(197, 197, 197);
         direction: ltr;
+    }
+    .bar-users{
+        position: fixed;
+        background-color: var(--boxbackground);
+        width: 20vw;
+        right: 21%;
+        z-index: 100;
+        border-radius: 1vw;
+        color: white;
+        direction: rtl;
+        text-align: right;
+        padding: 1vw;
+        bottom: 1vw;
     }
     
 }

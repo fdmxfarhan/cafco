@@ -33,6 +33,7 @@ $(document).ready(function(){
         }
         answerNum = parseInt($('input.number').val());
         var inputs = [];
+        var barAreas = [];
         for(var i=0; i < answerNum; i++)
         {
             var ans = document.createElement('div');
@@ -49,6 +50,7 @@ $(document).ready(function(){
             ans.appendChild(input);
             ans.appendChild(label);
             answers.appendChild(ans);
+
             inputs.push(input);
 
             var barArea = document.createElement('div');
@@ -56,6 +58,7 @@ $(document).ready(function(){
             var number = document.createElement('div');
             var bar = document.createElement('div');
             barArea.classList.add('bar-area');
+            barArea.setAttribute("id", "bar-area" + (i+1));
             question.classList.add('question');
             number.classList.add('number');
             number.setAttribute("id", "number" + (i+1));
@@ -67,12 +70,34 @@ $(document).ready(function(){
             barArea.appendChild(number);
             barArea.appendChild(bar);
             bars.appendChild(barArea); 
+
+            barAreas.push({barArea, num: i+1});
         }
         inputs.forEach(input => {
             input.addEventListener('change',() => {
                 rightAnswer = parseInt(input.id.slice(6, 1000));
             });
         });
+        barAreas.forEach(bar => {
+            bar.barArea.addEventListener('mouseover',() => {
+                questionAns = studentAnswers.filter(e => e.answer == bar.num);
+                console.log(questionAns);
+                var barUsers = document.createElement('div');
+                barUsers.classList.add('bar-users');
+                for (let i = 0; i < questionAns.length; i++) {
+                    var newUser = document.createElement('div');
+                    newUser.classList.add('user');
+                    newUser.textContent = questionAns[i].userName;
+                    barUsers.appendChild(newUser); 
+                }
+                barUsers.setAttribute("id", "barusers" + bar.num);
+                bar.barArea.appendChild(barUsers); 
+            });
+            bar.barArea.addEventListener('mouseleave',() => {
+                document.getElementById("barusers" + bar.num).remove();
+            });
+        });
+
         socket.emit(courseID, {state: 'change-ans',answerNum, userName});
     });
     $('.button-end').click(() => {
@@ -119,6 +144,7 @@ $(document).ready(function(){
             var number = document.createElement('div');
             var bar = document.createElement('div');
             barArea.classList.add('bar-area');
+            barArea.setAttribute("id", "bar-area" + (i+1));
             question.classList.add('question');
             number.classList.add('number');
             number.setAttribute("id", "number" + (i+1));
