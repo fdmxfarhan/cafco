@@ -70,7 +70,7 @@ body {
 .center {
     text-align: center;
 }
-
+input.ltr{text-align: left;}
 @media only screen and (min-width: 800px) {
     .dashboard .side-bar {
         background-color: var(--yellow);
