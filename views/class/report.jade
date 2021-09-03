@@ -17,22 +17,26 @@ block content
                         th جلسه
                         th تاریخ
                         th امتیاز
+                        th زمان پاسخ گویی (ثانیه)
                         th میانگین
                         th بیشترین
-                        th کمترین
                     -var courseIndex = users[i].course.map(e => e.courseID.toString()).indexOf(course._id.toString());
                     -if(courseIndex != -1){
                         -var answers = users[i].course[courseIndex].answer;
                         -if(answers){
-                            -for(var j=0; j<answers.length; j++){
-                                -var date = get_year_month_day(answers[j].date.toISOString())
-                                tr 
-                                    td= j+1
-                                    td #{date[0]}/#{date[1]}/#{date[2]}
-                                    td= answers[j].score
-                                    td= getAvg(users, answers[j].date)
-                                    td= getMax(users, answers[j].date)
-                                    td= getMin(users, answers[j].date)
+                            -for(var s=1; s<=course.sessionNum; s++){
+                                -for(var j=0; j<answers.length; j++){
+                                    -if(answers[j].session == s){
+                                        -var date = get_year_month_day(answers[j].date.toISOString())
+                                        tr 
+                                            td جلسه #{s}
+                                            td #{date[0]}/#{date[1]}/#{date[2]}
+                                            td= answers[j].score
+                                            td= Math.floor(answers[j].time/1000)
+                                            td= getAvg(users, answers[j].date)
+                                            td= answers[j].possibleMax
+                                    -}
+                                -}
                             -}
                         -}
                     -}

@@ -51,7 +51,7 @@ var CourseSchema = new mongoose.Schema({
     },
     sessionNum: {
         type: Number,
-        default: 1,
+        default: 0,
     },
     lastTeacherLogin: {
         type: Number,

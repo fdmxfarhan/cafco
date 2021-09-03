@@ -61,12 +61,12 @@ $(document).ready(function(){
                     answer = parseInt(input.id.slice(6, 1000));
                     if(!answeredBefore)
                     {
-                        socket.emit(courseID, {state: 'student-ans', userName, answer, userID});
+                        socket.emit(courseID, {state: 'student-ans', userName, answer, userID, time: Date.now()});
                         answeredBefore = true;
                     }
                     else
                     {
-                        socket.emit(courseID, {state: 'student-change', userName, answer, userID, lastAnswer})
+                        socket.emit(courseID, {state: 'student-change', userName, answer, userID, lastAnswer, time: Date.now()})
                     }
                     lastAnswer = answer;
                 });

@@ -689,15 +689,16 @@ router.get('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
 });
 
 router.post('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
-    const { userID, firstName, lastName, address, school, idNumber, phone, educationNum } = req.body;
+    var { userID, firstName, lastName, address, school, idNumber, phone, educationNum } = req.body;
+    var fullname = firstName + ' ' + lastName;
     if(req.user.role == 'admin'){
-        User.updateMany({_id: userID}, {$set: {firstName, lastName, address, school, idNumber, phone, educationNum}}, (err, doc) => {
+        User.updateMany({_id: userID}, {$set: {fullname, firstName, lastName, address, school, idNumber, phone, educationNum}}, (err, doc) => {
             req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
             res.redirect(`/dashboard/admin-edit-user?userID=${userID}`);
         });
     }
     else{
-        User.updateMany({_id: userID}, {$set: {firstName, lastName, address, school, idNumber, phone, educationNum}}, (err, doc) => {
+        User.updateMany({_id: userID}, {$set: {fullname, firstName, lastName, address, school, idNumber, phone, educationNum}}, (err, doc) => {
             req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
             res.redirect(`/dashboard/settings?userID=${userID}`);
         });

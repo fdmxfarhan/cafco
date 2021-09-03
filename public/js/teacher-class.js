@@ -21,6 +21,7 @@ $(document).ready(function(){
     var socket = io();
     var studentAnswers = [];
     var rightAnswer = 'undefined';
+    var refreshTime = 0;
     $('.submit-button').click(() => {
         sum = 0;
         studentAnswers = [];
@@ -32,6 +33,7 @@ $(document).ready(function(){
             bars.removeChild(bars.childNodes[0]);
         }
         answerNum = parseInt($('input.number').val());
+        refreshTime = Date.now();
         var inputs = [];
         var barAreas = [];
         for(var i=0; i < answerNum; i++)
@@ -110,6 +112,7 @@ $(document).ready(function(){
         socket.emit(courseID, {state: 'save', studentAnswers, scoreRight, scoreWrong, rightAnswer});
         socket.emit("avg", {courseID: courseID});
         alert('اطلاعات ثبت شد.');
+        answerNum = 0;
         socket.emit(courseID, {state: 'change-ans', answerNum, userName});
         sum = 0;
         studentAnswers = [];
@@ -167,6 +170,7 @@ $(document).ready(function(){
         if(msg.state == 'student-ans')
         {
             sum += 1;
+            msg.time -= refreshTime;
             studentAnswers.push(msg);
             var number = document.getElementById('number' + msg.answer);
             number.textContent = parseInt(number.textContent) + 1;
@@ -179,7 +183,11 @@ $(document).ready(function(){
         else if(msg.state == 'student-change')
         {
             for (let i = 0; i < studentAnswers.length; i++) {
-                if(msg.userName == studentAnswers[i].userName) studentAnswers[i].answer = msg.answer;
+                if(msg.userName == studentAnswers[i].userName) 
+                {
+                    studentAnswers[i].answer = msg.answer;
+                    studentAnswers[i].time = msg.time - refreshTime;
+                }
             }
             var number = document.getElementById('number' + msg.answer);
             var lastNumber = document.getElementById('number' + msg.lastAnswer);

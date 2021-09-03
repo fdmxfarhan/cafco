@@ -202,6 +202,7 @@ io.on("connection", socket => {
                     for(var i=0; i<msg.studentAnswers.length; i++)
                     {
                         var score = 0;
+                        var time = msg.studentAnswers[i].time;
                         if(msg.rightAnswer == msg.studentAnswers[i].answer) score = Math.abs(msg.scoreRight);
                         else score = -Math.abs(msg.scoreWrong);
                         User.findById(msg.studentAnswers[i].userID, (err, user) => {
@@ -222,6 +223,8 @@ io.on("connection", socket => {
                                     {
                                         var newCourse = user.course;
                                         newCourse[courseIndex].answer[j].score += score;
+                                        newCourse[courseIndex].answer[j].time += time;
+                                        newCourse[courseIndex].answer[j].possibleMax += msg.scoreRight;
                                         User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
                                         wasToday = true;
                                     }
@@ -230,7 +233,7 @@ io.on("connection", socket => {
                                 {
                                     var newCourse = user.course;
                                     newAnswer = newCourse[courseIndex].answer;
-                                    newAnswer.push({date, score});
+                                    newAnswer.push({date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight});
                                     newCourse[courseIndex].answer = newAnswer;
                                     User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
                                 }
@@ -238,7 +241,7 @@ io.on("connection", socket => {
                             else
                             {
                                 var newCourse = user.course;
-                                newCourse[courseIndex].answer = [{date, score}];
+                                newCourse[courseIndex].answer = [{date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight}];
                                 User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
                             }
                         });
@@ -317,6 +320,7 @@ io2.on("connection", socket => {
                     for(var i=0; i<msg.studentAnswers.length; i++)
                     {
                         var score = 0;
+                        var time = msg.studentAnswers[i].time;
                         if(msg.rightAnswer == msg.studentAnswers[i].answer) score = Math.abs(msg.scoreRight);
                         else score = -Math.abs(msg.scoreWrong);
                         User.findById(msg.studentAnswers[i].userID, (err, user) => {
@@ -337,6 +341,8 @@ io2.on("connection", socket => {
                                     {
                                         var newCourse = user.course;
                                         newCourse[courseIndex].answer[j].score += score;
+                                        newCourse[courseIndex].answer[j].time += time;
+                                        newCourse[courseIndex].answer[j].possibleMax += msg.scoreRight;
                                         User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
                                         wasToday = true;
                                     }
@@ -345,7 +351,7 @@ io2.on("connection", socket => {
                                 {
                                     var newCourse = user.course;
                                     newAnswer = newCourse[courseIndex].answer;
-                                    newAnswer.push({date, score});
+                                    newAnswer.push({date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight});
                                     newCourse[courseIndex].answer = newAnswer;
                                     User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
                                 }
@@ -353,7 +359,7 @@ io2.on("connection", socket => {
                             else
                             {
                                 var newCourse = user.course;
-                                newCourse[courseIndex].answer = [{date, score}];
+                                newCourse[courseIndex].answer = [{date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight}];
                                 User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
                             }
                         });
