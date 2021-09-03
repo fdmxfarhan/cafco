@@ -223,6 +223,9 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     }
     else if(req.user.role == 'teacher'){
         Course.findById(req.query.courseID, (err, course) => {
+            var sessionNum = course.sessionNum;
+            if(Date.now() - course.lastTeacherLogin > 12 * 60 * 60 * 1000) sessionNum++;
+            Course.updateMany({_id: course._id}, {$set: {sessionNum, lastTeacherLogin: Date.now()}}, (err) => {});
             res.render('./class/teacher-class', {
                 user: req.user,
                 course,

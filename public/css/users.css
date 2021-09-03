@@ -1,3 +1,4 @@
+.hidden{display: none;}
 @media only screen and (min-width: 800px) {
     .register{
         border-radius: 2vw;

@@ -48,6 +48,14 @@ var CourseSchema = new mongoose.Schema({
     usePanel: {
         type: Boolean,
         default: false,
+    },
+    sessionNum: {
+        type: Number,
+        default: 1,
+    },
+    lastTeacherLogin: {
+        type: Number,
+        default: 0,
     }
 });
 

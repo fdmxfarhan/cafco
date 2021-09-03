@@ -81,7 +81,7 @@ $(document).ready(function(){
         barAreas.forEach(bar => {
             bar.barArea.addEventListener('mouseover',() => {
                 questionAns = studentAnswers.filter(e => e.answer == bar.num);
-                console.log(questionAns);
+                // console.log(questionAns);
                 var barUsers = document.createElement('div');
                 barUsers.classList.add('bar-users');
                 for (let i = 0; i < questionAns.length; i++) {

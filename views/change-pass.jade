@@ -41,17 +41,16 @@ block content
     
     .register
         h1.title 
-            i.fa.fa-sign-in
-            | ورود
-        form(action="/users/login" target="_parent" id="register" method="POST")
+            i.fa.fa-key
+            | تغییر کلمه عبور
+        form(action="/users/change-pass" target="_parent" id="register" method="POST")
+            input.hidden(type="text" value="#{idNumber}" name="idNumber" style="display: none;")
             .text-input-area
-                input.textinput(type="text" placeholder="کد ملی" name="username" value= "#{ typeof uname != 'undefined' ? uname: '' }" required)
-                i.fa.fa-user
-            .text-input-area
-                input.textinput(type="password" placeholder="رمز عبور" name="password" value= "#{ typeof psw != 'undefined' ? psw: '' }" required)
+                input.textinput(type="text" placeholder="رمز عبور جدید" name="password" value= "#{ typeof password != 'undefined' ? password: '' }" required)
                 i.fa.fa-key
             .text-input-area
-                button.submit(type="submit") ورود
-            a.link(href="https://cafcoreg.ir/users/register" target="_parent") هنوز ثبت نام نکرده اید؟
-            a.link(href="/users/pass-recover" target="_parent") فراموشی رمز عبور
+                input.textinput(type="text" placeholder="تایید رمز عبور" name="confirmPassword" value= "#{ typeof confirmPassword != 'undefined' ? confirmPassword: '' }" required)
+                i.fa.fa-check
+            .text-input-area
+                button.submit(type="submit") ثبت
     script(src="/js/users.js")

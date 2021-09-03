@@ -39,6 +39,7 @@ var UserSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  recoveryCode: String,
 });
 
 var User = mongoose.model('User', UserSchema);

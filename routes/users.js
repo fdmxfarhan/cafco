@@ -5,6 +5,8 @@ var User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const mail = require('../config/mail');
 const passport = require('passport');
+const generateCode = require('../config/generateCode');
+const sms = require('../config/sms');
 
 router.get('/register', (req, res, next) => {
     if(req.user)
@@ -26,7 +28,69 @@ router.get('/login', (req, res, next) => {
     else
         res.render('login');
 });
+router.get('/pass-recover', (req, res, next) => {
+    if(req.user)
+        res.redirect('/dashboard');
+    else
+        res.render('pass-recover');
+});
   
+router.post('/pass-recover', (req, res, next) => {
+    var {idNumber} = req.body;
+    let errors = [];
+    code = generateCode(4);
+    User.findOne({idNumber: idNumber}, (err, user) => {
+        if(user){
+            sms(user.phone, `رمز یک بار مصرف شما: ${code} \nکلبه آفرینش فکر`);
+            User.updateMany({idNumber: idNumber}, {$set: {recoveryCode: code}}, (err) => {
+                res.render('enter-code', {idNumber})
+            });
+        }
+        else{
+            errors.push({msg: 'کد ملی یافت نشد'});
+            res.render('pass-recover', {idNumber, errors});
+        }
+    })
+});
+
+router.post('/enter-code', (req, res, next) => {
+    var {idNumber, enterCode} = req.body;
+    let errors = [];
+    User.findOne({idNumber: idNumber}, (err, user) => {
+        if(err) console.log(err);
+        else if(enterCode == user.recoveryCode){
+            res.render('change-pass', {idNumber});
+        }
+        else{
+            errors.push({msg: 'رمز یک بار مصرف اشتباه می‌باشد.'});
+            res.render('enter-code', {idNumber, errors});
+        }
+    });
+});
+
+router.post('/change-pass', (req, res, next) => {
+    var {idNumber, password, confirmPassword} = req.body;
+    let errors = [];
+    if(password !== confirmPassword){
+        errors.push({msg: 'تایید رمز عبور صحیح نمیباشد!'});
+    }
+    if(password.length < 4){
+        errors.push({msg: 'رمز عبور شما بسیار ضعیف میباشد!'});
+    }
+    if(errors.length > 0 ){
+        res.render('change-pass', {idNumber, password, confirmPassword, errors});
+    }
+    else{
+        bcrypt.genSalt(10, (err, salt) => bcrypt.hash(password, salt, (err, hash) => {
+            if(err) throw err;
+            User.updateMany({idNumber: idNumber}, {$set: {password: hash}}, (err) => {
+                res.render('login');
+            })
+        }));
+    }
+    
+});
+
 router.post('/register', (req, res, next) => {
     var { firstName, lastName, address, phone, school, idNumber, password, configpassword, birthDay, birthMonth, birthYear, education} = req.body;
     const role = 'user', card = 0;

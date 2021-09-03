@@ -10,6 +10,8 @@ const mail = require('../config/mail');
 const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
 const bcrypt = require('bcryptjs');
+const sms = require('../config/sms');
+
 
 var timeToString = (time) => {
     return(`${time.hour < 10 ? '0'+ time.hour : time.hour}:${time.minute < 10 ? '0' + time.minute : time.minute}:${time.second < 10 ? '0' + time.second : time.second}`)
@@ -937,5 +939,7 @@ router.get('/settings', ensureAuthenticated, (req, res, next) => {
         
     });
 });
+
+
 
 module.exports = router;
