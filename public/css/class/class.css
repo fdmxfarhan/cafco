@@ -138,13 +138,13 @@ input:focus{outline: none;}
     }
     .class-container .sideBar .user-info .titles h1.title{
         font-family: 'iransans';
-        font-size: 1.4vw;
+        font-size: 1.2vw;
         margin: 0;
         color: var(--blue);
     }
     .class-container .sideBar .user-info .titles h1.class-name{
         font-family: 'iransans';
-        font-size: 1.3vw;
+        font-size: 1.1vw;
         margin: 0;
         /* margin-top: 0.5vw; */
         color: var(--yellow);
@@ -229,7 +229,7 @@ input:focus{outline: none;}
     .box .score i.red{
         color: rgb(247, 41, 41);
     }
-    .box .bar-area{
+    .box .bar-area, .box .bar-area2{
         position: relative;
         direction: ltr;
         height: 0.7vw;
@@ -238,14 +238,16 @@ input:focus{outline: none;}
         background-color: lightgray;
         border-radius: 0.3vw;
     }
-    .box .bar-area .bar{
+    #bars2 .bar-area{background-color: rgb(90, 90, 90);}
+    #bars2 .bar-area .bar{background-color: rgb(165, 113, 224); width: 100%;}
+    .box .bar-area .bar, .box .bar-area2 .bar2{
         background-color: var(--blue);
         height: 0.7vw;
         width: 0%;
         border-radius: 0.3vw;
         transition-duration: 500ms;
     }
-    .box .bar-area .question{
+    .box .bar-area .question, .box .bar-area2 .question2{
         color: white;
         font-family: 'iransans';
         font-size: 0.9vw;
@@ -255,7 +257,7 @@ input:focus{outline: none;}
         left: -1.5vw;
         top: -0.4vw;
     }
-    .box .bar-area .number{
+    .box .bar-area .number, .box .bar-area2 .number2{
         top: -0.4vw;
         right: -1.5vw;
         color: white;
@@ -265,7 +267,7 @@ input:focus{outline: none;}
         padding: 0;
         position: absolute;
     }
-    #bars{margin-top: 2vw;}
+    #bars2{margin-top: 2vw;}
     .button-end{
         background-color: var(--blue);
         /* display: inline; */
@@ -325,7 +327,19 @@ input:focus{outline: none;}
         padding: 1vw;
         bottom: 1vw;
     }
-    
+    .show-score{
+        color: lightgray;
+        width: 80%;
+        margin: 0 auto;
+        padding: 0;
+        cursor: pointer;
+        font-family: 'iransans';
+        font-size: 1vw;
+        text-decoration: none;
+    }
+    .show-score:hover{
+        color: var(--blue);
+    }
 }
 @media only screen and (max-width: 400px) {
     .class-container{

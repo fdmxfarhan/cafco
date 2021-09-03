@@ -38,6 +38,20 @@ block content
                                     -}
                                 -}
                             -}
+                            tr 
+                                td .
+                                td 
+                                td 
+                                td 
+                                td 
+                                td 
+                            tr 
+                                td مجموع
+                                td 
+                                td= answers.map(item => item.score).reduce((a, b) => a+b)
+                                td= answers.map(item => Math.floor(item.time/1000)).reduce((a, b) => a+b)
+                                td= answers.map(item => getAvg(users, item.date)).reduce((a, b) => a+b)
+                                td= answers.map(item => item.possibleMax).reduce((a, b) => a+b)
                         -}
                     -}
         -}

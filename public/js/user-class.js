@@ -89,5 +89,14 @@ $(document).ready(function(){
             }
             socket.emit("avg", {courseID: courseID});
         }
+        else if(msg.state == 'show-score')
+        {
+            $('.score-area').show();
+        }
+        else if(msg.state == 'not-show-score')
+        {
+            $('.score-area').hide();
+        }
+        
     });
 });

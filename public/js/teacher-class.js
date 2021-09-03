@@ -7,8 +7,10 @@
 //         console.log("u got an error:" + err)
 //     });
 // }
+var allUsers = [];
 
 $(document).ready(function(){
+    $('#not-answered-bar-users').hide();
     // getLocalStream();
     // var iframe = document.getElementById("mainIframe");
     // iframe.allow="autoplay;fullscreen;speaker;microphone;camera;display-capture";
@@ -17,12 +19,19 @@ $(document).ready(function(){
     var courseID = document.getElementById('courseID').textContent;
     var userName = document.getElementById('userName').textContent;
     var sum = 0;
+    var maxUsers = 0;
     var answerNum = 0;
     var socket = io();
     var studentAnswers = [];
+    var notAnsweredUsers = [];
     var rightAnswer = 'undefined';
     var refreshTime = 0;
+    var showingScore = true;
     $('.submit-button').click(() => {
+        console.log(allUsers);
+        notAnsweredUsers = [];
+        allUsers.forEach(usr => notAnsweredUsers.push(usr));
+        updateNotAns(notAnsweredUsers);
         sum = 0;
         studentAnswers = [];
         rightAnswer = 'undefined';
@@ -172,6 +181,7 @@ $(document).ready(function(){
             sum += 1;
             msg.time -= refreshTime;
             studentAnswers.push(msg);
+            answeredUser(msg.userName);
             var number = document.getElementById('number' + msg.answer);
             number.textContent = parseInt(number.textContent) + 1;
             for(var i=0; i<answerNum; i++){
@@ -200,7 +210,52 @@ $(document).ready(function(){
             }
         }
         else if(msg.state == 'newUser'){
-            socket.emit(courseID, {state: 'change-ans',answerNum, userName});
+            socket.emit(courseID, {state: 'change-ans', answerNum, userName});
+            if(notAnsweredUsers.indexOf(msg.userName) == -1){
+                notAnsweredUsers.push(msg.userName);
+                maxUsers++;
+                updateNotAns(notAnsweredUsers);
+            }
+            if(allUsers.indexOf(msg.userName) == -1){
+                allUsers.push(msg.userName);
+            }
+        }
+    });
+    var updateNotAns = (notAnsweredUsers) => {
+        document.getElementById('not-answered-number').textContent = notAnsweredUsers.length.toString();
+        document.getElementById('not-answered-bar').style.width    = `${(notAnsweredUsers.length/maxUsers)*100}%`;
+        var notAnsweredUsersBar = document.getElementById('not-answered-bar-users')
+        while (notAnsweredUsersBar.childNodes.length > 0) {
+            notAnsweredUsersBar.removeChild(notAnsweredUsersBar.childNodes[0]);
+        }
+        notAnsweredUsers.forEach(usr => {
+            var newUser = document.createElement('div');
+            newUser.classList.add('user');
+            newUser.textContent = usr;
+            notAnsweredUsersBar.appendChild(newUser); 
+        });
+    }
+    var answeredUser = (usr) => {
+        var index = notAnsweredUsers.indexOf(usr);
+        if(index != -1) notAnsweredUsers.splice(index, 1);
+        updateNotAns(notAnsweredUsers);
+    }
+    $('#not-answered-bar-area').mouseover(() => {
+        $('#not-answered-bar-users').show();
+    });
+    $('#not-answered-bar-area').mouseleave(() => {
+        $('#not-answered-bar-users').hide();
+    });
+    $('.show-score').click(() => {
+        if(showingScore){
+            document.getElementById('show-score').textContent = 'عدم نمایش امتیازات';
+            showingScore = false;
+            socket.emit(courseID, {state: 'not-show-score', userName})
+        }
+        else{
+            document.getElementById('show-score').textContent = 'نمایش امتیازات';
+            showingScore = true;
+            socket.emit(courseID, {state: 'show-score', userName})
         }
     });
 });
