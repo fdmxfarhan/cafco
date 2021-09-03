@@ -110,7 +110,7 @@ $(document).ready(function(){
         socket.emit(courseID, {state: 'save', studentAnswers, scoreRight, scoreWrong, rightAnswer});
         socket.emit("avg", {courseID: courseID});
         alert('اطلاعات ثبت شد.');
-        socket.emit(courseID, {state: 'change-ans',answerNum, userName});
+        socket.emit(courseID, {state: 'change-ans', answerNum, userName});
         sum = 0;
         studentAnswers = [];
         rightAnswer = 'undefined';
