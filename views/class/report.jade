@@ -25,18 +25,30 @@ block content
                         -var answers = users[i].course[courseIndex].answer;
                         -if(answers){
                             -for(var s=1; s<=course.sessionNum; s++){
-                                -for(var j=0; j<answers.length; j++){
-                                    -if(answers[j].session == s){
-                                        -var date = get_year_month_day(answers[j].date.toISOString())
-                                        tr 
-                                            td جلسه #{s}
-                                            td #{date[0]}/#{date[1]}/#{date[2]}
-                                            td= answers[j].score
-                                            td= Math.floor(answers[j].time/1000)
-                                            td= getAvg(users, answers[j].date)
-                                            td= answers[j].possibleMax
+                                -var sessionAns = answers.filter(e => e.session == s)
+                                tr 
+                                    td جلسه #{s}
+                                    -if(sessionAns.length > 1){
+                                        -var date = get_year_month_day(sessionAns[0].date.toISOString())
+                                        td #{date[0]}/#{date[1]}/#{date[2]}
+                                        td= sessionAns.reduce((a, b) => a.score + b.score)
+                                        td= Math.floor((sessionAns.reduce((a, b) => a.time + b.time))/1000)
+                                        td= getAvg(users, s)
+                                        td= answers.reduce((a, b) => a.possibleMax + b.possibleMax)
+                                    -}else if(sessionAns.length == 1){
+                                        -var date = get_year_month_day(sessionAns[0].date.toISOString())
+                                        td #{date[0]}/#{date[1]}/#{date[2]}
+                                        td= sessionAns[0].score
+                                        td= Math.floor((sessionAns[0].time)/1000)
+                                        td= getAvg(users, s)
+                                        td= answers[0].possibleMax
+                                    -}else {
+                                        td 
+                                        td 
+                                        td 
+                                        td 
+                                        td 
                                     -}
-                                -}
                             -}
                             tr 
                                 td .

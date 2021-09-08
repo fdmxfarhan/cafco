@@ -239,7 +239,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
 router.get('/report', ensureAuthenticated, (req, res, next) => {
     var {courseID} = req.query;
 
-    var getAvg = (users, date) => {
+    var getAvg = (users, sessionNum) => {
         var sum = 0, cnt = 0;
         for (let i = 0; i < users.length; i++) {
             const usr = users[i];
@@ -248,8 +248,8 @@ router.get('/report', ensureAuthenticated, (req, res, next) => {
                 var answers = usr.course[courseIndex].answer;
                 if(answers){
                     for(var j=0; j<answers.length; j++){
-                        if((date.getTime() - answers[j].date.getTime()) < 1000*60*60*24){
-                            sum+= answers[j].score;
+                        if(answers[j].session == sessionNum){
+                            sum += answers[j].score;
                             cnt++;
                         }
                     }
@@ -257,7 +257,7 @@ router.get('/report', ensureAuthenticated, (req, res, next) => {
             }
         }
         if(cnt == 0) return 0;
-        return sum/cnt;
+        return Math.floor((sum/cnt)*100)/100;
     };
     var getMax = (users, date) => {
         var max = 0, cnt = 0;

@@ -134,6 +134,51 @@ var isToday = (date) => {
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
 
+var saveData = (course, msg) => {
+    for(var i=0; i<msg.studentAnswers.length; i++)
+    {
+        var answer = msg.studentAnswers[i];
+        var score = 0;
+        var time = answer.time;
+        var date = new Date();
+        if(msg.rightAnswer == answer.answer) score = Math.abs(msg.scoreRight);
+        else score = -Math.abs(msg.scoreWrong);
+        User.findById(answer.userID, (err, user) => {
+            var courseIndex = user.course.map(e => e.courseID.toString()).indexOf(course._id.toString());
+            if(courseIndex == -1) console.log('course not found');
+            else if(user.course[courseIndex].answer)
+            {
+                var newCourse = user.course;
+                newAnswer = newCourse[courseIndex].answer;
+                newAnswer.push({date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight});
+                newCourse[courseIndex].answer = newAnswer;
+                User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+            }
+            else
+            {
+                var newCourse = user.course;
+                newCourse[courseIndex].answer = [{date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight}];
+                User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+            }
+        });
+    }
+}
+
+var handleClasses = (io, socket) => {
+    Course.find({}, (err, courses) => {
+        courses.forEach(course => {
+            socket.on(`${course._id}`, msg => {
+                console.log(course.title, msg);
+                io.emit(`${course._id}`, msg);
+                if(msg.state == 'save')
+                {
+                    saveData(course, msg);
+                }
+            });
+        });
+    });
+}
+
 const io = require('socket.io')(httpsServer);
 io.on("connection", socket => {
     console.log("a user connected :D");
@@ -155,7 +200,7 @@ io.on("connection", socket => {
         io.emit("leave", msg);
     });
     socket.on("avg", msg => {
-        console.log(msg);
+        // console.log(msg);
         Course.findById(msg.courseID, (err, course) => {
             User.find({}, (err, allUsers) => {
                 var users = [];
@@ -192,64 +237,7 @@ io.on("connection", socket => {
         });
         
     });
-    Course.find({}, (err, courses) => {
-        courses.forEach(course => {
-            socket.on(`${course._id}`, msg => {
-                console.log(course.title, msg);
-                io.emit(`${course._id}`, msg);
-                if(msg.state == 'save')
-                {
-                    for(var i=0; i<msg.studentAnswers.length; i++)
-                    {
-                        var score = 0;
-                        var time = msg.studentAnswers[i].time;
-                        if(msg.rightAnswer == msg.studentAnswers[i].answer) score = Math.abs(msg.scoreRight);
-                        else score = -Math.abs(msg.scoreWrong);
-                        User.findById(msg.studentAnswers[i].userID, (err, user) => {
-                            var courseIndex = -1;
-                            for(var j=0; j<user.course.length; j++){
-                                if(user.course[j].courseID == course._id.toString()) {
-                                    courseIndex = j;
-                                }
-                            }
-                            var date = new Date();
-                            if(courseIndex == -1) console.log('course not found');
-                            else if(user.course[courseIndex].answer)
-                            {
-                                var wasToday = false
-                                for(var j=0; j<user.course[courseIndex].answer.length; j++)
-                                {
-                                    if(isToday(user.course[courseIndex].answer[j].date))
-                                    {
-                                        var newCourse = user.course;
-                                        newCourse[courseIndex].answer[j].score += score;
-                                        newCourse[courseIndex].answer[j].time += time;
-                                        newCourse[courseIndex].answer[j].possibleMax += msg.scoreRight;
-                                        User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
-                                        wasToday = true;
-                                    }
-                                }
-                                if(!wasToday)
-                                {
-                                    var newCourse = user.course;
-                                    newAnswer = newCourse[courseIndex].answer;
-                                    newAnswer.push({date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight});
-                                    newCourse[courseIndex].answer = newAnswer;
-                                    User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
-                                }
-                            }
-                            else
-                            {
-                                var newCourse = user.course;
-                                newCourse[courseIndex].answer = [{date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight}];
-                                User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
-                            }
-                        });
-                    }
-                }
-            });
-        });
-    });
+    handleClasses(io, socket);
     
 });
 
@@ -273,7 +261,7 @@ io2.on("connection", socket => {
         io2.emit("leave", msg);
     });
     socket.on("avg", msg => {
-        console.log(msg);
+        // console.log(msg);
         Course.findById(msg.courseID, (err, course) => {
             User.find({}, (err, allUsers) => {
                 var users = [];
@@ -310,64 +298,7 @@ io2.on("connection", socket => {
         });
         
     });
-    Course.find({}, (err, courses) => {
-        courses.forEach(course => {
-            socket.on(`${course._id}`, msg => {
-                console.log(course.title, msg);
-                io2.emit(`${course._id}`, msg);
-                if(msg.state == 'save')
-                {
-                    for(var i=0; i<msg.studentAnswers.length; i++)
-                    {
-                        var score = 0;
-                        var time = msg.studentAnswers[i].time;
-                        if(msg.rightAnswer == msg.studentAnswers[i].answer) score = Math.abs(msg.scoreRight);
-                        else score = -Math.abs(msg.scoreWrong);
-                        User.findById(msg.studentAnswers[i].userID, (err, user) => {
-                            var courseIndex = -1;
-                            for(var j=0; j<user.course.length; j++){
-                                if(user.course[j].courseID == course._id.toString()) {
-                                    courseIndex = j;
-                                }
-                            }
-                            var date = new Date();
-                            if(courseIndex == -1) console.log('course not found');
-                            else if(user.course[courseIndex].answer)
-                            {
-                                var wasToday = false
-                                for(var j=0; j<user.course[courseIndex].answer.length; j++)
-                                {
-                                    if(isToday(user.course[courseIndex].answer[j].date))
-                                    {
-                                        var newCourse = user.course;
-                                        newCourse[courseIndex].answer[j].score += score;
-                                        newCourse[courseIndex].answer[j].time += time;
-                                        newCourse[courseIndex].answer[j].possibleMax += msg.scoreRight;
-                                        User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
-                                        wasToday = true;
-                                    }
-                                }
-                                if(!wasToday)
-                                {
-                                    var newCourse = user.course;
-                                    newAnswer = newCourse[courseIndex].answer;
-                                    newAnswer.push({date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight});
-                                    newCourse[courseIndex].answer = newAnswer;
-                                    User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
-                                }
-                            }
-                            else
-                            {
-                                var newCourse = user.course;
-                                newCourse[courseIndex].answer = [{date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight}];
-                                User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
-                            }
-                        });
-                    }
-                }
-            });
-        });
-    });
+    handleClasses(io2, socket);
 });
 
 
