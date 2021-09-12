@@ -180,6 +180,7 @@ $(document).ready(function(){
         {
             sum += 1;
             msg.time -= refreshTime;
+            if(studentAnswers.indexOf(msg) != -1) studentAnswers.splice(studentAnswers.indexOf(msg), 1);
             studentAnswers.push(msg);
             answeredUser(msg.userName);
             var number = document.getElementById('number' + msg.answer);
@@ -210,6 +211,8 @@ $(document).ready(function(){
             }
         }
         else if(msg.state == 'newUser'){
+            var index = studentAnswers.map(e => e.userName).indexOf(msg.userName);
+            if(index != -1)  studentAnswers.splice(index, 1);
             socket.emit(courseID, {state: 'change-ans', answerNum, userName});
             if(notAnsweredUsers.indexOf(msg.userName) == -1){
                 notAnsweredUsers.push(msg.userName);
@@ -219,8 +222,26 @@ $(document).ready(function(){
             if(allUsers.indexOf(msg.userName) == -1){
                 allUsers.push(msg.userName);
             }
+            updateAllBars(studentAnswers);
         }
     });
+    var updateAllBars = (studentAnswers) => {
+        sum = studentAnswers.length;
+        for (let i = 0; i < answerNum; i++) {
+            var number = document.getElementById('number' + (i+1));
+            number.textContent = '0';
+            filteredAnswers = studentAnswers.filter(e => e.answer == i+1);
+            for (let j = 0; j < filteredAnswers.length; j++) {
+                var bar = document.getElementById('bar' + (i+1));
+                number.textContent = parseInt(number.textContent) + 1;
+            }
+        }
+        for(var i=0; i<answerNum; i++){
+            var bar = document.getElementById('bar' + (i+1));
+            number = document.getElementById('number' + (i+1));
+            bar.style.width = `${(parseInt(number.textContent)/sum)*100}%`;
+        }
+    }
     var updateNotAns = (notAnsweredUsers) => {
         document.getElementById('not-answered-number').textContent = notAnsweredUsers.length.toString();
         document.getElementById('not-answered-bar').style.width    = `${(notAnsweredUsers.length/maxUsers)*100}%`;
