@@ -27,6 +27,7 @@ var numToEducation = [
     'یازدهم دوره دوم دبیرستان',
     'دوازدهم دوره دوم دبیرستان'
 ]
+
 var timeToString = (time) => {
     return(`${time.hour < 10 ? '0'+ time.hour : time.hour}:${time.minute < 10 ? '0' + time.minute : time.minute}:${time.second < 10 ? '0' + time.second : time.second}`)
 }
