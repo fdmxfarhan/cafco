@@ -12,7 +12,21 @@ const shamsi = require('../config/shamsi');
 const bcrypt = require('bcryptjs');
 const sms = require('../config/sms');
 
-
+var numToEducation = [
+    'پیش دبستانی',
+    'اول ابتدایی',
+    'دوم ابتدایی',
+    'سوم ابتدایی',
+    'چهارم ابتدایی',
+    'پنجم ابتدایی',
+    'ششم ابتدایی',
+    'هفتم دوره اول دبیرستان',
+    'هشتم دوره اول دبیرستان',
+    'نهم دوره اول دبیرستان',
+    'دهم دوره دوم دبیرستان',
+    'یازدهم دوره دوم دبیرستان',
+    'دوازدهم دوره دوم دبیرستان'
+]
 var timeToString = (time) => {
     return(`${time.hour < 10 ? '0'+ time.hour : time.hour}:${time.minute < 10 ? '0' + time.minute : time.minute}:${time.second < 10 ? '0' + time.second : time.second}`)
 }
@@ -941,6 +955,24 @@ router.get('/settings', ensureAuthenticated, (req, res, next) => {
     });
 });
 
+router.get('/increase-all-ages', ensureAuthenticated, (req, res, next) => {
+    if(req.user.role == 'admin'){
+        User.find({}, (err, users) => {
+            for (let i = 0; i < users.length; i++) {
+                User.updateMany({_id: users[i]._id}, {$set: {
+                    educationNum: users[i].educationNum+1, 
+                    education: numToEducation[users[i].educationNum+1],
+                }}, (err) => {if(err) console.log(err)});
+            }
+            Course.find({status: 'در حال برگزاری'}, (err, courses) => {
+                for (let i = 0; i < courses.length; i++) {
+                    Course.updateMany({_id: courses[i]._id}, {$set: {minAge: courses[i].minAge+1, maxAge: courses[i].maxAge+1, }}, (err) => {if(err) console.log(err)});
+                }
+                res.send('done');
+            });
+        });
+    }
+});
 
 
 module.exports = router;
