@@ -56,7 +56,15 @@ var CourseSchema = new mongoose.Schema({
     lastTeacherLogin: {
         type: Number,
         default: 0,
-    }
+    },
+    yearPayment: {
+        type: Boolean,
+        default: false,
+    },
+    yearPrice: {
+        type: Number,
+        default: 0,
+    },
 });
 
 var Course = mongoose.model('Course', CourseSchema);

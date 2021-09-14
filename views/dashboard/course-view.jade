@@ -29,9 +29,22 @@
                         -else if(anarestani)
                             li هزینه: #{courses[i].price/10} تومان
                     -if(user.role != 'admin' && courses[i].status != 'پایان یافته' && courses[i].students.length < courses[i].capacity && registeredCourse.indexOf(courses[i]._id.toString()) == -1){
-                        a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}") 
-                            i.fa.fa-check
-                            | ثبت نام
+                        -if(courses[i].yearPayment){
+                            .register-buttons-area
+                                a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}") 
+                                    i.fa.fa-check
+                                    | ثبت نام ترم
+                                    .price #{dot(courses[i].price/10)} تومان
+                                a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}&yearPayment=true") 
+                                    i.fa.fa-check
+                                    | ثبت نام سالیانه
+                                    .price #{dot(courses[i].yearPrice/10)} تومان
+                            
+                        -}else{
+                            a.submit(href="/dashboard/register-course?courseID=#{courses[i]._id}") 
+                                i.fa.fa-check
+                                | ثبت نام
+                        -}
                     -}
                     -if(user.role == 'admin'){
                         .teachers 

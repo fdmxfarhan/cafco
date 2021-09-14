@@ -272,7 +272,7 @@ input.ltr{text-align: left;direction: ltr;}
     }
     .popup-area .two-side-cont .part .text-input input {
         font-family: 'iransans';
-        font-size: 1.1vw;
+        font-size: 1vw;
         padding: 0.4vw 1vw;
         border: none;
         width: 80%;
@@ -282,16 +282,34 @@ input.ltr{text-align: left;direction: ltr;}
     }
     .popup-area .two-side-cont .part textarea {
         font-family: 'iransans';
-        font-size: 1.1vw;
+        font-size: 1vw;
         padding: 0.4vw 1vw;
         border: none;
         width: 80%;
         border-radius: 1vw;
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
-        margin-bottom: 1.5vw;
+        /* margin-bottom: 1.5vw; */
         width: 93%;
-        height: 14vw;
+        height: 10vw;
         resize: vertical;
+    }
+    .popup-area .two-side-cont .part .check-input{
+        margin-bottom: 1vw;
+    }
+    .popup-area .two-side-cont .part .check-input input.text{
+        font-family: 'iransans';
+        padding: 0.3vw 1vw;
+        font-size: 1vw;
+        border-radius: 1vw;
+        border: none;
+        /* border-bottom: var(--blue) 0.1vw solid; */
+        width: 50%;
+        background-color: white;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
+        margin-right: 1vw;
+    }
+    .popup-area .two-side-cont .part .check-input input.text:focus{
+        outline: none;
     }
     .popup-area .two-side-cont .part textarea:focus {
         outline: none;
@@ -301,11 +319,11 @@ input.ltr{text-align: left;direction: ltr;}
     }
     .popup-area .two-side-cont .age-input input {
         font-family: 'iransans';
-        font-size: 1.1vw;
+        font-size: 1vw;
         padding: 0.4vw 1vw;
         border: none;
         width: 80%;
-        border-radius: 2vw;
+        border-radius: 1vw;
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
         margin-bottom: 1.5vw;
         width: 4vw;
@@ -320,11 +338,11 @@ input.ltr{text-align: left;direction: ltr;}
     }
     .popup-area .two-side-cont .date-input input {
         font-family: 'iransans';
-        font-size: 1.1vw;
+        font-size: 1vw;
         padding: 0.4vw 1vw;
         border: none;
         width: 80%;
-        border-radius: 2vw;
+        border-radius: 1vw;
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
         margin-bottom: 1.5vw;
         width: 4vw;
@@ -363,7 +381,7 @@ input.ltr{text-align: left;direction: ltr;}
         border: lightblue 2px dashed;
         position: relative;
         cursor: pointer;
-        padding: 2vw 0;
+        padding: 1vw 0;
         text-align: center;
         color: #798AAF;
         font-family: 'iransans';
@@ -400,6 +418,33 @@ input.ltr{text-align: left;direction: ltr;}
         margin-top: 2vw;
         display: block;
         width: fit-content;
+    }
+    .popup-area .two-side-cont .register-buttons-area a.submit {
+        border: none;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        background-color: var(--green);
+        color: white;
+        padding: 0.3vw 3vw;
+        border-radius: 1vw;
+        cursor: pointer;
+        transition-duration: 500ms;
+        margin-top: 1vw;
+        text-decoration: none;
+        margin-top: 2vw;
+        display: block;
+        width: fit-content;
+        float: right;
+        margin-right: 1vw;
+    }
+    .popup-area .two-side-cont .register-buttons-area a.submit .price{
+        padding: 0;
+        margin: 0;
+        text-align: center;
+        font-size: 0.9vw;
+    }
+    .popup-area .two-side-cont .register-buttons-area{
+        overflow: hidden;
     }
     .popup-area .two-side-cont a.submit:hover {
         background-color: var(--hover);

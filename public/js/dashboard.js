@@ -48,4 +48,13 @@ $(document).ready(function(){
             $('.black-modal').fadeIn(500);
         });
     });
+
+    $('#yearPayment').click(() => {
+        if(document.getElementById('yearPayment').checked)
+            $('#yearPaymentPrice').show();
+        else
+            $('#yearPaymentPrice').hide();
+    })
+
+
 });

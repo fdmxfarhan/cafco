@@ -24,7 +24,10 @@ block content
                         .labels 
                             a.remove(href="/dashboard/remove-user-course-pay?courseID=#{user.course[i].courseID}&index=#{i}") 
                                 i.fa.fa-trash
-                        .price #{dot(user.course[i].course.price/10)} تومان
+                        -if(user.course[i].yearPayment)
+                            .price #{dot(user.course[i].course.yearPrice/10)} تومان
+                        -else
+                            .price #{dot(user.course[i].course.price/10)} تومان
                 -}
             -}
         -}

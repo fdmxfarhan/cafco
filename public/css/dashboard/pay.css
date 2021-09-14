@@ -214,7 +214,7 @@
     }
     .payment-card .info .info-part{
         overflow: hidden;
-        margin: 0.7vw 0;
+        margin: 0.5vw 0;
         border-top: lightgray 0.1vw solid;
         padding: 0.5vw 0;
     }
@@ -223,13 +223,13 @@
         width: 50%;
         text-align: right;
         font-weight: bold;
-        font-size: 1.3vw;
+        font-size: 1.1vw;
     }
     .payment-card .info .item-value{
         float: left;
         width: 50%;
         text-align: left;
-        font-size: 1.4vw;
+        font-size: 1.1vw;
     }
     .payment-card .info .sum.green{
         color: var(--green);

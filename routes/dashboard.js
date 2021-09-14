@@ -373,6 +373,9 @@ router.post('/users-view', ensureAuthenticated, (req, res, next) => {
 });
 
 router.get('/register-course', ensureAuthenticated, (req, res, next) => {
+    var {yearPayment} = req.query;
+    if(yearPayment) yearPayment = true;
+    else            yearPayment = false;
     Course.findById(req.query.courseID, (err, course) => {
         var students = course.students;
         if (err) console.log(err);
@@ -384,7 +387,7 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
         if (!registered) {
             var payState = false;
             if(course.price == 0) payState = true;
-            courseList.push({ courseID: req.query.courseID, course, payed: payState });
+            courseList.push({ courseID: req.query.courseID, course, payed: payState, yearPayment });
             User.updateMany({ idNumber: req.user.idNumber }, { $set: { course: courseList } }, (err, doc) => {
                 students.push(req.user._id);
                 Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {
@@ -429,7 +432,10 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
     var discount72 = false;
     for (var i = 0; i < courseList.length; i++) {
         if (!courseList[i].payed)
-        priceSum += courseList[i].course.price;
+        if(courseList[i].course.yearPayment)
+            priceSum += courseList[i].course.yearPrice;
+        else
+            priceSum += courseList[i].course.price;
         sessionNum += courseList[i].course.session;
     }
     if(sessionNum > 72 && !anarestani) {
