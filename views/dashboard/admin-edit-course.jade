@@ -31,6 +31,17 @@ block content
                 .text-input 
                     i.fa.fa-user 
                     input(type="Number" name="session" placeholder="تعداد جلسات" value="#{course.session}" required)
+                -if(course.usePanel)
+                    input.check(type="checkbox" name="usePanel" id="usePanel" checked)
+                -else
+                    input.check(type="checkbox" name="usePanel" id="usePanel")
+                label(for="usePanel") استفاده از پنل ویژه
+                br
+                .check-input
+                    input.check(type="checkbox" name="yearPayment" id="yearPayment")
+                    label(for="yearPayment") پرداخت سالیانه
+                    input.text.hidden#yearPaymentPrice(type="number" name="yearPrice" placeholder="هزینه سالیانه")
+                
                 input.submit(type="submit" value="ثبت")
             .break-side 
             .part 
@@ -65,11 +76,6 @@ block content
                 .text-input 
                     i.fa.fa-play
                     input(type="text" name="video" placeholder="ویدئو معرفی" value="#{course.video == 'undefined'? '': 'https://www.aparat.com/v/' + course.video}")
-                -if(course.usePanel)
-                    input.check(type="checkbox" name="usePanel" id="usePanel" checked)
-                -else
-                    input.check(type="checkbox" name="usePanel" id="usePanel")
-                label(for="usePanel") استفاده از پنل ویژه
                 .cover-img-edit
                     img.cover(src="#{course.cover}", alt="cover")
                     #change 

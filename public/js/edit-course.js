@@ -24,5 +24,11 @@ $(document).ready(function(){
         $('#upload-cover-popup').fadeOut(500);
     });
     
+    $('#yearPayment').click(() => {
+        if(document.getElementById('yearPayment').checked)
+            $('#yearPaymentPrice').show();
+        else
+            $('#yearPaymentPrice').hide();
+    })
 
 });

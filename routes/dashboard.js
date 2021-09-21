@@ -618,16 +618,21 @@ router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
 });
 
 router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
-    var { usePanel, video, title, undertitle, description, teacher, session, minAge, maxAge, day, month, year, endDay, endMonth, endYear, capacity, price, courseID, link } = req.body;
+    var { usePanel, video, title, undertitle, description, teacher, session, 
+        minAge, maxAge, day, month, year, endDay, endMonth, endYear, 
+        capacity, price, courseID, link, yearPayment, yearPrice } = req.body;
     if(usePanel) usePanel = true;
     else         usePanel = false;
+    if(yearPayment) yearPayment = true;
+    else         yearPayment = false;
+    
     splited = video.split('/');
     video = splited[splited.length - 1];
     if(video == '') video = splited[splited.length - 2];
     if(req.user.role == 'admin'){
         var startDate = { day, month, year };
         var endDate = { day: endDay, month: endMonth, year: endYear };
-        Course.updateMany({_id: courseID}, {$set: {usePanel, video, title, undertitle, description, teacher, session, minAge, maxAge, startDate, endDate, capacity, price, courseID, link}}, (err, doc) => {
+        Course.updateMany({_id: courseID}, {$set: {usePanel, video, title, undertitle, description, teacher, session, minAge, maxAge, startDate, endDate, capacity, price, courseID, link, yearPayment, yearPrice}}, (err, doc) => {
             req.flash('success_msg', 'تغییرات با موفقیت ثبت شد');
             res.redirect(`/dashboard/admin-edit-course?courseID=${courseID}`);
         });
