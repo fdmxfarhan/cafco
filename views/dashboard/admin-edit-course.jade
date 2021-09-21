@@ -37,10 +37,17 @@ block content
                     input.check(type="checkbox" name="usePanel" id="usePanel")
                 label(for="usePanel") استفاده از پنل ویژه
                 br
-                .check-input
-                    input.check(type="checkbox" name="yearPayment" id="yearPayment")
-                    label(for="yearPayment") پرداخت سالیانه
-                    input.text.hidden#yearPaymentPrice(type="number" name="yearPrice" placeholder="هزینه سالیانه")
+                -if(course.yearPayment){
+                    .check-input
+                        input.check(type="checkbox" name="yearPayment" id="yearPayment" checked)
+                        label(for="yearPayment") پرداخت سالیانه
+                        input.text#yearPaymentPrice(type="number" name="yearPrice" placeholder="هزینه سالیانه" value="#{course.yearPrice}")
+                -}else{
+                    .check-input
+                        input.check(type="checkbox" name="yearPayment" id="yearPayment")
+                        label(for="yearPayment") پرداخت سالیانه
+                        input.text.hidden#yearPaymentPrice(type="number" name="yearPrice" placeholder="هزینه سالیانه")
+                -}
                 
                 input.submit(type="submit" value="ثبت")
             .break-side 
