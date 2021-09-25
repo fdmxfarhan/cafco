@@ -432,7 +432,7 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
     var discount72 = false;
     for (var i = 0; i < courseList.length; i++) {
         if (!courseList[i].payed)
-        if(courseList[i].course.yearPayment)
+        if(courseList[i].yearPayment)
             priceSum += courseList[i].course.yearPrice;
         else
             priceSum += courseList[i].course.price;
