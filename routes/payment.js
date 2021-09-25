@@ -20,7 +20,7 @@ router.get('/pay', function(req, res, next) {
     var priceSum = 0;
     for (var i = 0; i < courseList.length; i++) {
         if (!courseList[i].payed) {
-            if(courseList[i].course.yearPayment)
+            if(courseList[i].yearPayment)
                 priceSum += courseList[i].course.yearPrice;
             else
                 priceSum += courseList[i].course.price;
