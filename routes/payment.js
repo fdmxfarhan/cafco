@@ -65,7 +65,7 @@ router.get('/pay', function(req, res, next) {
                 'idNumber': payment.idNumber,
                 'phone': payment.phone,
                 'desc': payment.description,
-                'callback': 'https://cafcoreg.ir/payment/pay',
+                'callback': 'http://cafcoreg.ir/payment/pay',
                 'reseller': null,
             },
             json: true,
@@ -110,11 +110,15 @@ router.post('/pay', function(req, res, next) {
                                 payment
                             });
                         });
+                        
                         User.findOne({ idNumber: payment.idNumber }, (err, user) => {
                             if (err) console.log(err);
                             var courseList = user.course;
                             for (let i = 0; i < courseList.length; i++) {
                                 courseList[i].payed = true;
+                                var students = course[i].students;
+                                students.push(req.user._id);
+                                Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {});
                             }
                             User.updateMany({ idNumber: payment.idNumber }, { $set: { 
                                 course: courseList, 

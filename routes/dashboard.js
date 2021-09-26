@@ -389,10 +389,11 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
             if(course.price == 0) payState = true;
             courseList.push({ courseID: req.query.courseID, course, payed: payState, yearPayment });
             User.updateMany({ idNumber: req.user.idNumber }, { $set: { course: courseList } }, (err, doc) => {
-                students.push(req.user._id);
-                Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {
-                    res.redirect('/dashboard');
-                });
+                res.redirect('/dashboard');
+                // students.push(req.user._id);
+                // Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {
+                //     res.redirect('/dashboard');
+                // });
             });
         } else {
             res.send('این دوره قبلا ثبت شده');
