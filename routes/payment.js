@@ -65,7 +65,7 @@ router.get('/pay', function(req, res, next) {
                 'idNumber': payment.idNumber,
                 'phone': payment.phone,
                 'desc': payment.description,
-                'callback': 'http://cafcoreg.ir/payment/pay',
+                'callback': 'https://cafcoreg.ir/payment/pay',
                 'reseller': null,
             },
             json: true,
