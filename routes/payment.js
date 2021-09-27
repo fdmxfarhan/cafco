@@ -56,7 +56,7 @@ router.get('/pay', function(req, res, next) {
                 'Content-Type': 'application/json',
                 'X-API-KEY': 'dec2b2aa-2cb5-47f4-8584-963dc313f363',
                 // 'X-API-KEY': 'fe6a4553-cd95-4dff-af2e-80594c1c18c5',
-                'X-SANDBOX': 0,
+                'X-SANDBOX': 1,
             },
             body: {
                 'order_id': payment._id,
@@ -91,7 +91,7 @@ router.post('/pay', function(req, res, next) {
                     'Content-Type': 'application/json',
                     'X-API-KEY': 'dec2b2aa-2cb5-47f4-8584-963dc313f363',
                     // 'X-API-KEY': 'fe6a4553-cd95-4dff-af2e-80594c1c18c5',
-                    'X-SANDBOX': 0,
+                    'X-SANDBOX': 1,
                 },
                 body: {
                     'id': req.body.id,
@@ -116,7 +116,7 @@ router.post('/pay', function(req, res, next) {
                             var courseList = user.course;
                             for (let i = 0; i < courseList.length; i++) {
                                 courseList[i].payed = true;
-                                Course.find({_id: courseList[i].courseID}, (err, course) => {
+                                Course.find({_id: courseList[i].course._id}, (err, course) => {
                                     var students = course[i].students;
                                     students.push(user._id);
                                     Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {});
