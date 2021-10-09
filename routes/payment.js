@@ -106,29 +106,29 @@ router.post('/pay', function(req, res, next) {
                     Payment.updateMany({ _id: payment._id }, { $set: { payed: true, track_id: body.payment.track_id } }, (err, doc) => {
                         if (err) console.log(err);
                         Payment.findById(payment._id, (err, payment) => {
+                            User.findOne({ idNumber: payment.idNumber }, (err, user) => {
+                                if (err) console.log(err);
+                                var courseList = user.course;
+                                for (let i = 0; i < courseList.length; i++) {
+                                    courseList[i].payed = true;
+                                    Course.find({_id: courseList[i].course._id}, (err, course) => {
+                                        var students = course[i].students;
+                                        students.push(user._id);
+                                        Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {});
+                                    })
+                                }
+                                User.updateMany({ idNumber: payment.idNumber }, { $set: { 
+                                    course: courseList, 
+                                    // card: user.card + payment.discount,
+                                }}, (err, doc) => {
+                                    if (err) console.log(err);
+                                });
+                            });
                             res.render(`success-pay`, {
                                 payment
                             });
                         });
                         
-                        User.findOne({ idNumber: payment.idNumber }, (err, user) => {
-                            if (err) console.log(err);
-                            var courseList = user.course;
-                            for (let i = 0; i < courseList.length; i++) {
-                                courseList[i].payed = true;
-                                Course.find({_id: courseList[i].course._id}, (err, course) => {
-                                    var students = course[i].students;
-                                    students.push(user._id);
-                                    Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {});
-                                })
-                            }
-                            User.updateMany({ idNumber: payment.idNumber }, { $set: { 
-                                course: courseList, 
-                                // card: user.card + payment.discount,
-                            }}, (err, doc) => {
-                                if (err) console.log(err);
-                            });
-                        });
                     });
                 } else {
                     res.send('Error!!!!!!!!!!!');
