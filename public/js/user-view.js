@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var userView = [];
     var modal = $('.black-modal');
-    for(var i=0; i<500; i++){
+    for(var i=0; i<1000; i++){
         userView.push({btn: $(`#view-user${i}`), popup: $(`#user-view-popup${i}`)});
     }
 
