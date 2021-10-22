@@ -77,6 +77,12 @@ block content
     //-         a(href="#") اینجا 
     //-         | کلیک کنید.
     h1.title لیست دوره ها
+        .search 
+            form(action="/dashboard/courses" method="POST" id="form1") 
+                input(type="text" name="search" id="search" placeholder="جست و جو..." )
+                button(type="submit" form="form1")
+                    i.fa.fa-search
+            .preview#preview
     .product-cards-area 
         .card.add-course
             i.fa.fa-plus.plus

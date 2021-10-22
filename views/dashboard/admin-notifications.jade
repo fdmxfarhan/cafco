@@ -1,0 +1,13 @@
+extends layout
+
+block styles
+    link(rel="stylesheet", href="/css/dashboard/notifications.css")
+
+block content
+    .notifications 
+        -for(var i=notifications.length - 1; i>=0; i--){
+            .notif(class="#{notifications[i].seen == true ? 'seen' : ''}")
+                h1= notifications[i].text
+                .date= notifications[i].date
+        -}
+

@@ -8,7 +8,7 @@ block content
     .list 
         table 
             tr 
-                th ردیف
+                //- th ردیف
                 th کاربر
                 th مبلغ صورت حساب
                 th توضیحات
@@ -17,7 +17,7 @@ block content
                 th وضعیت
             -for(var i=payments.length-1; i>=0; i--){
                 tr(id="view-user#{i}")
-                    td= i+1
+                    //- td= i+1
                     td= payments[i].fullname
                     td= payments[i].amount
                     td

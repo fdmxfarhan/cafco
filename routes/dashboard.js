@@ -6,6 +6,7 @@ var User = require('../models/User');
 var Course = require('../models/Course');
 var Payment = require('../models/Payment');
 var Workshop = require('../models/Workshop');
+var Notification = require('../models/Notification');
 const mail = require('../config/mail');
 const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
@@ -389,7 +390,10 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
             if(course.price == 0) payState = true;
             courseList.push({ courseID: req.query.courseID, course, payed: payState, yearPayment });
             User.updateMany({ idNumber: req.user.idNumber }, { $set: { course: courseList } }, (err, doc) => {
-                res.redirect('/dashboard');
+                var newNotif = new Notification({text: `${req.user.fullname} در کلاس ${course.title} ثبت نام کرد.`, date: `${shamsi(new Date())}`});
+                newNotif.save().then(doc => {
+                    res.redirect('/dashboard');
+                }).catch(err => {if(err) console.log(err)});
                 // students.push(req.user._id);
                 // Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {
                 //     res.redirect('/dashboard');
@@ -490,18 +494,21 @@ contain = (course, word) => {
 
 router.post('/courses', ensureAuthenticated, (req, res, next) => {
     Course.find({}, (err, courses) => {
-        result = [];
-        courses.forEach(course => {
-            if(contain(course, req.body.search))
-                result.push(course);
-        });
-        res.render('./dashboard/admin-courses', {
-            user: req.user,
-            courses: result,
-            dot,
-            anarestani: false,
-            registeredCourse: [],
-            educationStages,
+        User.find({}, (err, users) => {
+            result = [];
+            courses.forEach(course => {
+                if(contain(course, req.body.search))
+                    result.push(course);
+            });
+            res.render('./dashboard/admin-courses', {
+                user: req.user,
+                courses: result,
+                dot,
+                anarestani: false,
+                registeredCourse: [],
+                educationStages,
+                users,
+            });
         });
     });
 });
@@ -808,8 +815,11 @@ router.post('/user-course-list-edit', ensureAuthenticated, (req, res, next) => {
             if(courseList){
                 for (let i = 0; i < courses.length; i++) {
                     for (let j = 1; j < courseList.length; j++) {
-                        if(courseList[j] == courses[i]._id)
+                        if(courseList[j] == courses[i]._id){
                             registeredCourseList.push({ courseID: courses[i]._id, course: courses[i], payed: true });
+                            courses[i].students.push(userID);
+                            Course.updateMany({_id: courses[i]._id}, {$set: {students: courses[i].students}}, (err) => {})
+                        }
                     }
                 }
             }
@@ -987,5 +997,14 @@ router.get('/increase-all-ages', ensureAuthenticated, (req, res, next) => {
     }
 });
 
+router.get('/notifications', ensureAuthenticated, (req, res, next) => {
+    Notification.find({}, (err, notifications) => {
+        res.render('./dashboard/admin-notifications', {
+            user: req.user,
+            notifications,
+        })
+        Notification.updateMany({}, {$set: {seen: true}}, err => {});
+    })
+})
 
 module.exports = router;

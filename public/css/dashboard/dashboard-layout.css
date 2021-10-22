@@ -17,6 +17,7 @@
     --kerem: #eec278;
     --red: #ff0000;
     --text: rgb(100, 100, 100);
+    --gray: rgb(161, 161, 161);
 }
 body {
     margin: 0;

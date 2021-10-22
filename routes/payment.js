@@ -6,6 +6,8 @@ const { ensureAuthenticated } = require('../config/auth');
 const User = require('../models/User');
 const Course = require('../models/Course');
 const Payment = require('../models/Payment');
+var Notification = require('../models/Notification');
+const shamsi = require('../config/shamsi');
 
 
 router.get('/', (req, res, next) => {
@@ -66,6 +68,7 @@ router.get('/pay', function(req, res, next) {
                 'phone': payment.phone,
                 'desc': payment.description,
                 'callback': 'https://cafcoreg.ir/payment/pay',
+                // 'callback': 'http://localhost:3000/payment/pay',
                 'reseller': null,
             },
             json: true,
@@ -111,9 +114,9 @@ router.post('/pay', function(req, res, next) {
                                 var courseList = user.course;
                                 for (let i = 0; i < courseList.length; i++) {
                                     courseList[i].payed = true;
-                                    Course.find({_id: courseList[i].course._id}, (err, course) => {
-                                        var students = course[i].students;
-                                        students.push(user._id);
+                                    Course.findOne({_id: courseList[i].course._id}, (err, course) => {
+                                        var students = course.students;
+                                        students.push(user._id.toString());
                                         Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {});
                                     })
                                 }
@@ -123,12 +126,17 @@ router.post('/pay', function(req, res, next) {
                                 }}, (err, doc) => {
                                     if (err) console.log(err);
                                 });
+                                var payedClasses = '';
+                                for(var i=0; i<payment.courseList.length; i++)
+                                    payedClasses += payment.courseList[i].course.title + '، ';
+                                var newNotif = new Notification({text: `${user.fullname} هزینه کلاس های ${payedClasses} را پرداخت کرد.`, date: `${shamsi(new Date())}`});
+                                newNotif.save().then(doc => {
+                                }).catch(err => {});
                             });
                             res.render(`success-pay`, {
                                 payment
                             });
                         });
-                        
                     });
                 } else {
                     res.send('Error!!!!!!!!!!!');

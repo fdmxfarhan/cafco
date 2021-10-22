@@ -1,0 +1,33 @@
+/* @media only screen and (min-width: 800px) { */
+
+
+.notifications {
+    padding: 2vw 3vw;
+}
+.notifications .notif{
+    background-color: var(--blue);
+    border-radius: 1vw;
+    color: white;
+    overflow: hidden;
+    margin-bottom: 1vw;
+    padding: 0;
+}
+.notifications .notif h1{
+    font-family: 'iransans';
+    font-size: 1.2vw;
+    padding: 0.5vw 1vw;
+    font-weight: normal;
+    float: right;
+    /* background-color: coral; */
+    margin: 0;
+}
+.notifications .notif .date{
+    padding: 0.5vw 1vw;
+    float: left;
+    /* background-color: coral; */
+}
+.notifications .notif.seen{
+    background-color: var(--gray);
+}
+
+/* } */

@@ -25,7 +25,7 @@ var CourseSchema = new mongoose.Schema({
     capacity: Number,
     cover: String,
     students: {
-        type: [Object],
+        type: [String],
         default: [],
     },
     link: {
