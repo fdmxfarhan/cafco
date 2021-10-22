@@ -15,14 +15,14 @@ block content
                 th تاریخ پرداخت
                 th کد پیگیری
                 th وضعیت
-            -for(var i=0; i<payments.length; i++){
+            -for(var i=payments.length-1; i>=0; i--){
                 tr(id="view-user#{i}")
                     td= i+1
                     td= payments[i].fullname
                     td= payments[i].amount
                     td
                         -for(var j=0; j<payments[i].courseList.length; j++)
-                            .course #{payments[i].courseList[j].title} 
+                            .course #{payments[i].courseList[j].course.title} 
                     td= shamsi(payments[i].date)
                     td= payments[i].track_id
                     td 
