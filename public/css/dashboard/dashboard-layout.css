@@ -124,6 +124,16 @@ input.ltr{text-align: left;direction: ltr;}
         padding: 0.4vw 2vw;
         font-size: 1.4vw;
         display: block;
+        position: relative;
+    }
+    .dashboard .side-bar .nav-links a.sidebar-nav-link .notif{
+        position: absolute;
+        background-color: rgb(231, 51, 5);
+        width: 0.6vw;
+        height: 0.6vw;
+        border-radius: 50%;
+        top: 1.2vw;
+        left: 2.3vw;
     }
     .dashboard .side-bar .nav-links a.sidebar-nav-link:hover {
         color: white;

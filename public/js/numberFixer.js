@@ -14,6 +14,6 @@ $(document).ready(function(){
         return str;
         };
     $(":input").bind('keyup change click', function (e) {
-            this.value = fixNumbers(this.value);
-        });
+        this.value = fixNumbers(this.value);
+    });
 })

@@ -266,23 +266,26 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     } else if (req.user.role == 'admin') {
         Course.find({}, (err, courses) => {
             User.find({}, (err, users) => {
-                var studentsNum = 0;
-                for (let i = 0; i < users.length; i++) {
-                    users[i].course.forEach(userCourse => {
-                        if (userCourse.payed) studentsNum++;
+                Notification.find({seen: false}, (err, notifications) => {
+                    var studentsNum = 0;
+                    for (let i = 0; i < users.length; i++) {
+                        users[i].course.forEach(userCourse => {
+                            if (userCourse.payed) studentsNum++;
+                        });
+                    }
+                    courses = courses.sort(sortAlgorythm);
+                    res.render('./dashboard/admin-dashboard', {
+                        user: req.user,
+                        users,
+                        login: req.query.login,
+                        courses,
+                        studentsNum,
+                        dot,
+                        anarestani: false,
+                        registeredCourse: [],
+                        educationStages,
+                        notifications,
                     });
-                }
-                courses = courses.sort(sortAlgorythm);
-                res.render('./dashboard/admin-dashboard', {
-                    user: req.user,
-                    users,
-                    login: req.query.login,
-                    courses,
-                    studentsNum,
-                    dot,
-                    anarestani: false,
-                    registeredCourse: [],
-                    educationStages,
                 });
             });
         });
@@ -341,9 +344,9 @@ var searchUser = (user, word) => {
     for (let i = 0; i < user.course.length; i++) {
         if(user.course[i].course.title.search(word) != -1) return true;
         if(user.course[i].course.description.search(word) != -1) return true;
-        if(user.course[i].course.teacher.search(word) != -1) return true;
-        if(user.course[i].course.status.search(word) != -1) return true;
-        if(user.course[i].course.cover.search(word) != -1) return true;
+        // if(user.course[i].course.teacher.search(word) != -1) return true;
+        // if(user.course[i].course.status.search(word) != -1) return true;
+        // if(user.course[i].course.cover.search(word) != -1) return true;
     }
     return false;
 }

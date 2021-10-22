@@ -56,6 +56,8 @@ html
                         a.sidebar-nav-link(href="/dashboard/notifications") 
                             i.fa.fa-bell
                             | اعلان ها
+                            -if(notifications && notifications.length > 0)
+                                .notif
                         .break 
                         a.sidebar-nav-link(href="/dashboard/users-view") 
                             i.fa.fa-users
@@ -97,6 +99,6 @@ html
             .content-area
                 block content
         script(src="/js/dashboard-layout.js")     
-        script(src="/js/numberFixer.js")     
+        //- script(src="/js/numberFixer.js")     
 
         
