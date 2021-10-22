@@ -326,6 +326,10 @@
         border-radius: 1vw;
         padding: 2vw;
     }
+    .popup-area.user-view .course-list-check-edit form{
+        max-height: 40vh;
+        overflow-y: scroll;
+    }
     .popup-area.user-view .course-list-check-edit h1.title{
         border: none;
         margin: 0;
