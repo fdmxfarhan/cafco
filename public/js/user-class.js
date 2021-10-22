@@ -99,4 +99,17 @@ $(document).ready(function(){
         }
         
     });
+
+    $('.collapse-right').click(() => {
+        $('.sideBar').css('width', '0');
+        $('.iframe-area').css('width', '100%');
+        $('.collapse-right').hide();
+        $('.collapse-left').show();
+    });
+    $('.collapse-left').click(() => {
+        $('.sideBar').css('width', '20%');
+        $('.iframe-area').css('width', '80%');
+        $('.collapse-right').show();
+        $('.collapse-left').hide();
+    });
 });

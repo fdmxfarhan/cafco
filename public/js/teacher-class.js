@@ -28,6 +28,9 @@ $(document).ready(function(){
     var refreshTime = 0;
     var showingScore = true;
     $('.submit-button').click(() => {
+        for(var i=0; i<20; i++)
+            if(document.getElementById("barusers" + i))
+                document.getElementById("barusers" + i).remove();        
         console.log(allUsers);
         notAnsweredUsers = [];
         allUsers.forEach(usr => notAnsweredUsers.push(usr));
@@ -95,7 +98,7 @@ $(document).ready(function(){
                 // console.log(questionAns);
                 var barUsers = document.createElement('div');
                 barUsers.classList.add('bar-users');
-                for (let i = 0; i < questionAns.length; i++) {
+                for(let i = 0; i < questionAns.length; i++) {
                     var newUser = document.createElement('div');
                     newUser.classList.add('user');
                     newUser.textContent = questionAns[i].userName;
@@ -279,4 +282,24 @@ $(document).ready(function(){
             socket.emit(courseID, {state: 'show-score', userName})
         }
     });
+
+    $('.collapse-right').click(() => {
+        $('.sideBar').css('width', '0');
+        $('.iframe-area').css('width', '100%');
+        $('.collapse-right').hide();
+        $('.collapse-left').show();
+        for(var i=0; i<20; i++)
+            if(document.getElementById("barusers" + i))
+                document.getElementById("barusers" + i).remove();
+    });
+    $('.collapse-left').click(() => {
+        $('.sideBar').css('width', '20%');
+        $('.iframe-area').css('width', '80%');
+        $('.collapse-right').show();
+        $('.collapse-left').hide();
+        for(var i=0; i<20; i++)
+            if(document.getElementById("barusers" + i))
+                document.getElementById("barusers" + i).remove();
+    });
+    
 });

@@ -18,9 +18,11 @@ block content
             -for(var i=0; i<payments.length; i++){
                 tr(id="view-user#{i}")
                     td= i+1
-                    td= payments[i].fulname
+                    td= payments[i].fullname
                     td= payments[i].amount
-                    td= payments[i].description
+                    td
+                        -for(var j=0; j<payments[i].courseList.length; j++)
+                            .course #{payments[i].courseList[j].title} 
                     td= shamsi(payments[i].date)
                     td= payments[i].track_id
                     td 

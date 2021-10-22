@@ -103,6 +103,24 @@ input:focus{outline: none;}
         width: 100%;
         height: 100vh;
     }
+    .class-container i.collapse-right, .class-container i.collapse-left{
+        color: white;
+        position: absolute;
+        top: 1vw;
+        right: 21vw;
+        z-index: 10s;
+        background-color: var(--background);
+        padding: 0.5vw 1vw;
+        border-radius: 0.5vw;
+        cursor: pointer;
+        text-align: center;
+    }
+    .class-container i.collapse-left{
+        right: 2vw;
+        display: hidden;
+    }
+    .class-container i.collapse-right:hover{color: var(--blue);}
+    .class-container i.collapse-left:hover{color: var(--blue);}
     .class-container .sideBar {
         background-color: var(--background);
         width: 20%;
