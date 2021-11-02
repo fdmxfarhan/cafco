@@ -28,18 +28,15 @@ var numToEducation = [
     'یازدهم دوره دوم دبیرستان',
     'دوازدهم دوره دوم دبیرستان'
 ]
-
 var timeToString = (time) => {
     return(`${time.hour < 10 ? '0'+ time.hour : time.hour}:${time.minute < 10 ? '0' + time.minute : time.minute}:${time.second < 10 ? '0' + time.second : time.second}`)
 }
-
 var isAnarestani = (phone) => {
     if(phone.slice(0, 5) == '09944' || phone.slice(0, 5) == '09945' || phone.slice(0, 5) == '09933' || phone.slice(0, 5) == '09932' || phone.slice(0, 5) == '09908' || phone.slice(0, 5) == '09940'){
         return true;
     }
     return false;
 }
-
 var educationStages = [
     'پیش دبستانی',
     'اول ابتدایی',
@@ -56,7 +53,6 @@ var educationStages = [
     'دوازدهم دوره دوم دبیرستان',
     'بزرگسال',
 ];
-
 getAge = (year) => {
     _greg = new Date(Date.now());
     _day = _greg.getDate();
@@ -67,11 +63,9 @@ getAge = (year) => {
 
     return(now.year - year);
 }
-
 function div(a, b) {
     return parseInt((a / b));
 }
-
 function gregorian_to_jalali(g_y, g_m, g_d) {
     var g_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var j_days_in_month = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
@@ -115,7 +109,6 @@ function gregorian_to_jalali(g_y, g_m, g_d) {
     //return jalali[0] + "_" + jalali[1] + "_" + jalali[2];
     //return jy + "/" + jm + "/" + jd;
 }
-
 function get_year_month_day(date) {
     var convertDate;
     var y = date.substr(0, 4);
@@ -124,7 +117,6 @@ function get_year_month_day(date) {
     convertDate = gregorian_to_jalali(y, m, d);
     return convertDate;
 }
-
 function get_hour_minute_second(time) {
     var convertTime = [];
     convertTime[0] = time.substr(0, 2);
@@ -132,13 +124,11 @@ function get_hour_minute_second(time) {
     convertTime[2] = time.substr(6, 2);
     return convertTime;
 }
-
 function convertDate(date) {
     var convertDateTime = get_year_month_day(date.substr(0, 10));
     convertDateTime = convertDateTime[0] + "/" + convertDateTime[1] + "/" + convertDateTime[2] + " " + date.substr(10);
     return convertDateTime;
 }
-
 function get_persian_month(month) {
     switch (month) {
         case 1:
@@ -179,7 +169,6 @@ function get_persian_month(month) {
             break;
     }
 }
-
 setInterval(() => {
     greg = new Date(Date.now());
     day = greg.getDate();
@@ -221,7 +210,6 @@ setInterval(() => {
         });
     });
 }, 30 * 1000);
-
 var sortAlgorythm = (a, b) => {
     if(a.startDate.year == b.startDate.year){
         if(a.startDate.month == b.startDate.month){
@@ -234,13 +222,24 @@ var sortAlgorythm = (a, b) => {
     }
     return b.startDate.year - a.startDate.year;
 };
-
 router.get('/', ensureAuthenticated, (req, res, next) => {
     if (req.user.role == 'user') {
         // age = getAge(req.user.birthday.year);
         // Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
         age = req.user.educationNum;
         Course.find({ minAge: {$lt : age+1}, maxAge: { $gt :  age-1}, }, (err, courses) => {
+            for (var i = 0; i < req.user.course.length; i++) {
+                for (var j = 0; j < courses.length; j++) {
+                    if(req.user.course[i].courseID.toString() == courses[j]._id.toString()){
+                        if(req.user.course[i].payed && courses[j].status == 'پایان یافته' && !req.user.course[i].yearPayment){
+                            req.user.course[i].payed = false;
+                        }
+                    }
+                }
+            }
+            User.updateMany({_id: req.user._id}, {$set: {course: req.user.course}}, (err, doc) => {
+                if(err) console.log(err);
+            })
             var anarestani = false;
             if(req.user.phone.slice(0, 5) == '09944' || req.user.phone.slice(0, 5) == '09945' || req.user.phone.slice(0, 5) == '09933' || req.user.phone.slice(0, 5) == '09932' || req.user.phone.slice(0, 5) == '09908' || req.user.phone.slice(0, 5) == '09940')
                 anarestani = true;
@@ -250,7 +249,7 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
                 if (!req.user.course[i].payed) notPayedCoursesNum++;
                 registeredCourse.push(req.user.course[i].courseID)
             }
-
+            
             courses = courses.sort(sortAlgorythm);
             res.render('./dashboard/user-dashboard', {
                 user: req.user,
@@ -380,6 +379,7 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
     var {yearPayment} = req.query;
     if(yearPayment) yearPayment = true;
     else            yearPayment = false;
+    console.log(yearPayment)
     Course.findById(req.query.courseID, (err, course) => {
         var students = course.students;
         if (err) console.log(err);

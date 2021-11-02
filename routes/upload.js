@@ -51,7 +51,6 @@ router.post('/course', ensureAuthenticated, upload.single('myFile'), (req, res, 
             });
     }
 });
-
 router.post('/course-cover', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
     const file = req.file;
     const { courseID } = req.body;
@@ -65,7 +64,6 @@ router.post('/course-cover', ensureAuthenticated, upload.single('myFile'), (req,
         });
     }
 });
-
 router.post('/api-Workshop', ensureAuthenticated, upload.single('myFile'), (req, res, next) => {
     const file = req.file;
     const { workshopID, title, answer } = req.body;
@@ -83,6 +81,5 @@ router.post('/api-Workshop', ensureAuthenticated, upload.single('myFile'), (req,
         });
     }
 });
-
 
 module.exports = router;
