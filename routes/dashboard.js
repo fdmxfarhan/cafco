@@ -471,7 +471,13 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
     });
 });
 router.get('/set-course-status', ensureAuthenticated, (req, res, next) => {
-    Course.updateMany({ _id: req.query.courseID }, { $set: { status: req.query.status } }, (err, doc) => {
+    if(req.query.status == 'پایان یافته'){
+        Course.findById(req.query.courseID, (err, course) => {
+            Course.updateMany({ _id: req.query.courseID }, {$set: {term: course.term + 1}}, (err, doc) => {
+            });
+        })
+    }
+    Course.updateMany({ _id: req.query.courseID }, {$set: {status: req.query.status}}, (err, doc) => {
         if (err) console.log(err);
         res.redirect('/dashboard');
     });
