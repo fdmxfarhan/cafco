@@ -118,6 +118,9 @@ router.post('/pay', function(req, res, next) {
                                         var students = course.students;
                                         students.push(user._id.toString());
                                         Course.updateMany({_id: req.query.courseID}, {$set: {students: students}}, (err, doc) => {});
+                                        for(var j=0; j<user.course.length; j++){
+                                            user.course[j].payedTerm = course.term;
+                                        }
                                     })
                                 }
                                 User.updateMany({ idNumber: payment.idNumber }, { $set: { 

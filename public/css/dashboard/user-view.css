@@ -113,7 +113,7 @@
     }
     .popup .part .user-course-list-view .course .info .labels .label{
         float: left;
-        font-size: 1vw;
+        font-size: 0.8vw;
         margin: 0 0.4vw;
     }
     .popup .part .user-course-list-view .course .info .labels .label.green{color: green;}
@@ -434,6 +434,9 @@
     .role-choose a.active,.role-choose a:hover{
         background-color: var(--blue);
         color: white;
+    }
+    .guide{
+        font-size: 0.6vw;
     }
 
 }

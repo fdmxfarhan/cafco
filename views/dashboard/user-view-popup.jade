@@ -55,7 +55,7 @@
                 .course 
                     img(src="#{crs.cover}", alt="cover")
                     .info 
-                        h1= crs.title
+                        h1 #{crs.title} (#{users[i].course[j].yearPayment == true ? 'سالیانه' : 'ترمی'})
                         h2 مدرس: #{crs.teacher}
                         .labels 
                             .label.blue= crs.status
@@ -79,14 +79,25 @@
 .course-list-check-edit 
     h1.title ویرایش دوره ها
     form(action="/dashboard/user-course-list-edit" method="POST") 
+        .guide سالیانه ترمی
         input.hidden(type="text" name="userID" value="#{users[i]._id}")
         input.hidden(type="checkbox" name="courseList" value="Nothing" checked)
+        input.hidden(type="checkbox" name="courseListTerm" value="Nothing" checked)
         -for(var j=0; j<courses.length; j++){
             -if(courses[j].minAge <= users[i].educationNum && courses[j].maxAge >= users[i].educationNum){
-                -if(users[i].course.find(({courseID}) => courseID.toString() == courses[j]._id))
-                    input(type="checkbox" name="courseList" value="#{courses[j]._id}" checked)
-                -else
+                -var foundedCourse = users[i].course.find(({courseID}) => courseID.toString() == courses[j]._id);
+                -if(foundedCourse){
+                    -if(foundedCourse.yearPayment){
+                        input(type="checkbox" name="courseList" value="#{courses[j]._id}" checked)
+                        input(type="checkbox" name="courseListTerm" value="#{courses[j]._id}")
+                    -}else{
+                        input(type="checkbox" name="courseList" value="#{courses[j]._id}")
+                        input(type="checkbox" name="courseListTerm" value="#{courses[j]._id}" checked)
+                    -}
+                -}else{
                     input(type="checkbox" name="courseList" value="#{courses[j]._id}")
+                    input(type="checkbox" name="courseListTerm" value="#{courses[j]._id}")
+                -}
                 label(for="#{courses[j]._id}") #{courses[j].title}
                     .gray-inline (#{courses[j].minAge} تا #{courses[j].maxAge})
                 br

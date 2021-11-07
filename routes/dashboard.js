@@ -187,13 +187,12 @@ setInterval(() => {
                 });
             }
             if (parseInt(course.endDate.day) <= now.day && parseInt(course.endDate.month) <= now.month && parseInt(course.endDate.year) <= now.year && course.status == 'در حال برگزاری') {
-                Course.updateMany({ _id: course._id }, { $set: { status: 'پایان یافته' } }, (err, doc) => {
+                Course.updateMany({ _id: course._id }, { $set: { status: 'پایان یافته', term: course.term + 1 } }, (err, doc) => {
                     if (err) console.log(err);
                 });
             }
         });
     });
-
     User.find({}, (err, users) => {
         Course.find({}, (err, courses) => {
             users.forEach(user => {
@@ -209,7 +208,7 @@ setInterval(() => {
             });
         });
     });
-}, 30 * 1000);
+}, 10 * 1000);
 var sortAlgorythm = (a, b) => {
     if(a.startDate.year == b.startDate.year){
         if(a.startDate.month == b.startDate.month){
@@ -228,18 +227,18 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
         // Course.find({ minAge: {$lt : age}, maxAge: { $gt :  age}, }, (err, courses) => {
         age = req.user.educationNum;
         Course.find({ minAge: {$lt : age+1}, maxAge: { $gt :  age-1}, }, (err, courses) => {
-            for (var i = 0; i < req.user.course.length; i++) {
-                for (var j = 0; j < courses.length; j++) {
-                    if(req.user.course[i].courseID.toString() == courses[j]._id.toString()){
-                        if(req.user.course[i].payed && courses[j].status == 'پایان یافته' && !req.user.course[i].yearPayment){
-                            req.user.course[i].payed = false;
-                        }
-                    }
-                }
-            }
-            User.updateMany({_id: req.user._id}, {$set: {course: req.user.course}}, (err, doc) => {
-                if(err) console.log(err);
-            })
+            // for (var i = 0; i < req.user.course.length; i++) {
+            //     for (var j = 0; j < courses.length; j++) {
+            //         if(req.user.course[i].courseID.toString() == courses[j]._id.toString()){
+            //             if(req.user.course[i].payed && courses[j].status == 'پایان یافته' && !req.user.course[i].yearPayment){
+            //                 req.user.course[i].payed = false;
+            //             }
+            //         }
+            //     }
+            // }
+            // User.updateMany({_id: req.user._id}, {$set: {course: req.user.course}}, (err, doc) => {
+            //     if(err) console.log(err);
+            // })
             var anarestani = false;
             if(req.user.phone.slice(0, 5) == '09944' || req.user.phone.slice(0, 5) == '09945' || req.user.phone.slice(0, 5) == '09933' || req.user.phone.slice(0, 5) == '09932' || req.user.phone.slice(0, 5) == '09908' || req.user.phone.slice(0, 5) == '09940')
                 anarestani = true;
@@ -266,6 +265,23 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
         Course.find({}, (err, courses) => {
             User.find({}, (err, users) => {
                 Notification.find({seen: false}, (err, notifications) => {
+                    for(var u=0; u<users.length; u++){
+                        for (var i = 0; i < users[u].course.length; i++) {
+                            for (var j = 0; j < courses.length; j++) {
+                                if(users[u].course[i].courseID.toString() == courses[j]._id.toString()){
+                                    if(users[u].course[i].payed && courses[j].status == 'پایان یافته' && !users[u].course[i].yearPayment && (!users[u].course[i].payedTerm || courses[j].term != users[u].course[i].payedTerm)){
+                                        users[u].course[i].payed = false;
+                                        var index = courses[j].students.indexOf(users[u]._id.toString());
+                                        courses[j].students.splice(index, 1);
+                                        Course.updateMany({_id: courses[j]._id}, {$set: {students: courses[j].students}}, (err, doc) => {if(err) console.log(err)});
+                                    }
+                                }
+                            }
+                        }
+                        User.updateMany({_id: users[u]._id}, {$set: {course: users[u].course}}, (err, doc) => {
+                            if(err) console.log(err);
+                        })
+                    }
                     var studentsNum = 0;
                     for (let i = 0; i < users.length; i++) {
                         users[i].course.forEach(userCourse => {
@@ -304,7 +320,6 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/users-view', ensureAuthenticated, (req, res, next) => {
     if (req.user.role == 'admin') {
         Course.find({}, (err, courses) => {
@@ -322,7 +337,6 @@ router.get('/users-view', ensureAuthenticated, (req, res, next) => {
         })
     } else  res.send('permission denied');
 });
-
 var searchUser = (user, word) => {
     if(user.fullname)
         if(user.fullname.search(word) != -1) return true;
@@ -349,7 +363,6 @@ var searchUser = (user, word) => {
     }
     return false;
 }
-
 router.post('/users-view', ensureAuthenticated, (req, res, next) => {
     var {search} = req.body;
     if (req.user.role == 'admin') {
@@ -374,7 +387,6 @@ router.post('/users-view', ensureAuthenticated, (req, res, next) => {
         });
     } else  res.send('permission denied');
 });
-
 router.get('/register-course', ensureAuthenticated, (req, res, next) => {
     var {yearPayment} = req.query;
     if(yearPayment) yearPayment = true;
@@ -407,13 +419,11 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
         }
     })
 });
-
 router.get('/remove-course', ensureAuthenticated, (req, res, next) => {
     Course.deleteOne({ _id: req.query.courseID }, (err, doc) => {
         res.redirect('/dashboard');
     });
 });
-
 router.get('/remove-user-course', ensureAuthenticated, (req, res, next) => {
     var courseList = req.user.course;
     courseList.splice(req.query.index, 1);
@@ -421,7 +431,6 @@ router.get('/remove-user-course', ensureAuthenticated, (req, res, next) => {
         res.redirect('/dashboard');
     });
 });
-
 router.get('/remove-user-course-pay', ensureAuthenticated, (req, res, next) => {
     var courseList = req.user.course;
     courseList.splice(req.query.index, 1);
@@ -429,7 +438,6 @@ router.get('/remove-user-course-pay', ensureAuthenticated, (req, res, next) => {
         res.redirect('/dashboard/pay');
     });
 });
-
 router.get('/pay', ensureAuthenticated, (req, res, next) => {
     var anarestani = false;
     if(req.user.phone.slice(0, 5) == '09944' || req.user.phone.slice(0, 5) == '09945' || req.user.phone.slice(0, 5) == '09933' || req.user.phone.slice(0, 5) == '09932' || req.user.phone.slice(0, 5) == '09908' || req.user.phone.slice(0, 5) == '09940'){
@@ -462,14 +470,12 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
         anarestani,
     });
 });
-
 router.get('/set-course-status', ensureAuthenticated, (req, res, next) => {
     Course.updateMany({ _id: req.query.courseID }, { $set: { status: req.query.status } }, (err, doc) => {
         if (err) console.log(err);
         res.redirect('/dashboard');
     });
 });
-
 router.get('/courses', ensureAuthenticated, (req, res, next) => {
     Course.find({}, (err, courses) => {
         User.find({}, (err, users) => {
@@ -485,7 +491,6 @@ router.get('/courses', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
-
 contain = (course, word) => {
     if(course.title.search(word) != -1) return true;
     if(course.description.search(word) != -1) return true;
@@ -494,7 +499,6 @@ contain = (course, word) => {
     if(course.cover.search(word) != -1) return true;
     return false;
 };
-
 router.post('/courses', ensureAuthenticated, (req, res, next) => {
     Course.find({}, (err, courses) => {
         User.find({}, (err, users) => {
@@ -515,14 +519,12 @@ router.post('/courses', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
-
 router.get('/user-courses-view', ensureAuthenticated, (req, res, next) => {
     res.render('./dashboard/user-courses-view', {
         user: req.user,
         dot,
     });
 });
-
 router.get('/course-list', ensureAuthenticated, (req, res, next) => {
     Course.findById(req.query.courseID, (err, course) => {
         Course.find({}, (err, courses) => {
@@ -553,7 +555,6 @@ router.get('/course-list', ensureAuthenticated, (req, res, next) => {
         })
     });
 });
-
 router.post('/course-list', ensureAuthenticated, (req, res, next) => {
     var {search} = req.body;
     Course.findById(req.body.courseID, (err, course) => {
@@ -585,7 +586,6 @@ router.post('/course-list', ensureAuthenticated, (req, res, next) => {
         })
     });
 });
-
 router.get('/user-payments', ensureAuthenticated, (req, res, next) => {
     Payment.find({ idNumber: req.user.idNumber }, (err, payments) => {
         res.render('./dashboard/user-payments', {
@@ -595,7 +595,6 @@ router.get('/user-payments', ensureAuthenticated, (req, res, next) => {
         });
     });
 });
-
 router.get('/admin-payments', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         Payment.find({}, (err, payments) => {
@@ -607,7 +606,6 @@ router.get('/admin-payments', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/discount', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         res.render('./dashboard/admin-discount', {
@@ -615,7 +613,6 @@ router.get('/discount', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         Course.findById(req.query.courseID, (err, course) => {
@@ -627,7 +624,6 @@ router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
     var { usePanel, video, title, undertitle, description, teacher, session, 
         minAge, maxAge, day, month, year, endDay, endMonth, endYear, 
@@ -649,7 +645,6 @@ router.post('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.updateMany({_id: req.query.userID}, {$set: {role: 'admin'}}, (err, doc) => {
@@ -657,7 +652,6 @@ router.get('/make-admin', ensureAuthenticated, (req, res, next) => {
         })
     }
 });
-
 router.get('/change-role', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.updateMany({_id: req.query.userID}, {$set: {role: req.query.role}}, (err, doc) => {
@@ -665,7 +659,6 @@ router.get('/change-role', ensureAuthenticated, (req, res, next) => {
         })
     }
 });
-
 router.get('/make-user', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.updateMany({_id: req.query.userID}, {$set: {role: 'user'}}, (err, doc) => {
@@ -673,7 +666,6 @@ router.get('/make-user', ensureAuthenticated, (req, res, next) => {
         })
     }
 });
-
 router.get('/remove-user', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.deleteMany({_id: req.query.userID}, (err, doc) => {
@@ -681,7 +673,6 @@ router.get('/remove-user', ensureAuthenticated, (req, res, next) => {
         })
     }
 });
-
 router.post('/admin-add-course-to-user', ensureAuthenticated, (req, res, next) => {
     console.log(req.body);
     if(req.user.role == 'admin'){
@@ -713,7 +704,6 @@ router.post('/admin-add-course-to-user', ensureAuthenticated, (req, res, next) =
         });
     }
 });
-
 router.get('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.findById(req.query.userID, (err, editingUser) => {
@@ -724,7 +714,6 @@ router.get('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.post('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
     var { userID, firstName, lastName, address, school, idNumber, phone, educationNum } = req.body;
     var fullname = firstName + ' ' + lastName;
@@ -741,7 +730,6 @@ router.post('/admin-edit-user', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.post('/admin-password-user', ensureAuthenticated, (req, res, next) => {
     const { userID, password, confirmpassword } = req.body;
     if(password != confirmpassword) 
@@ -759,7 +747,6 @@ router.post('/admin-password-user', ensureAuthenticated, (req, res, next) => {
         }));
     }
 });
-
 router.post('/admin-adduser', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         const  {firstName, lastName, address, phone, school, birthDay, birthMonth, birthYear, education, idNumber, password, configpassword, courseList} = req.body;
@@ -809,18 +796,31 @@ router.post('/admin-adduser', ensureAuthenticated, (req, res, next) => {
         })
     }
 });
-
 router.post('/user-course-list-edit', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
-        var {userID, courseList} = req.body;
+        var {userID, courseList, courseListTerm} = req.body;
+        var cnt = 0;
         Course.find({}, (err, courses) => {
             var registeredCourseList = [];
             if(courseList){
                 for (let i = 0; i < courses.length; i++) {
                     for (let j = 1; j < courseList.length; j++) {
                         if(courseList[j] == courses[i]._id){
-                            registeredCourseList.push({ courseID: courses[i]._id, course: courses[i], payed: true });
-                            courses[i].students.push(userID);
+                            registeredCourseList.push({ courseID: courses[i]._id, course: courses[i], payed: true, yearPayment: true });
+                            registeredCourseList[cnt].payedTerm = courses[i].term;
+                            cnt++;
+                            if(!courses[i].students.find(a => a == userID.toString()))
+                                courses[i].students.push(userID);
+                            Course.updateMany({_id: courses[i]._id}, {$set: {students: courses[i].students}}, (err) => {})
+                        }
+                    }
+                    for (let j = 1; j < courseListTerm.length; j++) {
+                        if(courseListTerm[j] == courses[i]._id){
+                            registeredCourseList.push({ courseID: courses[i]._id, course: courses[i], payed: true, yearPayment: false });
+                            registeredCourseList[cnt].payedTerm = courses[i].term;
+                            cnt++;
+                            if(!courses[i].students.find(a => a == userID.toString()))
+                                courses[i].students.push(userID);
                             Course.updateMany({_id: courses[i]._id}, {$set: {students: courses[i].students}}, (err) => {})
                         }
                     }
@@ -832,7 +832,6 @@ router.post('/user-course-list-edit', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.post('/add-user-to-course', ensureAuthenticated, (req, res, next) => {
     var {courseID, userID} = req.body;
     Course.findById(courseID, (err, course) => {
@@ -858,7 +857,6 @@ router.post('/add-user-to-course', ensureAuthenticated, (req, res, next) => {
         })
     })
 });
-
 router.get('/api', ensureAuthenticated, (req, res, next) => {
     Workshop.find({}, (err, workshop) => {
         User.find({role: 'admin'}, (err, users) => {
@@ -871,7 +869,6 @@ router.get('/api', ensureAuthenticated, (req, res, next) => {
         })
     })
 });
-
 router.post('/api-add-senario', ensureAuthenticated, (req, res, next) => {
     const {senarioNum, title} = req.body;
     if(req.user.role == 'admin'){
@@ -882,7 +879,6 @@ router.post('/api-add-senario', ensureAuthenticated, (req, res, next) => {
         }).catch(err => {if(err) console.log(err);});
     }
 });
-
 router.get('/api-senario', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         Workshop.findById(req.query.id, (err, workshop) => {
@@ -893,7 +889,6 @@ router.get('/api-senario', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/api-remove-question', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         Workshop.findById(req.query.workshopID, (err, workshop) => {
@@ -906,7 +901,6 @@ router.get('/api-remove-question', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/api-remove-senario', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         Workshop.deleteOne({_id: req.query.id}, (err) => {
@@ -914,7 +908,6 @@ router.get('/api-remove-senario', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.post('/admin-edit-senario', ensureAuthenticated, (req, res, next) => {
     const {workshopID, title, second, minute, hour} = req.body;
     if(req.user.role == 'admin'){
@@ -923,7 +916,6 @@ router.post('/admin-edit-senario', ensureAuthenticated, (req, res, next) => {
         });
     }
 })
-
 router.post('/api-edit-admins', ensureAuthenticated, (req, res, next) => {
     var admins = req.body.admins;
     if(req.user.role == 'admin'){
@@ -933,7 +925,6 @@ router.post('/api-edit-admins', ensureAuthenticated, (req, res, next) => {
         res.redirect('/dashboard/api')
     }
 });
-
 router.post('/add-teacher-to-course', ensureAuthenticated, (req, res, next) => {
     if(!req.body.teacherID) res.redirect('/dashboard');
     else if(req.user.role == 'admin'){
@@ -952,7 +943,6 @@ router.post('/add-teacher-to-course', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/remove-teacher-from-course', ensureAuthenticated, (req, res, next) => {
     var {courseID, teacherID} = req.query;
     if(req.user.role == 'admin'){
@@ -973,14 +963,12 @@ router.get('/remove-teacher-from-course', ensureAuthenticated, (req, res, next) 
         });
     }
 });
-
 router.get('/settings', ensureAuthenticated, (req, res, next) => {
     res.render('./dashboard/user-settings', {
         user: req.user,
         
     });
 });
-
 router.get('/increase-all-ages', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
         User.find({}, (err, users) => {
@@ -999,7 +987,6 @@ router.get('/increase-all-ages', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
 router.get('/notifications', ensureAuthenticated, (req, res, next) => {
     Notification.find({}, (err, notifications) => {
         res.render('./dashboard/admin-notifications', {
@@ -1008,6 +995,6 @@ router.get('/notifications', ensureAuthenticated, (req, res, next) => {
         })
         Notification.updateMany({}, {$set: {seen: true}}, err => {});
     })
-})
+});
 
 module.exports = router;

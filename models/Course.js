@@ -65,6 +65,10 @@ var CourseSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    term: {
+        type: Number,
+        default: 1,
+    }
 });
 
 var Course = mongoose.model('Course', CourseSchema);
