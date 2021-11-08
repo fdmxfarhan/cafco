@@ -180,7 +180,7 @@ var fixCapacities = () => {
                     const user = users[j];
                     for (let k = 0; k < user.course.length; k++) {
                         const userCourse = user.course[k];
-                        console.log(userCourse)
+                        // console.log(userCourse)
                         if(userCourse.course._id.toString() == course._id.toString() && userCourse.payed){
                             students.push(user._id);
                         }
