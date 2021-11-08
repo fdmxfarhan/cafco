@@ -12,7 +12,7 @@ const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
 const bcrypt = require('bcryptjs');
 const sms = require('../config/sms');
-
+const {convertDate} = require('../config/dateCon');
 
 var numToEducation = [
     'پیش دبستانی',
@@ -111,12 +111,12 @@ function gregorian_to_jalali(g_y, g_m, g_d) {
     //return jy + "/" + jm + "/" + jd;
 }
 function get_year_month_day(date) {
-    var convertDate;
+    var convertDate2;
     var y = date.substr(0, 4);
     var m = date.substr(5, 2);
     var d = date.substr(8, 2);
-    convertDate = gregorian_to_jalali(y, m, d);
-    return convertDate;
+    convertDate2 = gregorian_to_jalali(y, m, d);
+    return convertDate2;
 }
 function get_hour_minute_second(time) {
     var convertTime = [];
@@ -125,9 +125,9 @@ function get_hour_minute_second(time) {
     convertTime[2] = time.substr(6, 2);
     return convertTime;
 }
-function convertDate(date) {
+function convertDate2(date) {
     var convertDateTime = get_year_month_day(date.substr(0, 10));
-    convertDateTime = convertDateTime[0] + "/" + convertDateTime[1] + "/" + convertDateTime[2] + " " + date.substr(10);
+    convertDateTime = convertDateTime[0] + "/" + convertDateTime[1] + "/" + convertDateTime[2];
     return convertDateTime;
 }
 function get_persian_month(month) {
@@ -417,7 +417,6 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
     var {yearPayment} = req.query;
     if(yearPayment) yearPayment = true;
     else            yearPayment = false;
-    console.log(yearPayment)
     Course.findById(req.query.courseID, (err, course) => {
         var students = course.students;
         if (err) console.log(err);
@@ -431,7 +430,7 @@ router.get('/register-course', ensureAuthenticated, (req, res, next) => {
             if(course.price == 0) payState = true;
             courseList.push({ courseID: req.query.courseID, course, payed: payState, yearPayment });
             User.updateMany({ idNumber: req.user.idNumber }, { $set: { course: courseList } }, (err, doc) => {
-                var newNotif = new Notification({text: `${req.user.fullname} در کلاس ${course.title} ثبت نام کرد.`, date: `${shamsi(new Date())}`});
+                var newNotif = new Notification({text: `${req.user.fullname} در کلاس ${course.title} ثبت نام کرد.`, date: `${convertDate(new Date())}`});
                 newNotif.save().then(doc => {
                     res.redirect('/dashboard');
                 }).catch(err => {if(err) console.log(err)});

@@ -25,10 +25,10 @@ block content
                         .subtitle زمان شروع: #{courses[i].startDate.year}/#{courses[i].startDate.month}/#{courses[i].startDate.day}
                     .labels 
                         .label.green= courses[i].status
+                        a(href="/class/report?courseID=#{courses[i]._id}") 
+                            .label.red گزارشات
                         -if(courses[i].link && courses[i].link != 'undefined'){
-                            -if(courses[i].usePanel)
-                                a(href="/class/report?courseID=#{courses[i]._id}") 
-                                    .label.red گزارشات
+                            //- -if(courses[i].usePanel)
                             .label.blue
                                 //- -var index = courses.map(e => e._id.toString()).indexOf(user.course[i].courseID.toString())
                                 -if(courses[i].usePanel)

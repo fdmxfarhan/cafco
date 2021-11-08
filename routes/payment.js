@@ -8,7 +8,7 @@ const Course = require('../models/Course');
 const Payment = require('../models/Payment');
 var Notification = require('../models/Notification');
 const shamsi = require('../config/shamsi');
-
+const {convertDate} = require('../config/dateCon');
 
 router.get('/', (req, res, next) => {
     Payment.findOne({}, (err, payment) => {
@@ -132,7 +132,7 @@ router.post('/pay', function(req, res, next) {
                                 var payedClasses = '';
                                 for(var i=0; i<payment.courseList.length; i++)
                                     payedClasses += payment.courseList[i].course.title + '، ';
-                                var newNotif = new Notification({text: `${user.fullname} هزینه کلاس های ${payedClasses} را پرداخت کرد.`, date: `${shamsi(new Date())}`});
+                                var newNotif = new Notification({text: `${user.fullname} هزینه کلاس های ${payedClasses} را پرداخت کرد.`, date: `${convertDate(new Date())}`});
                                 newNotif.save().then(doc => {
                                 }).catch(err => {});
                             });
