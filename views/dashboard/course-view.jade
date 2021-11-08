@@ -14,7 +14,7 @@
                             li مدرس: #{courses[i].teacher}
                         -}
                         li زمان شروع: #{courses[i].startDate.year}/#{courses[i].startDate.month}/#{courses[i].startDate.day}
-                        li زمان شروع: #{courses[i].endDate.year}/#{courses[i].endDate.month}/#{courses[i].endDate.day}
+                        li زمان پایان: #{courses[i].endDate.year}/#{courses[i].endDate.month}/#{courses[i].endDate.day}
                         -if(courses[i].minAge == courses[i].maxAge)
                             li پایه تحصیلی: #{educationStages[courses[i].minAge]}
                         -else

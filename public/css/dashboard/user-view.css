@@ -47,8 +47,8 @@
         font-weight: bold;
         color: darkblue;
         font-family: 'iransans';
-        font-size: 1.3vw;
-        margin-bottom: 1vw;
+        font-size: 1vw;
+        margin-bottom: 0.4vw;
     }
     .popup .part .item a{
         text-decoration: none;
@@ -82,7 +82,7 @@
     }
     .popup .part .user-course-list-view .course{
         overflow: hidden;
-        border-radius: 1.5vw;
+        border-radius: 0.5vw;
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.2);
         position: relative;
         margin-bottom: 1vw;
@@ -90,6 +90,9 @@
     .popup .part .user-course-list-view .course img{
         width: 25%;
         float: right;
+        display: block;
+        padding: 0;
+        margin: 0;
     }
     .popup .part .user-course-list-view .course .info{
         width: 70%;
@@ -115,6 +118,8 @@
         float: left;
         font-size: 0.8vw;
         margin: 0 0.4vw;
+        text-decoration: none;
+        font-family: 'iransans';
     }
     .popup .part .user-course-list-view .course .info .labels .label.green{color: green;}
     .popup .part .user-course-list-view .course .info .labels .label.red{color: red;}

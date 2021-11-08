@@ -60,9 +60,9 @@
                         .labels 
                             .label.blue= crs.status
                             -if(users[i].course[j].payed)
-                                .label.green پرداخت شده
+                                a.label.green(href="/dashboard/admin-unpay-course?userID=#{users[i]._id}&courseIndex=#{j}")  پرداخت شده
                             -else
-                                .label.red پرداخت نشده
+                                a.label.red(href="/dashboard/admin-pay-course?userID=#{users[i]._id}&courseIndex=#{j}") پرداخت نشده
                             
             -}
         //- .add-course-to-user 

@@ -4,7 +4,6 @@ block styles
     link(rel="stylesheet", href="/css/dashboard/edit-course.css")
 
 block content
-
     -if(success_msg != ''){
         .message-area
             .success-msg
@@ -12,24 +11,31 @@ block content
                 ul 
                     li= success_msg
     -}
-    
     h1.title ویرایش دوره
     .two-side-cont
         form(action="/dashboard/admin-edit-course" method="POST") 
             input.hidden(type="text" name="courseID" value="#{course._id}")
             .part
                 .text-input
-                    i.fa.fa-pencil
+                    label(for="title") 
+                        i.fa.fa-pencil
+                        | عنوان دوره:
                     input(type="text" name="title" placeholder="عنوان دوره" value="#{course.title}" required)
                 .text-input
-                    i.fa.fa-pencil 
+                    label(for="undertitle") 
+                        i.fa.fa-pencil 
+                        | زیرعنوان:
                     input(type="text" name="undertitle" placeholder="زیر عنوان" value="#{course.undertitle}")
                 textarea#txt-area(name="description" placeholder="توضیحات ..." required) #{course.description}
                 .text-input 
-                    i.fa.fa-user 
+                    label(for="teacher") 
+                        i.fa.fa-user 
+                        | مدرس:
                     input(type="text" name="teacher" placeholder="مدرس" value="#{course.teacher}" required)
                 .text-input 
-                    i.fa.fa-user 
+                    label(for="session") 
+                        i.fa.fa-user 
+                        | تعداد جلسات:
                     input(type="Number" name="session" placeholder="تعداد جلسات" value="#{course.session}" required)
                 -if(course.usePanel)
                     input.check(type="checkbox" name="usePanel" id="usePanel" checked)
@@ -48,7 +54,6 @@ block content
                         label(for="yearPayment") پرداخت سالیانه
                         input.text.hidden#yearPaymentPrice(type="number" name="yearPrice" placeholder="هزینه سالیانه")
                 -}
-                
                 input.submit(type="submit" value="ثبت")
             .break-side 
             .part 
@@ -72,17 +77,25 @@ block content
                     label(for="year") / 
                     input(type="Number" name="endYear" placeholder="سال" value="#{course.endDate.year}" required)
                 .text-input 
-                    i.fa.fa-glass
+                    label(for="capacity") 
+                        i.fa.fa-glass
+                        | ظرفیت:
                     input(type="Number" name="capacity" placeholder="ظرفیت" value="#{course.capacity}" required)
                 .text-input 
-                    i.fa.fa-dollar 
+                    label(for="price") 
+                        i.fa.fa-dollar 
+                        | هزینه دوره(ریال):
                     input(type="Number" name="price" placeholder="هزینه دوره (ریال)" value="#{course.price}" required)
                 .text-input 
-                    i.fa.fa-link 
-                    input(type="text" name="link" placeholder="لینک ورود" value="#{course.link == 'undefined'? 'https://www.skyroom.online/ch/cafco/': course.link}")
+                    label(for="link") 
+                        i.fa.fa-link 
+                        | لینک ورود:
+                    input.left-align(type="text" name="link" placeholder="لینک ورود" value="#{course.link == 'undefined'? 'https://www.skyroom.online/ch/cafco/': course.link}")
                 .text-input 
-                    i.fa.fa-play
-                    input(type="text" name="video" placeholder="ویدئو معرفی" value="#{course.video == 'undefined'? '': 'https://www.aparat.com/v/' + course.video}")
+                    label(for="video") 
+                        i.fa.fa-play
+                        | ویدئو معرفی:
+                    input.left-align(type="text" name="video" placeholder="ویدئو معرفی" value="#{course.video == 'undefined'? '': 'https://www.aparat.com/v/' + course.video}")
                 .cover-img-edit
                     img.cover(src="#{course.cover}", alt="cover")
                     #change 

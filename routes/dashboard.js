@@ -13,6 +13,7 @@ const shamsi = require('../config/shamsi');
 const bcrypt = require('bcryptjs');
 const sms = require('../config/sms');
 
+
 var numToEducation = [
     'پیش دبستانی',
     'اول ابتدایی',
@@ -169,6 +170,30 @@ function get_persian_month(month) {
             break;
     }
 }
+var fixCapacities = () => {
+    Course.find({}, (err, courses) => {
+        User.find({}, (err, users) => {
+            for (let i = 0; i < courses.length; i++) {
+                var course = courses[i];
+                students = [];
+                for (let j = 0; j < users.length; j++) {
+                    const user = users[j];
+                    for (let k = 0; k < user.course.length; k++) {
+                        const userCourse = user.course[k];
+                        console.log(userCourse)
+                        if(userCourse.course._id.toString() == course._id.toString() && userCourse.payed){
+                            students.push(user._id);
+                        }
+                    }
+                }
+                Course.updateMany({_id: course._id}, {$set: {students}}, (err) => {
+                    if(err) throw err;
+                })
+            }
+            // res.send('done');
+        });
+    });
+}
 setInterval(() => {
     greg = new Date(Date.now());
     day = greg.getDate();
@@ -208,7 +233,8 @@ setInterval(() => {
             });
         });
     });
-}, 10 * 1000);
+    fixCapacities();
+}, 60 * 1000);
 var sortAlgorythm = (a, b) => {
     if(a.startDate.year == b.startDate.year){
         if(a.startDate.month == b.startDate.month){
@@ -1002,5 +1028,38 @@ router.get('/notifications', ensureAuthenticated, (req, res, next) => {
         Notification.updateMany({}, {$set: {seen: true}}, err => {});
     })
 });
+router.get('/admin-pay-course', ensureAuthenticated, (req, res, next) => {
+    var {userID, courseIndex} = req.query;
+    if(req.user.role == 'admin'){
+        User.findById(userID, (err, user) => {
+            user.course[courseIndex].payed = true;
+            User.updateMany({_id: userID}, {$set: {course: user.course}}, (err, doc) => {
+                Course.findById(user.course[courseIndex].courseID, (err, course) => {
+                    course.students.push(user._id);
+                    Course.updateMany({_id: course._id}, {$set: {students: course.students}}, (err, doc) => {
+                        res.redirect(`/dashboard/users-view?userID=${userID}`);
+                    });
+                });
+            });
+        });
+    }
+});
+router.get('/admin-unpay-course', ensureAuthenticated, (req, res, next) => {
+    var {userID, courseIndex} = req.query;
+    if(req.user.role == 'admin'){
+        User.findById(userID, (err, user) => {
+            user.course[courseIndex].payed = false;
+            User.updateMany({_id: userID}, {$set: {course: user.course}}, (err, doc) => {
+                Course.findById(user.course[courseIndex].courseID, (err, course) => {
+                    course.students.push(user._id);
+                    Course.updateMany({_id: course._id}, {$set: {students: course.students}}, (err, doc) => {
+                        res.redirect(`/dashboard/users-view?userID=${userID}`);
+                    });
+                });
+            });
+        });
+    }
+});
+
 
 module.exports = router;
