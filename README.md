@@ -5,8 +5,8 @@ This web application is designed and developed to manage online courses registra
 To run the server, we need `NodeJS` and `mongodb`. To install these tools follow the instruction bellow. You can run the server on any platforms, such as **Windows**, **Linux** or **MacOS**.
   
   * installing on **Windows** or **Mac OS**:
-    1. Download and install **Nodejs** from (here)[https://nodejs.org/en/download/].
-    2. Download and install **MongoDB Compass** from (here)[https://www.mongodb.com/products/compass].
+    1. Download and install **Nodejs** from [here](https://nodejs.org/en/download/).
+    2. Download and install **MongoDB Compass** from [here](https://www.mongodb.com/products/compass).
   
   * installing on **Linux**:
     1. To install **Nodejs** run the commands bellow in a terminal.
@@ -25,6 +25,12 @@ To run the server, we need `NodeJS` and `mongodb`. To install these tools follow
     ```
 
 # Download Project
-You can clone this repository using `git` or (GitHub Desktop)[https://desktop.github.com/]
+You can clone this repository using `git` or [GitHub Desktop](https://desktop.github.com/) manually click [here](https://github.com/fdmxfarhan/cafco/archive/refs/heads/main.zip) to download this project. If you are using **Linux** run this commands in a terminal.
+```
+cd ~
+git clone https://github.com/fdmxfarhan/cafco.git
+cd cafco
+npm i
+```
 
 
