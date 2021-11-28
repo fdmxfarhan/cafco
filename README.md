@@ -43,3 +43,9 @@ node index.js
 Inside the project directory there are folders wich contains each part of the application. The codes inside these folders are explained bellow.
   * **views:** this folder contains view files which are written in `jade` template. jade is similar to HTML but with diffrent syntax and with more options.
   * **routes:** this folder contains routing files wich are written in JS language. routes are the path after the domain for example in cofco.ir/dashboard as an example '/dashboard' is a route.
+  * **public:** this folder is where all public files are placed. It contains images, fonts, css files, js files and etc.
+  * **config:** this folder contains javascript functions for special use like date conversion, sms verification or authentications.
+  * **models:** this folder contains database modles and schemas. [more info...](https://docs.mongodb.com/manual/data-modeling/)
+  * **node_modules:** all the nodejs packages are placed here. Theres no need to change anything in this folder.
+  * **ssl:** ssl certificate and private key are placed here.
+  
