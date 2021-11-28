@@ -1,8 +1,8 @@
-# Cafco Register Management
+## Cafco Register Management
 This web application is designed and developed to manage online courses registration for cafco institution. It also contains APIs for CafcoWorkshop Mobile application.
 
 # Requirements
-To run the server, we need `NodeJS` and `mongodb`. To install these tools follow the instruction bellow. You can run the server on any platforms, such as **Windows**, **Linux** or **MacOS**.
+To run the server, we need `NodeJS` and `mongodb`. To install these tools follow the instruction bellow. You can run the server on any platforms, such as **Windows**, **Linux** or **MacOS**. You can use Visual Studio Code (VS Code) as an editor and download it from [here](https://code.visualstudio.com/download).
   
   * installing on **Windows** or **Mac OS**:
     1. Download and install **Nodejs** from [here](https://nodejs.org/en/download/).
@@ -33,4 +33,13 @@ cd cafco
 npm i
 ```
 
+# Run Server
+To run the server you can use the command bellow in a terminal. if you are using mac or windows you can use VSCode terminal as well (press `ctrl + j`). To stop server you can easily press `ctrl + c` in the terminal. This command must show to logs. First is that the server is running and seccond log is for database connection. after running this command, the server is started and now you can go to your browser and navigate to http://localhost:3000/ 
+```
+node index.js
+```
 
+# Code Structure
+Inside the project directory there are folders wich contains each part of the application. The codes inside these folders are explained bellow.
+  * **views:** this folder contains view files which are written in `jade` template. jade is similar to HTML but with diffrent syntax and with more options.
+  * **routes:** this folder contains routing files wich are written in JS language. routes are the path after the domain for example in cofco.ir/dashboard as an example '/dashboard' is a route.
