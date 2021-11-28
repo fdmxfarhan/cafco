@@ -3,9 +3,11 @@ This web application is designed and developed to manage online courses registra
 
 # Requirements
 To run the server, we need `NodeJS` and `mongodb`. To install these tools follow the instruction bellow. You can run the server on any platforms, such as **Windows**, **Linux** or **MacOS**.
+  
   * installing on **Windows** or **Mac OS**:
     1. Download and install **Nodejs** from (here)[https://nodejs.org/en/download/].
     2. Download and install **MongoDB Compass** from (here)[https://www.mongodb.com/products/compass].
+  
   * installing on **Linux**:
     1. To install **Nodejs** run the commands bellow in a terminal.
     ```
