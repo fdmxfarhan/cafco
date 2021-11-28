@@ -23,4 +23,8 @@ To run the server, we need `NodeJS` and `mongodb`. To install these tools follow
     sudo apt-get install -y mongodb-org
     sudo apt-get install -y mongodb
     ```
-    
+
+# Download Project
+You can clone this repository using `git` or (GitHub Desktop)[https://desktop.github.com/]
+
+
