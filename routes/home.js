@@ -8,6 +8,12 @@ router.get('/', (req, res, next) => {
     res.redirect('/users/login');
 });
 
+
+router.get('/salam', function(req, res){
+    res.render('login');
+});
+
+
 router.get('/doit', (req, res, next) => {
     Course.find({}, (err, courses) => {
         User.find({}, (err, users) => {
