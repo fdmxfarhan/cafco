@@ -7,6 +7,8 @@
 //         console.log("u got an error:" + err)
 //     });
 // }
+
+
 $(document).ready(function(){
     // getLocalStream();
     var answers  = document.getElementById('answers');
@@ -20,6 +22,7 @@ $(document).ready(function(){
     var socket   = io();
     var answeredBefore = false;
     var lastAnswer;
+    var shortAnswer = '';
     socket.emit("avg", {courseID: courseID});
     socket.emit(courseID, {state: 'newUser', userName});
 
@@ -89,13 +92,41 @@ $(document).ready(function(){
             }
             socket.emit("avg", {courseID: courseID});
         }
-        else if(msg.state == 'show-score')
+        else if(msg.state == 'save2')
         {
+            if(shortAnswer == '') alert('پاسخ شما نادرست بود.');
+            else{
+                rightAnswers = msg.rightAnswer.replace(/ /g, '').split('-');
+                console.log(rightAnswers);
+                var flag = false;
+                for(var i=0; i<rightAnswers.length; i++){
+                    if(shortAnswer.replace(/ /g, '') == rightAnswers[i]){
+                        flag = true;
+                        alert('پاسخ شما درست بود.');
+                        break;
+                    }
+                }
+                if(!flag) alert('پاسخ شما نادرست بود.');
+            }
+            shortAnswer = '';
+            $('#short-ans').val('');
+            socket.emit("avg", {courseID: courseID});
+        }
+        else if(msg.state == 'show-score'){
             $('.score-area').show();
         }
-        else if(msg.state == 'not-show-score')
-        {
+        else if(msg.state == 'not-show-score'){
             $('.score-area').hide();
+        }
+        else if(msg.state == 'multi-choice-question'){
+            $('#question1').show();
+            $('#question2').hide();
+        }
+        else if(msg.state == 'short-ans-question'){
+            $('#question1').hide();
+            $('#question2').show();
+            $('#short-submit').show();
+            $('#sent-ans').hide();
         }
         
     });
@@ -111,5 +142,11 @@ $(document).ready(function(){
         $('.iframe-area').css('width', '80%');
         $('.collapse-right').show();
         $('.collapse-left').hide();
+    });
+    $('#short-submit').click(() => {
+        $('#short-submit').hide();
+        $('#sent-ans').show();
+        shortAnswer = $('#short-ans').val();
+        socket.emit(courseID, {state: 'student-short-answer', userName, answer: shortAnswer, userID, time: Date.now()});
     });
 });

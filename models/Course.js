@@ -68,7 +68,11 @@ var CourseSchema = new mongoose.Schema({
     term: {
         type: Number,
         default: 1,
-    }
+    },
+    lastQuestionMultichoice: {
+        type: Boolean,
+        default: true,
+    },
 });
 
 var Course = mongoose.model('Course', CourseSchema);

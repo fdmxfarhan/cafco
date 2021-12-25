@@ -376,6 +376,36 @@ input:focus{outline: none;}
     .show-score:hover{
         color: var(--blue);
     }
+    .box input.short-ans{
+        background-color: var(--boxborder);
+        color: white;
+        padding: 0.2vw 1vw;
+        width: 50%;
+        border: none;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(255, 255, 255, 0.2);
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        margin-right: 1vw;
+        margin-bottom: 2vw;
+    }
+    .box button#short-submit{
+        background-color: var(--blue);
+        display: inline;
+        color: white;
+        padding: 0.2vw 1vw;
+        font-family: 'iransans';
+        font-size: 1.1vw;
+        box-shadow: 0 0 0.3vw 0.1vw rgba(255, 255, 255, 0.2);
+        margin-right: 0.5vw;
+        cursor: pointer;
+        border: none;
+    }
+    .box #sent-ans{
+        display: none;
+        color: var(--green);
+        font-size: 1.3vw;
+        padding: 0 1vw;
+    }
 }
 @media only screen and (max-width: 400px) {
     .class-container{
@@ -394,8 +424,3 @@ input:focus{outline: none;}
         height: 100vh;
     }
 }
-
-
-
-
-

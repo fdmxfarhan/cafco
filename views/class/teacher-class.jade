@@ -29,9 +29,9 @@ html
                         i.fa.fa-pencil
                         | پاسخ به سوالات 
                     h1.title
-                        .question.active#question-btn-1 گزینه ای 
-                        .question#question-btn-2 پاسخ کوتاه 
-                    #question1
+                        .question#question-btn-1(class="#{course.lastQuestionMultichoice == true? 'active': ''}") گزینه ای 
+                        .question#question-btn-2(class="#{course.lastQuestionMultichoice == true? '': 'active'}") پاسخ کوتاه 
+                    #question1(class="#{course.lastQuestionMultichoice == true? '': 'hidden'}")
                         input.number(type="number" id="answerNum" placeholder="تعداد")
                         .submit-button 
                             i.fa.fa-refresh
@@ -75,16 +75,15 @@ html
                             //-     .number 0
                             //-     .bar#bar4
                         .button-end ثبت پاسخ ها
-                    #question2.hidden
+                    #question2(class="#{course.lastQuestionMultichoice == true? 'hidden': ''}")
                         input.number.full(type="text" id="answerNum2" placeholder="جواب1 - جواب2 - ...")
                         h1.title امتیازات
                         .score
                             i.fa.fa-check.green
-                            input.number(type="number" id="score-right" placeholder="درست")
+                            input.number(type="number" id="score-right2" placeholder="درست")
                         .score
                             i.fa.fa-times.red
-                            input.number(type="number" id="score-wrong" placeholder="غلط")
-                        
+                            input.number(type="number" id="score-wrong2" placeholder="غلط")
                         .button-end2 ثبت پاسخ ها
                 .show-score#show-score نمایش امتیازات
             .iframe-area

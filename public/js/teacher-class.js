@@ -8,7 +8,6 @@
 //     });
 // }
 var allUsers = [];
-
 $(document).ready(function(){
     $('#not-answered-bar-users').hide();
     // getLocalStream();
@@ -19,12 +18,16 @@ $(document).ready(function(){
     var courseID = document.getElementById('courseID').textContent;
     var userName = document.getElementById('userName').textContent;
     var sum = 0;
+    var sumShort = 0;
     var maxUsers = 0;
     var answerNum = 0;
+    var answerNumShort = 0;
     var socket = io();
     var studentAnswers = [];
+    var studentAnswersShort = [];
     var notAnsweredUsers = [];
     var rightAnswer = 'undefined';
+    var rightAnswerShort = 'undefined';
     var refreshTime = 0;
     var showingScore = true;
     $('.submit-button').click(() => {
@@ -178,6 +181,22 @@ $(document).ready(function(){
             });
         });
     });
+    $('.button-end2').click(() => {
+        rightAnswerShort = $('#answerNum2').val();
+        var scoreRight = parseInt($('#score-right2').val());
+        var scoreWrong = parseInt($('#score-wrong2').val());
+        socket.emit(courseID, {state: 'save2', studentAnswers: studentAnswersShort, scoreRight, scoreWrong, rightAnswer: rightAnswerShort});
+        socket.emit("avg", {courseID: courseID});
+        alert('اطلاعات ثبت شد.');
+        socket.emit(courseID, {state: 'short-ans-question'});
+        answerNumShort = 0;
+        sumShort = 0;
+        studentAnswersShort = [];
+        rightAnswerShort = 'undefined';
+        $('#answerNum2').val('');
+        $('#score-right2').val('');
+        $('#score-wrong2').val('');
+    });
     socket.on(courseID, (msg) => {
         if(msg.state == 'student-ans')
         {
@@ -226,6 +245,12 @@ $(document).ready(function(){
                 allUsers.push(msg.userName);
             }
             updateAllBars(studentAnswers);
+        }
+        else if(msg.state == 'student-short-answer')
+        {
+            sumShort += 1;
+            msg.time -= refreshTime;
+            studentAnswersShort.push(msg);
         }
     });
     var updateAllBars = (studentAnswers) => {
@@ -308,12 +333,18 @@ $(document).ready(function(){
         $('#question2').hide();
         $('#question-btn-1').addClass('active');
         $('#question-btn-2').removeClass('active');
+        socket.emit(courseID, {state: 'multi-choice-question'});
     });
     $('#question-btn-2').click(() => {
         $('#question2').show();
         $('#question1').hide();
         $('#question-btn-2').addClass('active');
         $('#question-btn-1').removeClass('active');
+        socket.emit(courseID, {state: 'short-ans-question'});
+        answerNumShort = 0;
+        sumShort = 0;
+        studentAnswersShort = [];
+        rightAnswerShort = 'undefined';
     });
 
 });

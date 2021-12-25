@@ -149,9 +149,43 @@ var saveData = (course, msg) => {
             else if(user.course[courseIndex].answer)
             {
                 var newCourse = user.course;
-                newAnswer = newCourse[courseIndex].answer;
-                newAnswer.push({date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight});
-                newCourse[courseIndex].answer = newAnswer;
+                newCourse[courseIndex].answer.push({date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight});
+                User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+            }
+            else
+            {
+                var newCourse = user.course;
+                newCourse[courseIndex].answer = [{date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight}];
+                User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
+            }
+        });
+    }
+}
+
+var saveData2 = (course, msg) => {
+    for(var i=0; i<msg.studentAnswers.length; i++)
+    {
+        var answer = msg.studentAnswers[i];
+        var score = 0;
+        var time = answer.time;
+        var date = new Date();
+        rightAnswers = msg.rightAnswer.replace(/ /g, '').split('-');
+        var flag = false;
+        for(var i=0; i<rightAnswers.length; i++){
+            if(answer.answer.replace(/ /g, '') == rightAnswers[i]){
+                flag = true;
+                break;
+            }
+        }
+        if(flag) score = Math.abs(msg.scoreRight);
+        else     score = -Math.abs(msg.scoreWrong);
+        User.findById(answer.userID, (err, user) => {
+            var courseIndex = user.course.map(e => e.courseID.toString()).indexOf(course._id.toString());
+            if(courseIndex == -1) console.log('course not found');
+            else if(user.course[courseIndex].answer)
+            {
+                var newCourse = user.course;
+                newCourse[courseIndex].answer.push({date, score, session: course.sessionNum, time: time, possibleMax: msg.scoreRight});
                 User.updateMany({_id: user._id}, {$set: {course: newCourse}}, (err) => {if(err) console.log(err)});
             }
             else
@@ -170,13 +204,31 @@ var handleClasses = (io, socket) => {
             socket.on(`${course._id}`, msg => {
                 console.log(course.title, msg);
                 io.emit(`${course._id}`, msg);
-                if(msg.state == 'save')
-                {
+                if(msg.state == 'save'){
                     saveData(course, msg);
+                }
+                else if(msg.state == 'save2'){
+                    saveData2(course, msg);
+                }
+                else if(msg.state == 'multi-choice-question'){
+                    handleMultiChoiceQuestion(course, msg);
+                }
+                else if(msg.state == 'short-ans-question'){
+                    handleShortAnsQuestion(course, msg);
                 }
             });
         });
     });
+}
+var handleMultiChoiceQuestion = (course, msg) => {
+    Course.updateMany({_id: course._id}, {$set: {lastQuestionMultichoice: true}}, (err, doc) => {
+        if(err) console.log(err);
+    })
+}
+var handleShortAnsQuestion = (course, msg) => {
+    Course.updateMany({_id: course._id}, {$set: {lastQuestionMultichoice: false}}, (err, doc) => {
+        if(err) console.log(err);
+    })
 }
 
 const io = require('socket.io')(httpsServer);
