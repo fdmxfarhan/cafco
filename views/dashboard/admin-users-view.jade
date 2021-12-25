@@ -109,8 +109,9 @@ block content
                     .select-input-area
                         label(for="userID") نام کاربر: 
                         select(name="userID") 
-                            -for(var i=0; i<usersForThisCourse.length; i++)
-                                option(value="#{usersForThisCourse[i]._id}")= usersForThisCourse[i].fullname
+                            -if(usersForThisCourse)
+                                -for(var i=0; i<usersForThisCourse.length; i++)
+                                    option(value="#{usersForThisCourse[i]._id}")= usersForThisCourse[i].fullname
                     button.submit(type="submit") ثبت نام
     -}     
                         

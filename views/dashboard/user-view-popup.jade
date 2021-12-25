@@ -60,10 +60,18 @@
                         .labels 
                             .label.blue= crs.status
                             -if(users[i].course[j].payed)
-                                a.label.green(href="/dashboard/admin-unpay-course?userID=#{users[i]._id}&courseIndex=#{j}")  پرداخت شده
+                                a.label.green(href="/dashboard/admin-unpay-course?userID=#{users[i]._id}&courseIndex=#{j}") پرداخت شده
                             -else
                                 a.label.red(href="/dashboard/admin-pay-course?userID=#{users[i]._id}&courseIndex=#{j}") پرداخت نشده
-                            
+                            -if(users[i].course[j].payed){
+                                .label#edit-price #{typeof users[i].course[j].payedAmount == 'undefined' ? 0 : users[i].course[j].payedAmount} تومان
+                                form#edit-price-form.hidden(action="/dashboard/edit-price-user-course" method="POST") 
+                                    input.hidden(type="text" name="userID" value="#{users[i]._id}")
+                                    input.hidden(type="text" name="courseIndex" value="#{j}")
+                                    input.price(type="number" name="price" placeholder="XX ریال" value="#{users[i].course[j].payedAmount}")
+                                    button(type="submit")
+                                        i.fa.fa-save
+                            -}
             -}
         //- .add-course-to-user 
         //-     form(action="/dashboard/admin-add-course-to-user" method="POST") 

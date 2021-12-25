@@ -41,5 +41,10 @@ $(document).ready(function(){
         modal.fadeIn(500);
         $('#add-user-popup').fadeIn(500);
     });
+    $('.label#edit-price').click(() => {
+        $('.label#edit-price').hide();
+        $('form#edit-price-form').show();
+    });
+
 
 });

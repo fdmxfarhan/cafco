@@ -121,6 +121,8 @@ router.post('/pay', function(req, res, next) {
                                         for(var j=0; j<user.course.length; j++){
                                             user.course[j].payedTerm = course.term;
                                         }
+                                        
+                                        courseList[i].payedAmount = course.price * (payment.amount / (payment.amount+payment.discount));
                                     })
                                 }
                                 User.updateMany({ idNumber: payment.idNumber }, { $set: { 

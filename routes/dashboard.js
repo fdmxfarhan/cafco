@@ -1059,6 +1059,16 @@ router.get('/admin-unpay-course', ensureAuthenticated, (req, res, next) => {
         });
     }
 });
-
+router.post('/edit-price-user-course', ensureAuthenticated, (req, res, next) => {
+    var {userID, courseIndex, price} = req.body;
+    User.findById(userID, (err, user) => {
+        course = user.course;
+        course[courseIndex].payedAmount = price;
+        User.updateMany({_id: userID}, {$set: {course}}, (err, doc) => {
+            if(err) console.log(err);
+            else res.redirect(`/dashboard/users-view?userID=${userID}`);
+        })
+    });
+});
 
 module.exports = router;

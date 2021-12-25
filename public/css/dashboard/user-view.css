@@ -71,7 +71,7 @@
         color: var(--blue);
         margin: 0;
         font-family: 'iransans';
-        font-size: 1.3vw;
+        font-size: 1.1vw;
     }
     .popup .part .user-course-list-view{
         height: 20vw;
@@ -443,7 +443,22 @@
     .guide{
         font-size: 0.6vw;
     }
-
+    .label#edit-price{
+        cursor: pointer;
+    }
+    #edit-price-form{
+        /* display: inline; */
+    }
+    #edit-price-form input.price{
+        font-family: 'iransans';
+        font-size: 0.7vw;
+        padding: 0 0.4vw;
+        width: 4vw;
+        direction: ltr;
+    }
+    #edit-price-form button{
+        font-size: 0.8vw;
+    }
 }
 @media only screen and (max-width: 800px) {
     
