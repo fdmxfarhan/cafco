@@ -302,4 +302,18 @@ $(document).ready(function(){
                 document.getElementById("barusers" + i).remove();
     });
     
+
+    $('#question-btn-1').click(() => {
+        $('#question1').show();
+        $('#question2').hide();
+        $('#question-btn-1').addClass('active');
+        $('#question-btn-2').removeClass('active');
+    });
+    $('#question-btn-2').click(() => {
+        $('#question2').show();
+        $('#question1').hide();
+        $('#question-btn-2').addClass('active');
+        $('#question-btn-1').removeClass('active');
+    });
+
 });

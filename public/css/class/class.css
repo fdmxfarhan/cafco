@@ -190,13 +190,28 @@ input:focus{outline: none;}
         padding-left: 1vw;
     }
     .box h1.title{
-        color: var(--blue);
         font-family: 'iransans';
         font-size: 1.2vw;
         padding: 1vw;
         padding-bottom: 0.5vw;
         margin-bottom: 0;
         margin-top: 0;
+        overflow: hidden;
+        padding-bottom: 1vw;
+        color: var(--boxborder);
+    }
+    .box h1.title .question{
+        float: right;
+        width: 50%;
+        text-align: center;
+        font-size: 1vw;
+        cursor: pointer;
+    }
+    .box h1.title .question.active{
+        color: var(--blue);
+    }
+    .box h1.title .question:hover{
+        color: var(--hover);
     }
     .box input.number{
         background-color: var(--boxborder);
@@ -208,6 +223,9 @@ input:focus{outline: none;}
         font-family: 'iransans';
         font-size: 1.1vw;
         margin-right: 1vw;
+    }
+    .box input.number.full{
+        width: 70%;
     }
     .box input.number::placeholder{
         color: rgb(163, 163, 163);
@@ -286,7 +304,7 @@ input:focus{outline: none;}
         position: absolute;
     }
     #bars2{margin-top: 2vw;}
-    .button-end{
+    .button-end, .button-end2{
         background-color: var(--blue);
         /* display: inline; */
         color: white;
@@ -299,7 +317,7 @@ input:focus{outline: none;}
         width: 90%;
         margin: 5%;
     }
-    .button-end:hover{
+    .button-end:hover, .button-end2:hover{
         background-color: var(--hover);
     }
     .sideBar .score-area{ 

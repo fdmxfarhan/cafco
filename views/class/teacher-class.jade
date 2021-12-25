@@ -28,55 +28,69 @@ html
                     h1.box-title
                         i.fa.fa-pencil
                         | پاسخ به سوالات 
-                    h1.title گزینه ها
-                    input.number(type="number" id="answerNum" placeholder="تعداد")
-                    .submit-button 
-                        i.fa.fa-refresh
-                    .answers#answers
-                        //- .ans 
-                        //-     input.radio(type="radio" id="answer1" name="answer")
-                        //-     label.radio(for="answer1") گزینه 1
-                        //- .ans 
-                        //-     input.radio(type="radio" id="answer2" name="answer")
-                        //-     label.radio(for="answer2") گزینه 2
-                        //- .ans 
-                        //-     input.radio(type="radio" id="answer3" name="answer")
-                        //-     label.radio(for="answer3") گزینه 3
-                        //- .ans 
-                        //-     input.radio(type="radio" id="answer4" name="answer")
-                        //-     label.radio(for="answer4") گزینه 4
-                    h1.title امتیازات
-                    .score
-                        i.fa.fa-check.green
-                        input.number(type="number" id="score-right" placeholder="درست")
-                    .score
-                        i.fa.fa-times.red
-                        input.number(type="number" id="score-wrong" placeholder="غلط")
-                    #bars2
-                        .bar-area#not-answered-bar-area
-                            .question -
-                            .number#not-answered-number 0
-                            .bar#not-answered-bar
-                            .bar-users#not-answered-bar-users
-                    #bars
-                        //- .bar-area
-                        //-     .question 2
-                        //-     .number 0
-                        //-     .bar#bar2
-                        //- .bar-area
-                        //-     .question 3
-                        //-     .number 0
-                        //-     .bar#bar3
-                        //- .bar-area
-                        //-     .question 4
-                        //-     .number 0
-                        //-     .bar#bar4
-                    .button-end ثبت پاسخ ها
+                    h1.title
+                        .question.active#question-btn-1 گزینه ای 
+                        .question#question-btn-2 پاسخ کوتاه 
+                    #question1
+                        input.number(type="number" id="answerNum" placeholder="تعداد")
+                        .submit-button 
+                            i.fa.fa-refresh
+                        .answers#answers
+                            //- .ans 
+                            //-     input.radio(type="radio" id="answer1" name="answer")
+                            //-     label.radio(for="answer1") گزینه 1
+                            //- .ans 
+                            //-     input.radio(type="radio" id="answer2" name="answer")
+                            //-     label.radio(for="answer2") گزینه 2
+                            //- .ans 
+                            //-     input.radio(type="radio" id="answer3" name="answer")
+                            //-     label.radio(for="answer3") گزینه 3
+                            //- .ans 
+                            //-     input.radio(type="radio" id="answer4" name="answer")
+                            //-     label.radio(for="answer4") گزینه 4
+                        h1.title امتیازات
+                        .score
+                            i.fa.fa-check.green
+                            input.number(type="number" id="score-right" placeholder="درست")
+                        .score
+                            i.fa.fa-times.red
+                            input.number(type="number" id="score-wrong" placeholder="غلط")
+                        #bars2
+                            .bar-area#not-answered-bar-area
+                                .question -
+                                .number#not-answered-number 0
+                                .bar#not-answered-bar
+                                .bar-users#not-answered-bar-users
+                        #bars
+                            //- .bar-area
+                            //-     .question 2
+                            //-     .number 0
+                            //-     .bar#bar2
+                            //- .bar-area
+                            //-     .question 3
+                            //-     .number 0
+                            //-     .bar#bar3
+                            //- .bar-area
+                            //-     .question 4
+                            //-     .number 0
+                            //-     .bar#bar4
+                        .button-end ثبت پاسخ ها
+                    #question2.hidden
+                        input.number.full(type="text" id="answerNum2" placeholder="جواب1 - جواب2 - ...")
+                        h1.title امتیازات
+                        .score
+                            i.fa.fa-check.green
+                            input.number(type="number" id="score-right" placeholder="درست")
+                        .score
+                            i.fa.fa-times.red
+                            input.number(type="number" id="score-wrong" placeholder="غلط")
+                        
+                        .button-end2 ثبت پاسخ ها
                 .show-score#show-score نمایش امتیازات
             .iframe-area
                 iframe#mainIframe(src="#{link}" width="100%" height="100%" frameborder="0" allowFullScreen="true" allow="autoplay;fullscreen;speaker;microphone;camera;display-capture") 
-            i.fa.fa-chevron-right.collapse-right 
-            i.fa.fa-chevron-left.collapse-left
+            i.fa.fa-chevron-right.collapse-right
+            i.fa.fa-chevron-left.collapse-left.hidden
 
         script(src="/js/teacher-class.js") 
 
