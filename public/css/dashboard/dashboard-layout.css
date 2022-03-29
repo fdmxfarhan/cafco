@@ -84,7 +84,7 @@ input.ltr{text-align: left;direction: ltr;}
         width: 80%;
         margin: auto;
         margin-top: 1vw;
-        font-size: 1.2vw;
+        font-size: 1.1vw;
         color: gray;
     }
     .dashboard .side-bar .card .green{
@@ -100,7 +100,7 @@ input.ltr{text-align: left;direction: ltr;}
         min-height: 100vh;
     }
     .dashboard .side-bar .avatar {
-        width: 60%;
+        width: 40%;
         margin: auto;
         margin-top: 2vw;
     }
@@ -110,7 +110,7 @@ input.ltr{text-align: left;direction: ltr;}
     .dashboard .side-bar .name {
         font-weight: bold;
         font-family: 'iransans';
-        font-size: 1.5vw;
+        font-size: 1.1vw;
         text-align: center;
         color: var(--brown);
     }
@@ -122,7 +122,7 @@ input.ltr{text-align: left;direction: ltr;}
         text-decoration: none;
         font-family: 'iransans';
         padding: 0.4vw 2vw;
-        font-size: 1.4vw;
+        font-size: 1.2vw;
         display: block;
         position: relative;
     }
@@ -141,10 +141,10 @@ input.ltr{text-align: left;direction: ltr;}
     }
     .dashboard .side-bar i {
         padding-left: 1vw;
-        font-size: 2vw;
+        font-size: 1.2vw;
     }
     .dashboard .side-bar .nav-links .break {
-        background-color: var(--background);
+        background-color: rgb(224, 217, 140);
         width: 80%;
         height: 0.1vw;
         margin: auto;
@@ -213,6 +213,11 @@ input.ltr{text-align: left;direction: ltr;}
         width: 75%;
         margin: 2vw auto;
         z-index: 11;
+    }
+    .popup-area.pr60 {
+        left: 18%;
+        top: 3vw;
+        width: 60%;
     }
     .popup-area .popup {
         background-color: white;

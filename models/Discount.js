@@ -5,7 +5,12 @@ var DiscountSchema = new mongoose.Schema({
     percentage: Number,
     users: [Object],
     code: String,
-    
+    startDate: {type: Date, default: new Date()},
+    endDate: Date,
+    endDateJ: Object,
+    type: String,
+    expired: {type: Boolean, default: false},
+
 });
 
 var Discount = mongoose.model('Discount', DiscountSchema);

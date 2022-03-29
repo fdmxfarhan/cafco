@@ -35,6 +35,9 @@ function div(a, b) {
 }
 
 function jalali_to_gregorian(jy, jm, jd) {
+    jy = parseInt(jy);
+    jm = parseInt(jm);
+    jd = parseInt(jd);
     var sal_a, gy, gm, gd, days;
     jy += 1595;
     days = -355668 + (365 * jy) + (~~(jy / 33) * 8) + ~~(((jy % 33) + 3) / 4) + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);

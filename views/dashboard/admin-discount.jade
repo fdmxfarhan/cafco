@@ -1,7 +1,69 @@
 extends layout
 
 block styles
-    link(rel="stylesheet", href="/css/dashboard/discount.css")
+    link(rel="stylesheet", href="/css/dashboard/user-view.css")
+    link(rel="stylesheet", href="/css/dashboard/form.css")
 
 block content
-    h1 تخفیف ها
+    h1.title.center کد های تخفیف
+    a.add-user-icon
+        i.fa.fa-plus
+    .user-list 
+        table 
+            tr 
+                th کد تخفیف
+                th درصد
+                th سقف
+                th تعداد کاربر
+                th تاریخ انقضا
+                th وضعیت
+            -for(var i=discounts.length-1; i>=0; i--){
+                tr 
+                    td= discounts[i].code
+                    td= discounts[i].percentage
+                    td= discounts[i].maxPrice
+                    td= discounts[i].users.length
+                    td #{discounts[i].endDateJ.year}/#{discounts[i].endDateJ.month}/#{discounts[i].endDateJ.day}
+                    td= discounts[i].expired == false? 'فعال' : 'غیر فعال'
+            -}
+    .popup-area.pr60#add-discount-popup
+        .popup
+            i.fa.fa-times.close-popup
+            h1.title.center افزودن کد تخفیف
+            form(action="/dashboard/add-discount" method="POST" autocomplete="off") 
+                .part
+                    .text-input-view
+                        .label کد تخفیف:
+                            i.fa.fa-pencil
+                        input(type="text" placeholder="کد تخفیف" name="code" value="#{generateDiscount(5)}" required)
+                    .text-input-view
+                        .label درصد:
+                            i.fa.fa-pencil
+                        input(type="number" placeholder="درصد" name="percentage" required)
+                    .text-input-view
+                        .label سقف (تومان):
+                            i.fa.fa-dollar
+                        input(type="number" placeholder="سقف (تومان)" name="maxPrice" required)
+                    .date-input-view 
+                        .label تاریخ انقضا: 
+                            i.fa.fa-calendar
+                        .date-input 
+                            input(type="number" placeholder="روز" name="endDay" required)
+                            | /
+                            input(type="number" placeholder="ماه" name="endMonth" required)
+                            | /
+                            input(type="number" placeholder="سال" name="endYear" value="1401" required)
+                    button.submit-btn(type="submit") ثبت
+                .part 
+                    .label-right
+                        i.fa.fa-user
+                        | کاربران:
+                    p در صورتی که این کد تخفیف برای همه کاربران است در فیلد زیر هیچ کاربری انتخاب نکنید.
+                    .select-users-view 
+                        -for(var i=0; i<users.length; i++){
+                            input(type="checkbox" name="usersList" value="#{users[i]._id}")
+                            label(for="usersList")= users[i].fullname
+                            br
+                        -}
+    script(src="/js/discount.js") 
+    

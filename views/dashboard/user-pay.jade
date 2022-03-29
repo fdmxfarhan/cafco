@@ -31,14 +31,22 @@ block content
                 -}
             -}
         -}
-    a.add-course(href="/dashboard/courses") ثبت نام دوره جدید
-    -if(discount72 || anarestani){
+        .overflow-hidden
+            -if(!discountCode){
+                form(action="/dashboard/pay" method="GET") 
+                    input.text(type="text" placeholder="کد تخفیف ..." name="discountCode")
+                    input.submit(type="submit" value="بررسی")
+            -}
+            a.add-course(href="/dashboard/courses") + ثبت نام دوره جدید
+    -if(discount72 || anarestani || discountCode){
         .discount 
             ul 
                 -if(discount72)
                     li شما با ثبت نام در بیش از 72 جلسه 20 درصد تخفیف دریافت کردید.
                 -if(anarestani)
                     li شما با ورود از طریق سیمکارت انارستان 40 درصد تخفیف دریافت کرده اید.
+                -if(discountCode)
+                    li کد تخفیف #{discountCode}
                 
     -}
     .payment-card

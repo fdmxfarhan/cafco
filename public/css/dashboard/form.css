@@ -1,0 +1,84 @@
+@media only screen and (min-width: 800px) {
+    form .text-input-view,
+    form .date-input-view{
+        overflow: hidden;
+        margin-bottom: 0.8vw;
+    }
+    form .text-input-view .label,
+    form .date-input-view .label{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--text);
+        margin-bottom: 0;
+        line-height: 1.3vw;
+        float: right;
+        width: 30%;
+        padding: 0.3vw 1vw;
+        text-align: left;
+    }
+    form .label-right{
+        font-family: 'iransans';
+        font-size: 1vw;
+        color: var(--text);
+        margin-bottom: 0;
+        line-height: 1.3vw;
+        padding: 0.3vw 1vw;
+    }
+    form .label-right i{padding-left: 0.5vw;}
+    form .text-input-view .label i,
+    form .date-input-view .label i{
+        padding-left: 0.5vw;
+        padding-right: 0.5vw;
+    }
+    form .text-input-view input,
+    form .date-input-view .date-input{
+        float: right;
+        width: 40%;
+        margin-right: 5%;
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        color: var(--text);
+        margin: 0;
+        /* border: var(--text) 0.1vw solid; */
+        border: none;
+        background-color: rgb(201, 225, 231);
+        padding: 0.3vw 1vw;
+        border-radius: 0.5vw;
+    }
+    form .date-input-view .date-input input{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        background-color: transparent;
+        width: 27%;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+    form button.submit-btn{
+        background-color: var(--blue);
+        font-size: 0.9vw;
+        font-family: 'iransans';
+        border: none;
+        color: white;
+        text-decoration: none;
+        font-weight: normal;
+        border-radius: 0.5vw;
+        padding: 0.2vw 1vw;
+        cursor: pointer;
+    }
+    form button.submit-btn:hover{
+        background-color: var(--hover);
+    }
+    form p{
+        color: var(--gray);
+        font-family: 'iransans';
+        font-size: 0.9vw;
+        margin: 0;
+        padding: 0 1vw;
+    }
+    form .select-users-view{
+        height: 10vw;
+        overflow-y: scroll;
+    }
+}

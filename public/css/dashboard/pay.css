@@ -71,7 +71,7 @@
         position: absolute;
         bottom: 1vw;
         left: 2vw;
-        font-size: 1.2vw;
+        font-size: 1vw;
         /* font-weight: bold; */
         color: rgb(0, 190, 0);
     }
@@ -168,8 +168,8 @@
         left: 2vw;
         bottom: 1vw;
         font-family: 'iransans';
-        font-size: 1.7vw;
-        /* font-weight: bold; */
+        font-size: 1.2vw;
+        font-weight: bold;
         color: var(--green);
     }
     .course-list .course .labels .label.green{background-color: rgb(42, 228, 42);}
@@ -184,7 +184,7 @@
     .course-list .course .labels a.remove{
         display: block;
         float: left;
-        padding: 0.3vw 1vw;
+        padding: 0.3vw 1vw 0.1vw 1vw;
         border-radius: 1vw;
         margin: 0 0.5vw;
         /* background-color: var(--red); */
@@ -193,6 +193,7 @@
     }
     .course-list .course .labels a.remove:hover{
         background-color: var(--hover);
+        color: white;
     }
     .course-list .course a .label.red:hover{
         background-color: var(--hover);
@@ -263,21 +264,55 @@
     }
     a.add-course{
         background-color: var(--blue);
-        margin-right: 5%;
-        padding: 0.5vw 1vw;
-        border-radius: 1.5vw;
+        padding: 0.3vw 1vw;
+        border-radius: 0.5vw;
         color: white;
         font-family: 'iransans';
-        font-size: 1.3vw;
+        font-size: 1vw;
         text-decoration: none;
         transition-duration: 500ms;
         display: block;
         width: fit-content;
-        margin-bottom: 1vw;
+        float: left;
     }
     a.add-course:hover{
         background-color: var(--hover);
         border-radius: 0.3vw;
+    }
+    
+    /* -------------------------------------flag---------------------------------------- */
+    .overflow-hidden{
+        margin-bottom: 1vw;
+        overflow: hidden;
+    }
+    .overflow-hidden form{
+        float: right;
+    }
+    .overflow-hidden form input.text{
+        font-family: 'iransans';
+        font-size: 1vw;
+        border: none;
+        background-color: white;
+        padding: 0.3vw 1vw;
+        border-top-right-radius: 0.5vw;
+        border-bottom-right-radius: 0.5vw;
+    }
+    .overflow-hidden form input.text:focus{
+        outline: none;
+    }
+    .overflow-hidden form input.submit{
+        font-family: 'iransans';
+        font-size: 1vw;
+        border: none;
+        background-color: var(--blue);
+        color: white;
+        padding: 0.3vw 1vw;
+        border-top-left-radius: 0.5vw;
+        border-bottom-left-radius: 0.5vw;
+        cursor: pointer;
+    }
+    .overflow-hidden form input.submit:hover{
+        background-color: var(--hover);
     }
 }
 @media only screen and (max-width: 800px) {

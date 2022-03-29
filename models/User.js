@@ -40,6 +40,7 @@ var UserSchema = new mongoose.Schema({
     default: [],
   },
   recoveryCode: String,
+  usedDiscounts: {type: [String], default: []},
 });
 
 var User = mongoose.model('User', UserSchema);

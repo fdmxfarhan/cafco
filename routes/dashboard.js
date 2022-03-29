@@ -5,6 +5,7 @@ const { ensureAuthenticated } = require('../config/auth');
 var User = require('../models/User');
 var Course = require('../models/Course');
 var Payment = require('../models/Payment');
+var Discount = require('../models/Discount');
 var Workshop = require('../models/Workshop');
 var Notification = require('../models/Notification');
 const mail = require('../config/mail');
@@ -12,7 +13,8 @@ const dot = require('../config/dot');
 const shamsi = require('../config/shamsi');
 const bcrypt = require('bcryptjs');
 const sms = require('../config/sms');
-const {convertDate} = require('../config/dateCon');
+const {convertDate, jalali_to_gregorian} = require('../config/dateCon');
+const generateDiscount = require('../config/generateDiscount');
 
 var numToEducation = [
     'پیش دبستانی',
@@ -464,6 +466,7 @@ router.get('/remove-user-course-pay', ensureAuthenticated, (req, res, next) => {
     });
 });
 router.get('/pay', ensureAuthenticated, (req, res, next) => {
+    var {discountCode} = req.query;
     var anarestani = false;
     if(req.user.phone.slice(0, 5) == '09944' || req.user.phone.slice(0, 5) == '09945' || req.user.phone.slice(0, 5) == '09933' || req.user.phone.slice(0, 5) == '09932' || req.user.phone.slice(0, 5) == '09908' || req.user.phone.slice(0, 5) == '09940'){
         anarestani = true;
@@ -486,13 +489,28 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
     if(anarestani){
         discount += Math.floor((priceSum * 40) / 100)
     }
-    res.render('./dashboard/user-pay', {
-        user: req.user,
-        priceSum,
-        discount,
-        dot,
-        discount72,
-        anarestani,
+    Discount.findOne({code: discountCode}, (err, disc) => {
+        if(discountCode){
+            if(req.user.usedDiscounts.indexOf(discountCode) == -1){
+                if(disc){
+                    if((priceSum*disc.percentage)/100 > disc.maxPrice*10){
+                        discount += disc.maxPrice*10;
+                    }
+                    else discount += (priceSum*disc.percentage)/100;
+                    console.log(discount)
+                }
+                else console.log('discount code not found :(')
+            }
+        }
+        res.render('./dashboard/user-pay', {
+            user: req.user,
+            priceSum,
+            discount,
+            dot,
+            discount72,
+            anarestani,
+            discountCode,
+        });
     });
 });
 router.get('/set-course-status', ensureAuthenticated, (req, res, next) => {
@@ -639,9 +657,16 @@ router.get('/admin-payments', ensureAuthenticated, (req, res, next) => {
 });
 router.get('/discount', ensureAuthenticated, (req, res, next) => {
     if(req.user.role == 'admin'){
-        res.render('./dashboard/admin-discount', {
-            user: req.user,
-        });
+        User.find({role: 'user'}, (err, users) => {
+            Discount.find({}, (err, discounts) => {
+                res.render('./dashboard/admin-discount', {
+                    user: req.user,
+                    generateDiscount,
+                    users,
+                    discounts
+                });
+            });
+        })
     }
 });
 router.get('/admin-edit-course', ensureAuthenticated, (req, res, next) => {
@@ -1070,5 +1095,19 @@ router.post('/edit-price-user-course', ensureAuthenticated, (req, res, next) => 
         })
     });
 });
-
+router.post('/add-discount', ensureAuthenticated, (req, res, next) => {
+    var {code, percentage, maxPrice, endDay, endMonth, endYear, usersList} = req.body;
+    if(req.user.role == 'admin'){
+        var users = [];
+        if(typeof(usersList) == 'string') users.push(usersList);
+        else if(typeof(usersList) == 'object') users = usersList;
+        var d = jalali_to_gregorian(endYear, endMonth, endDay);
+        var endDate = new Date(d[0], d[1]-1, d[2], 12, 0, 0, 0);
+        console.log(endDate);
+        var newDiscount = new Discount({code, percentage, maxPrice, startDate: new Date(), endDateJ: {day: endDay, month: endMonth, year: endYear}, users, endDate})
+        newDiscount.save().then(doc => {
+            res.redirect('/dashboard/discount')
+        }).catch(err => console.log(err));
+    }
+})
 module.exports = router;

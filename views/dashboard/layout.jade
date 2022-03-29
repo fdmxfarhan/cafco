@@ -71,10 +71,15 @@ html
                             i.fa.fa-dollar
                             | مالی
                         .break 
+                        a.sidebar-nav-link(href="/dashboard/discount") 
+                            i.fa.fa-credit-card
+                            | کد تخفیف
+                        .break 
                         -if(user.idNumber == '2581340517' || user.idNumber == '1818571668' || user.kashfolasrar){
                             a.sidebar-nav-link(href="/dashboard/api") 
                                 i.fa.fa-tv
                                 | کشف الاسرار
+                            .break 
                             a.sidebar-nav-link(href="/api/cpanel") 
                                 i.fa.fa-mobile-phone
                                 | مدیریت کشف الاسرار
