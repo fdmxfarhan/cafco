@@ -493,7 +493,21 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
         if(discountCode){
             if(req.user.usedDiscounts.indexOf(discountCode) == -1){
                 if(disc){
-                    if((priceSum*disc.percentage)/100 > disc.maxPrice*10){
+                    if(disc.percentage >= 100){
+                        for (let i = 0; i < courseList.length; i++) {
+                            courseList[i].payed = true;
+                            Course.findById(courseList[i].courseID, (err, crs) => {
+                                crs.students.push(req.user._id.toString());
+                                Course.updateMany({_id: crs._id}, {$set: {students: crs.students}}, (err) => {});
+                            });
+                        }
+                        User.updateMany({_id: req.user._id}, {$set: {course: courseList}}, (err) => {
+                            req.flash('success_msg', 'پرداخت با موفقیت انجام شد.');
+                            res.redirect('/dashboard');
+                        });
+                        return;
+                    }
+                    else if((priceSum*disc.percentage)/100 > disc.maxPrice*10){
                         discount += disc.maxPrice*10;
                     }
                     else discount += (priceSum*disc.percentage)/100;
