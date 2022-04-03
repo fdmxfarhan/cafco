@@ -497,9 +497,15 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
                         discount += disc.maxPrice*10;
                     }
                     else discount += (priceSum*disc.percentage)/100;
-                    console.log(discount)
+                    req.user.usedDiscounts.push(discountCode);
+                    User.updateMany({_id: req.user._id}, {$set: {usedDiscounts: req.user.usedDiscounts}}, (err) => {});
                 }
                 else console.log('discount code not found :(')
+            }
+            else {
+                req.flash('error_msg', 'کد تخفیف قبلا استفاده شده.');
+                res.redirect('/dashboard/pay');
+                return;
             }
         }
         res.render('./dashboard/user-pay', {
@@ -510,6 +516,7 @@ router.get('/pay', ensureAuthenticated, (req, res, next) => {
             discount72,
             anarestani,
             discountCode,
+            disc,
         });
     });
 });

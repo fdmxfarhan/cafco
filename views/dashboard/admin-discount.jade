@@ -59,11 +59,15 @@ block content
                         i.fa.fa-user
                         | کاربران:
                     p در صورتی که این کد تخفیف برای همه کاربران است در فیلد زیر هیچ کاربری انتخاب نکنید.
-                    .select-users-view 
+                    .search-area
+                        input.search#search-input(type="text" placeholder="جستجو" onkeyup="searchUsers()")
+                        i.fa.fa-search
+                    .select-users-view#myTable
                         -for(var i=0; i<users.length; i++){
-                            input(type="checkbox" name="usersList" value="#{users[i]._id}")
-                            label(for="usersList")= users[i].fullname
-                            br
+                            .row
+                                input(type="checkbox" name="usersList" value="#{users[i]._id}")
+                                label(for="usersList")= users[i].fullname
+                                br
                         -}
     script(src="/js/discount.js") 
     

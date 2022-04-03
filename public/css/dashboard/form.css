@@ -81,4 +81,24 @@
         height: 10vw;
         overflow-y: scroll;
     }
+    .search-area input.search{
+        display: block;
+        font-family: 'iransans';
+        font-size: 1vw;
+        padding: 0.2vw 1vw; 
+        border: none;
+        border-bottom: var(--gray) 0.1vw solid;
+        width: 90%;
+        margin: 0;
+        margin-bottom: 0.5vw;
+    }
+    .search-area {
+        position: relative;
+    }
+    .search-area i{
+        position: absolute;
+        top: 0.7vw;
+        left: 2vw;
+        color: var(--gray);
+    }
 }
