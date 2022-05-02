@@ -13,6 +13,7 @@ const session = require('express-session');
 const passport = require('passport'); 
 var Course = require('./models/Course');
 var Answer = require('./models/Answer');
+const User = require('./models/User');
 
 // routs requirement
 var homeRoute = require('./routes/home');
@@ -22,7 +23,7 @@ var uploadRoute = require('./routes/upload');
 var paymentRoute = require('./routes/payment');
 var apiRoute = require('./routes/api');
 var classRoute = require('./routes/class');
-const User = require('./models/User');
+var tradeWorkshopRoute = require('./routes/tradeWorkshop');
 
 // Mongo DB connect
 mongoose.connect('mongodb://localhost/register', {useNewUrlParser: true, useUnifiedTopology: true}, (err) =>{
@@ -97,6 +98,7 @@ app.use('/dashboard', dashboardRoute);
 app.use('/payment', paymentRoute);
 app.use('/api', apiRoute);
 app.use('/class', classRoute);
+app.use('/trade-workshop', tradeWorkshopRoute);
 
 
 

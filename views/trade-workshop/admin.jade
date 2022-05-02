@@ -1,0 +1,133 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+        link(rel="stylesheet", href="/css/trade-workshop/admin.css")
+        link(rel="shortcut icon", href="/img/logo.png", type="image/x-icon")
+        script(src="/js/jquery-3.5.1.min.js")
+        title کارسوق
+    body 
+        .black-modal
+        #time-started.hidden= timeStarted
+        .title-view 
+            .top-title ADMIN
+            .time 
+                .num#time-hours #{clock.hours < 10? '0'+clock.hours : clock.hours}
+                .double-dots :
+                .num#time-minutes #{clock.minutes < 10? '0'+clock.minutes : clock.minutes}
+                .double-dots :
+                .num#time-seconds #{clock.seconds < 10? '0'+clock.seconds : clock.seconds}
+            .control
+                a.blue(href="/trade-workshop/time-restart") 
+                    i.fa.fa-refresh
+                a.red(href="/trade-workshop/time-stop") 
+                    i.fa.fa-stop
+                -if(timeStarted){
+                    a.green(href="/trade-workshop/time-pause") 
+                        i.fa.fa-pause
+                -}else{
+                    a.yellow(href="/trade-workshop/time-start") 
+                        i.fa.fa-play
+                -}
+        .cards-view 
+            .card.blue
+                .card-title.blue مواد اولیه
+                table.title
+                    tr 
+                        th.name عنوان
+                        th.num تعداد ورود
+                        th.num بازه زمانی
+                        th.price قیمت کف
+                        th.delete
+                .items-view 
+                    table
+                        -for(var i=0; i < materials.length; i++){
+                            tr
+                                td.name= materials[i].title
+                                td.num= materials[i].extendInPeriod
+                                td.num= materials[i].period
+                                td.price #{materials[i].minPrice} $
+                                td.delete
+                                    a(href="/trade-workshop/delete-material?id=#{materials[i]._id}" onclick="makeSure(event)") 
+                                        i.fa.fa-times
+                        -}
+                .add-item 
+                    form(action="/trade-workshop/add-material" method="POST") 
+                        input(type="text" placeholder="نام" name="title")
+                        input(type="number" placeholder="تعداد ورود به بازار در هر بازه زمانی" name="extendInPeriod")
+                        input(type="number" placeholder="بازه زمانی (ثانیه)" name="period")
+                        input(type="number" placeholder="قیمت کف" name="minPrice")
+                        button.submit.blue(type="submit")
+                            i.fa.fa-plus
+            .card.center-card.green
+                .card-title.green محصولات
+                table.title
+                    tr 
+                        th.name عنوان
+                        th.num تعداد خروج
+                        th.num بازه زمانی
+                        th.price قیمت سقف
+                        th.delete
+                .items-view 
+                    table
+                        -for(var i=0; i<products.length; i++){
+                            tr
+                                td.name= products[i].title
+                                td.num= products[i].sellInPeriod
+                                td.num= products[i].period
+                                td.price #{products[i].maxPrice} $
+                                td.delete
+                                    a(href="/trade-workshop/delete-product?id=#{products[i]._id}" onclick="makeSure(event)") 
+                                        i.fa.fa-times
+                        -}
+                .add-item 
+                    form(action="/trade-workshop/add-product" method="POST") 
+                        input(type="text" placeholder="نام" name="title")
+                        input(type="number" placeholder="تعداد خروج از بازار در بازه زمانی" name="sellInPeriod")
+                        input(type="number" placeholder="بازه زمانی (ثانیه)" name="period")
+                        input(type="number" placeholder="قیمت سقف" name="maxPrice")
+                        button.submit.green(type="submit")
+                            i.fa.fa-plus
+            .card.yellow
+                .card-title.yellow کاربران
+                table.title
+                    tr 
+                        th.name نام
+                        th.name نام کاربری
+                        th.name کلمه عبور
+                        th.price اعتبار
+                        th.delete
+                .items-view 
+                    table
+                        -for(var i=0; i<tradeUsers.length; i++){
+                            tr
+                                td.name= tradeUsers[i].name
+                                td.name= tradeUsers[i].username
+                                td.name= tradeUsers[i].password
+                                td.price #{tradeUsers[i].card} $
+                                td.delete
+                                    a(href="/trade-workshop/delete-user?id=#{tradeUsers[i]._id}" onclick="makeSure(event)") 
+                                        i.fa.fa-times
+                        -}
+                .add-item 
+                    form(action="/trade-workshop/add-user" method="POST") 
+                        input(type="text" placeholder="نام" name="name")
+                        input(type="text" placeholder="نام کاربری" name="username")
+                        input(type="text" placeholder="کلمه عبور" name="password")
+                        input(type="number" placeholder="اعتبار اولیه" name="card")
+                        button.submit.yellow(type="submit")
+                            i.fa.fa-plus
+            
+    
+        script.
+            function makeSure(e)
+            {
+                if(!confirm('آیا مطمئن هستید؟')) {
+                    e.preventDefault();
+                }
+            }                
+        script(src="/js/trade-admin.js") 
+                
