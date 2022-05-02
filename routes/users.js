@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
-var User = require('../models/User');
+const User = require('../models/User');
+const TradeUser = require('../models/workshop-trade/TradeUser');
 const bcrypt = require('bcryptjs');
 const mail = require('../config/mail');
 const passport = require('passport');
@@ -175,11 +176,18 @@ router.post('/login', function(req, res, next){
     if(errors.length > 0 ){
       res.render('login', { errors, username, password});
     }
-    passport.authenticate('local', {
-      successRedirect: '/dashboard?login=true',
-      failureRedirect: '/users/login',
-      failureFlash: true
-    })(req, res, next);
+    TradeUser.findOne({username, password}, (err, user) => {
+        if(user){
+            req.session.tradeUserID = user._id;
+            res.redirect('/trade-workshop/user');
+        }else{
+            passport.authenticate('local', {
+              successRedirect: '/dashboard?login=true',
+              failureRedirect: '/users/login',
+              failureFlash: true
+            })(req, res, next);
+        }
+    })
 });
   
 // Logout handle

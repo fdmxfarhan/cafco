@@ -95,5 +95,51 @@ router.get('/time-pause', ensureAuthenticated, (req, res, next) => {
     if(timeInterval) clearInterval(timeInterval);
     res.redirect('/trade-workshop/admin')
 });
+router.post('/add-material-to-product', ensureAuthenticated, (req, res, next) => {
+    var {materialID, number, productID} = req.body;
+    Product.findById(productID, (err, product) => {
+        product.materialsList.push({materialID, number});
+        Product.updateMany({_id: productID}, {$set: {materialsList: product.materialsList}}, (err, doc) => {
+            res.redirect('/trade-workshop/admin');
+        })
+    })
+});
+router.get('/delete-material-from-product', ensureAuthenticated, (req, res, next) => {
+    var {productID, index} = req.query;
+    Product.findById(productID, (err, product) => {
+        product.materialsList.splice(parseInt(index), 1);
+        Product.updateMany({_id: productID}, {$set: {materialsList: product.materialsList}}, (err, doc) => {
+            res.redirect('/trade-workshop/admin');
+        })
+    });
+});
+router.get('/user', (req, res, next) => {
+    TradeUser.findById(req.session.tradeUserID, (err, user) => {
+        if(user){
+            Material.find({}, (err, materials) => {
+                Product.find({}, (err, products) => {
+                    TradeUser.find({}, (err, tradeUsers) => {
+                        res.render('./trade-workshop/user', {
+                            user,
+                            materials,
+                            products,
+                            tradeUsers,
+                            time,
+                            clock: {
+                                hours: Math.floor(time/3600),
+                                minutes: Math.floor((time%3600)/60),
+                                seconds: time%60,
+                            },
+                            timeStarted,
+                        })
+                    })
+                })
+            })
+        }else{
+            res.redirect('/users/login');
+        }
+    })
+});
+
 
 module.exports = router;

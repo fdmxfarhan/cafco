@@ -66,12 +66,6 @@ body {
     padding: 0;
     margin: 0;
 }
-.hidden {
-    display: none;
-}
-.visible{
-    display: block;
-}
 .center {
     text-align: center;
 }
@@ -186,13 +180,22 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         overflow-y: scroll;
     }
     .cards-view .card .items-view::-webkit-scrollbar {width: 0.3vw;}
-    .cards-view .card .items-view::-webkit-scrollbar-track {background: var(--gray);}
-    .cards-view .card .items-view::-webkit-scrollbar-thumb {background: var(--dark);}
+    .cards-view .card .items-view::-webkit-scrollbar-track {background: var(--white);}
+    .cards-view .card.blue .items-view::-webkit-scrollbar-thumb {background: var(--lightblue);}
+    .cards-view .card.green .items-view::-webkit-scrollbar-thumb {background: var(--green);}
+    .cards-view .card.yellow .items-view::-webkit-scrollbar-thumb {background: var(--yellow);}
     .cards-view .card .items-view::-webkit-scrollbar-thumb:hover{background: var(--blue);}
-    .cards-view .card .items-view table{
+    .cards-view .card .items-view table,
+    .cards-view .card .item{
         width: 90%;
         margin: auto;
+        overflow: hidden;
     }
+    .cards-view .card .item .name,
+    .cards-view .card .item .price,
+    .cards-view .card .item .num,
+    .cards-view .card .item .delete{float: right;}
+
     .cards-view .card .add-item {
         overflow: hidden;
         margin-top: 1vw;
@@ -233,29 +236,38 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         font-family: 'iransans';
         font-size: 0.9vw;
     }
-    .cards-view .card table td{
+    .cards-view .card table td,
+    .cards-view .card .item .name,
+    .cards-view .card .item .num,
+    .cards-view .card .item .price,
+    .cards-view .card .item .delete{
         font-family: 'iransans';
         font-size: 0.9vw;
+        padding: 0.1vw 0;
     }
     .cards-view .card table th.name, 
-    .cards-view .card table td.name{
+    .cards-view .card table td.name,
+    .cards-view .card .item .name{
         width: 24%;
         border-bottom: var(--lightgray) 0.1vw solid;
     }
     .cards-view .card table th.delete, 
-    .cards-view .card table td.delete{
+    .cards-view .card table td.delete,
+    .cards-view .card .item .delete{
         width: 5%;
         text-align: left;
         border-bottom: var(--lightgray) 0.1vw solid;
     }
     .cards-view .card table th.num, 
-    .cards-view .card table td.num{
+    .cards-view .card table td.num,
+    .cards-view .card .item .num{
         width: 20%;
         text-align: center;
         border-bottom: var(--lightgray) 0.1vw solid;
     }
     .cards-view .card table th.price, 
-    .cards-view .card table td.price{
+    .cards-view .card table td.price,
+    .cards-view .card .item .price{
         width: 20%;
         text-align: left;
         font-weight: bold;
@@ -265,10 +277,88 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         font-weight: bold;
         color: var(--blue);
     }
-    .cards-view .card table td.delete a{text-decoration: none; color: var(--gray);}
-    .cards-view .card table td.delete a:hover{color: var(--red);}
-    .cards-view .card table td{padding: 0.1vw 0;}
+    .cards-view .card .item .price{width: 25%;}
+    .cards-view .card table td.delete a,
+    .cards-view .card .item .delete a{
+        text-decoration: none; 
+        color: var(--gray);
+    }
+    .cards-view .card table td.delete a:hover,
+    .cards-view .card .item .delete a:hover{
+        color: var(--red);
+    }
+    .cards-view .card .item .delete.drop-down{
+        font-size: 0.6vw;
+        padding: 0.3vw 0;
+        text-align: right;
+        color: var(--green);
+        cursor: pointer;
+    }
     .cards-view .card.blue table td.price{color: var(--blue);}
     .cards-view .card.green table td.price{color: var(--green);}
+    .cards-view .card.green .item .price{color: var(--green);}
     .cards-view .card.yellow table td.price{color: var(--yellow);}
+    .cards-view .card .needed-materials{
+        display: none;
+    }
+    .cards-view .card .needed-materials form{
+        overflow: hidden;
+        width: 90%;
+        margin: 1vw auto;
+    }
+    .cards-view .card .needed-materials form input{
+        display: block;
+        float: right;
+        width: 25%;
+        margin-right: 0.3vw;
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        padding: 0.01vw 0.2vw;
+        border-radius: 0.5vw;
+    }
+    .cards-view .card .needed-materials form select{
+        display: block;
+        float: right;
+        width: 25%;
+        margin-right: 0.3vw;
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        padding: 0.01vw 0.2vw;
+        border-radius: 0.5vw;
+    }
+    .cards-view .card .needed-materials form button.submit{
+        display: block;
+        float: right;
+        color: white;
+        font-size: 1vw;
+        border: none;
+        padding: 0.3vw 0.4vw 0.1vw 0.4vw;
+        border-radius: 0.5vw;
+        margin-right: 0.3vw;
+        cursor: pointer;
+    }
+    .cards-view .card .needed-materials ul li{
+        font-family: 'iransans';
+        font-size: 0.9vw;
+    }
+    .cards-view .card .needed-materials ul li a{
+        text-decoration: none;
+        font-size: 0.9vw;
+        color: var(--lightgray);
+    }
+    .cards-view .card .needed-materials ul li a:hover{color: var(--red);}
+    .cards-view .card.blue .needed-materials form input{border: var(--blue) 0.1vw solid;}
+    .cards-view .card.green .needed-materials form input{border: var(--green) 0.1vw solid;}
+    .cards-view .card.yellow .needed-materials form input{border: var(--yellow) 0.1vw solid;}
+    .cards-view .card.blue .needed-materials form select{border: var(--blue) 0.1vw solid;}
+    .cards-view .card.green .needed-materials form select{border: var(--green) 0.1vw solid;}
+    .cards-view .card.yellow .needed-materials form select{border: var(--yellow) 0.1vw solid;}
+    .cards-view .card .needed-materials form button.submit.blue{background-color: var(--blue);}
+    .cards-view .card .needed-materials form button.submit.green{background-color: var(--green);}
+    .cards-view .card .needed-materials form button.submit.yellow{background-color: var(--yellow);}
+    .cards-view .card .needed-materials form button.submit:hover{background-color: var(--darkblue);}
+    .cards-view .card .needed-materials form input.hidden{display: none;}
 }
+
+.hidden {display: none;}
+.visible{display: block;}

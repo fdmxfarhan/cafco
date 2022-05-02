@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+        link(rel="stylesheet", href="/css/trade-workshop/user.css")
+        link(rel="shortcut icon", href="/img/logo.png", type="image/x-icon")
+        script(src="/js/jquery-3.5.1.min.js")
+        title بازار مالی
+    body 
+        .black-modal
+        #time-started.hidden= timeStarted
+        #materials-length.hidden= materials.length
+        #products-length.hidden= products.length
+        .title-view 
+            .time 
+                .num#time-hours #{clock.hours < 10? '0'+clock.hours : clock.hours}
+                .double-dots :
+                .num#time-minutes #{clock.minutes < 10? '0'+clock.minutes : clock.minutes}
+                .double-dots :
+                .num#time-seconds #{clock.seconds < 10? '0'+clock.seconds : clock.seconds}
+            .username= user.name
+            .walet 
+                | موجودی: 
+                .card #{user.card} $
+        .two-cards-view 
+            .card-50
+            .card-50
+                    
+        script.
+            function makeSure(e)
+            {
+                if(!confirm('آیا مطمئن هستید؟')) {
+                    e.preventDefault();
+                }
+            }                
+        script(src="/js/trade-admin.js") 
+                

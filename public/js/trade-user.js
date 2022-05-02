@@ -20,17 +20,5 @@ if(document.getElementById('time-started').textContent == 'true'){
 $(document).ready(() => {
     var materialsLength = parseInt(document.getElementById('materials-length').textContent);
     var productsLength = parseInt(document.getElementById('products-length').textContent);
-    var products = [];
-    for (let i = 0; i < productsLength; i++) {
-        products.push({
-            id: i,
-            btn: $(`#product-${i}-btn`),
-            view: $(`#product-${i}-materials`),
-        })
-    }
-    products.forEach(product => {
-        product.btn.click(() => {
-            product.view.slideToggle(500);
-        })
-    });
+    
 });
