@@ -25,9 +25,41 @@ html(lang="en")
             .walet 
                 | موجودی: 
                 .card #{user.card} $
+        .two-cards-titles
+            .title دارایی
+            .title بازار
         .two-cards-view 
-            .card-50
-            .card-50
+            .card-50.right-card 
+                .right 
+                    .title مواد اولیه
+                .break
+                .left 
+                    .title محصولات
+            .card-50.left-card
+                .right
+                    .title مواد اولیه
+                    .items-view.yellow
+                        -for(var i=0; i<materials.length; i++){
+                            .item
+                                .info
+                                    .part.name #{materials[i].title} 
+                                        .peranteces (#{materials[i].extendInPeriod} واحد)
+                                    .part.price #{materials[i].minPrice} $
+                                .info
+                                    .part.timer 
+                                        -var matTimer = materials[i].period - time%materials[i].period;
+                                        .num(id="timer-#{i}-hours") #{Math.floor(matTimer/3600)}
+                                        .double-dots :
+                                        .num(id="timer-#{i}-minutes") #{Math.floor((matTimer%3600)/60)}
+                                        .double-dots :
+                                        .num(id="timer-#{i}-seconds") #{matTimer%60}
+                                    .part.buy-btn 
+                                        i.fa.fa-plus 
+                                        | خرید
+                        -}
+                .break
+                .left 
+                    .title محصولات
                     
         script.
             function makeSure(e)
@@ -36,5 +68,5 @@ html(lang="en")
                     e.preventDefault();
                 }
             }                
-        script(src="/js/trade-admin.js") 
+        script(src="/js/trade-user.js") 
                 

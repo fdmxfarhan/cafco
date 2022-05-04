@@ -15,6 +15,7 @@
     --green: #18d112;
     --red: #ff0000;
     --dark: #023047;
+    --purple: #CB3E99;
     --hover: #ff7b00;
     --dark: #050507;
     --light: white;
@@ -129,7 +130,7 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
     .two-cards-view{
         overflow: hidden;
         width: 90%;
-        margin: 1vw auto;
+        margin: 0 auto;
         padding: 1vw;
     }
     .two-cards-view .card-50{
@@ -139,9 +140,134 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.1);
         height: 80vh;
         float: right;
+        overflow: hidden;
     }
+    /* .two-cards-view .card-50.right-card{border-bottom: var(--dark) 0.4vw solid;} */
+    /* .two-cards-view .card-50.left-card{border-bottom: var(--purple) 0.4vw solid;} */
     .two-cards-view .card-50:first-of-type{margin-left: 2%;}
-
+    .two-cards-titles{
+        overflow: hidden;
+        width: 90%;
+        margin: auto;
+        margin-bottom: -0.5vw;
+        font-family: 'iransans';
+        font-size: 1vw;
+        font-weight: bold;
+        color: var(--darkblue);
+    }
+    .two-cards-titles .title{
+        float: right;
+        width: 50%;
+        text-align: center;
+    }
+    .two-cards-view .card-50 .right,
+    .two-cards-view .card-50 .left{
+        float: right;
+        width: 49.9%;
+        height: 10vw;
+    }
+    .two-cards-view .card-50 .right .title,
+    .two-cards-view .card-50 .left .title{
+        text-align: center;
+        padding: 0.3vw 0;
+        font-family: 'iransans';
+        font-size: 1vw;
+        font-weight: bold;
+        color: white;
+    }
+    .two-cards-view .card-50 .right .title{background-color: var(--blue);}
+    .two-cards-view .card-50.left-card .right .title{background-color: var(--yellow);}
+    .two-cards-view .card-50 .left .title{background-color: var(--green);}
+    .two-cards-view .card-50.left-card .left .title{background-color: var(--purple);}
+    .two-cards-view .card-50 .break{
+        float: right;
+        min-height: 80vh;
+        background-color: var(--lightgray);
+        width: 0.2%;
+    }
+    .two-cards-view .card-50 .items-view{
+        height: 75vh;
+        overflow-y: scroll;
+    }
+    .two-cards-view .card-50 .items-view::-webkit-scrollbar {width: 0.3vw;}
+    .two-cards-view .card-50 .items-view::-webkit-scrollbar-track {background: var(--white);}
+    .two-cards-view .card-50 .items-view.blue::-webkit-scrollbar-thumb {background: var(--lightblue);}
+    .two-cards-view .card-50 .items-view.green::-webkit-scrollbar-thumb {background: var(--green);}
+    .two-cards-view .card-50 .items-view.yellow::-webkit-scrollbar-thumb {background: var(--yellow);}
+    .two-cards-view .card-50 .items-view.purple::-webkit-scrollbar-thumb {background: var(--purple);}
+    .two-cards-view .card-50 .items-view::-webkit-scrollbar-thumb:hover{background: var(--blue);}
+    .two-cards-view .card-50 .items-view .item{
+        width: 95%;
+        margin: 0.5vw auto;
+        border-radius: 0.5vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.1);
+    }
+    .two-cards-view .card-50 .items-view.yellow .item{border-bottom: var(--yellow) 0.2vw solid;}
+    .two-cards-view .card-50 .items-view .item .info{
+        overflow: hidden;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.name{
+        float: right;
+        font-family: 'iransans';
+        font-size: 1vw;
+        font-weight: bold;
+        padding: 0.5vw 1vw;
+        color: var(--dark);
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.name .peranteces{
+        display: inline;
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        color: var(--text);
+        font-weight: normal;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.price{
+        float: left;
+        padding: 0.5vw 1vw;
+        font-family: 'iransans';
+        font-size: 1vw;
+        font-weight: bold;
+    }
+    .two-cards-view .card-50 .items-view.yellow .item .info .part.price{color: var(--yellow);}
+    .two-cards-view .card-50 .items-view .item .info .part.timer{
+        float: right;
+        padding: 0.5vw 1vw;
+        font-family: 'iransans';
+        font-size: 1vw;
+        overflow: hidden;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.timer .num{
+        display: inline;
+        font-family: 'iransans';
+        font-size: 1vw;
+        overflow: hidden;
+        color: var(--text);
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.timer .double-dots{
+        font-size: 1vw;
+        color: var(--text);
+        display: inline;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.buy-btn{
+        float: left;
+        padding: 0.2vw 0.8vw;
+        font-family: 'iransans';
+        font-size: 0.8vw;
+        overflow: hidden;
+        margin: 0.4vw 0.5vw;
+        border-radius: 0.5vw;
+        color: white;
+        cursor: pointer;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.buy-btn i{
+        padding-left: 0.5vw;
+        font-size: 0.8vw;
+    }
+    .two-cards-view .card-50 .items-view.yellow .item .info .part.buy-btn{background-color: var(--yellow);}
+    .two-cards-view .card-50 .items-view .item .info .part.buy-btn:hover{
+        background-color: var(--dark);
+    }
+    
 }
 
 .hidden {display: none;}
