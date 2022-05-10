@@ -191,6 +191,7 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         margin: auto;
         overflow: hidden;
     }
+    .cards-view .card .item .drop-down,
     .cards-view .card .item .name,
     .cards-view .card .item .price,
     .cards-view .card .item .num,
@@ -238,6 +239,7 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
     }
     .cards-view .card table td,
     .cards-view .card .item .name,
+    .cards-view .card .item .drop-down,
     .cards-view .card .item .num,
     .cards-view .card .item .price,
     .cards-view .card .item .delete{
@@ -245,10 +247,14 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         font-size: 0.9vw;
         padding: 0.1vw 0;
     }
-    .cards-view .card table th.name, 
+    .cards-view .card table th.drop-down{
+        width: 13%;
+        border-bottom: var(--lightgray) 0.1vw solid;
+    }
     .cards-view .card table td.name,
+    .cards-view .card table th.name,
     .cards-view .card .item .name{
-        width: 24%;
+        width: 20%;
         border-bottom: var(--lightgray) 0.1vw solid;
     }
     .cards-view .card table th.delete, 
@@ -257,11 +263,15 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         width: 5%;
         text-align: left;
         border-bottom: var(--lightgray) 0.1vw solid;
+    }.cards-view .card .item .drop-down{
+        width: 13%;
+        text-align: left;
+        border-bottom: var(--lightgray) 0.1vw solid;
     }
     .cards-view .card table th.num, 
     .cards-view .card table td.num,
     .cards-view .card .item .num{
-        width: 20%;
+        width: 17%;
         text-align: center;
         border-bottom: var(--lightgray) 0.1vw solid;
     }
@@ -287,9 +297,9 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
     .cards-view .card .item .delete a:hover{
         color: var(--red);
     }
-    .cards-view .card .item .delete.drop-down{
+    .cards-view .card .item .drop-down{
         font-size: 0.6vw;
-        padding: 0.3vw 0;
+        padding: 0.35vw 0;
         text-align: right;
         color: var(--green);
         cursor: pointer;

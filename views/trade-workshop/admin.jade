@@ -68,7 +68,7 @@ html(lang="en")
                 .card-title.green محصولات
                 table.title
                     tr 
-                        th.delete
+                        th.drop-down
                         th.name عنوان
                         th.num تعداد خروج
                         th.num بازه زمانی
@@ -77,8 +77,9 @@ html(lang="en")
                 .items-view 
                     -for(var i=0; i<products.length; i++){
                         .item
-                            .delete.drop-down(id="product-#{i}-btn")
+                            .drop-down(id="product-#{i}-btn")
                                 i.fa.fa-chevron-down
+                                | مواد اولیه
                             .name= products[i].title
                             .num= products[i].sellInPeriod
                             .num= products[i].period

@@ -13,7 +13,10 @@ html(lang="en")
         .black-modal
         #time-started.hidden= timeStarted
         #materials-length.hidden= materials.length
+        #bought-materials-length.hidden= user.materials.length
         #products-length.hidden= products.length
+        #user-products-length.hidden= user.products.length
+        #sold-products-length.hidden= user.soldProducts.length
         .title-view 
             .time 
                 .num#time-hours #{clock.hours < 10? '0'+clock.hours : clock.hours}
@@ -32,9 +35,83 @@ html(lang="en")
             .card-50.right-card 
                 .right 
                     .title مواد اولیه
+                    .items-view.blue
+                        -for(var i=0; i < user.materials.length; i++){
+                            -var material = materials.find(e => e._id.toString() == user.materials[i].materialID)
+                            -if(!user.materials[i].confirmed){
+                                .item.disabled
+                                    .info
+                                        .part.name #{user.materials[i].number} واحد #{material.title} 
+                                            .peranteces (در انتظار تایید)
+                                        .part.price #{user.materials[i].price} $
+                                    .info
+                                        .part.timer 
+                                            -var matTimer = material.period - time%material.period;
+                                            .num(id="bought-timer-#{i}-hours") #{Math.floor(matTimer/3600)}
+                                            .double-dots :
+                                            .num(id="bought-timer-#{i}-minutes") #{Math.floor((matTimer%3600)/60)}
+                                            .double-dots :
+                                            .num(id="bought-timer-#{i}-seconds") #{matTimer%60}
+                                        a.part.buy-btn(href="/trade-workshop/delete-bought-material") 
+                                            i.fa.fa-trash
+                                            | حذف
+                            -}
+                        -}
+                        -for(var i=0; i<user.materials.length; i++){
+                            -var material = materials.find(e => e._id.toString() == user.materials[i].materialID)
+                            -if(user.materials[i].confirmed){
+                                .item
+                                    .info
+                                        .part.name #{user.materials[i].number} واحد #{material.title} 
+                                    .info.hidden
+                                        .part.timer 
+                                            -var matTimer = material.period - time%material.period;
+                                            .num(id="bought-timer-#{i}-hours") #{Math.floor(matTimer/3600)}
+                                            .double-dots :
+                                            .num(id="bought-timer-#{i}-minutes") #{Math.floor((matTimer%3600)/60)}
+                                            .double-dots :
+                                            .num(id="bought-timer-#{i}-seconds") #{matTimer%60}
+                                        
+                            -}
+                            
+                        -}
                 .break
                 .left 
                     .title محصولات
+                    .items-view.green
+                        -for(var i=0; i<makableProducts.length; i++){
+                            -var reqmats = getProductsRequiredMaterials(makableProducts[i], materials);
+                            .item.disabled
+                                .info
+                                    .part.name #{material.title} 
+                                        .peranteces (
+                                            -for(var j=0; j<reqmats.length; j++){
+                                                | #{reqmats[j].number} واحد #{reqmats[j].material.title}#{j == reqmats.length-1 ? '' : '، '}
+                                            -}
+                                            | )
+                                .info
+                                    a.part.buy-btn(href="/trade-workshop/make-product?productID=#{makableProducts[i]._id}") 
+                                        i.fa.fa-plus
+                                        | ساخت
+                        -}
+                        -for(var i=0; i<user.products.length; i++){
+                            -var product = products.find(e => e._id.toString() == user.products[i].productID)
+                            .item
+                                .info
+                                    .part.name #{user.products[i].number} واحد #{product.title} 
+                                .info
+                                    a.part.buy-btn(id="sell-product-btn-#{i}")
+                                        i.fa.fa-dollar
+                                        | فروش
+                            .item-form.hidden(id="sell-product-view-#{i}")
+                                form(action="/trade-workshop/sell-product" method="POST") 
+                                    input.hidden(type="text" name="productID" value="#{user.products[i].productID}")
+                                    input.text1(type="number" name="number" placeholder="تعداد" required)
+                                    input.text2(type="number" name="price" placeholder="قیمت پیشنهادی" required)
+                                    button(type="submit")
+                                        i.fa.fa-shopping-cart
+                                        | تایید
+                        -}
             .card-50.left-card
                 .right
                     .title مواد اولیه
@@ -53,14 +130,61 @@ html(lang="en")
                                         .num(id="timer-#{i}-minutes") #{Math.floor((matTimer%3600)/60)}
                                         .double-dots :
                                         .num(id="timer-#{i}-seconds") #{matTimer%60}
-                                    .part.buy-btn 
+                                    .part.buy-btn(id="market-material-buy-#{i}")
                                         i.fa.fa-plus 
                                         | خرید
+                            .item-form.hidden(id="market-material-view-#{i}")
+                                form(action="/trade-workshop/buy-material" method="POST") 
+                                    input.hidden(type="text" name="materialID" value="#{materials[i]._id}")
+                                    input.text1(type="number" name="number" placeholder="تعداد" required)
+                                    input.text2(type="number" name="price" placeholder="قیمت پیشنهادی" required)
+                                    button(type="submit")
+                                        i.fa.fa-shopping-cart
+                                        | تایید
                         -}
                 .break
                 .left 
                     .title محصولات
-                    
+                    .items-view.purple
+                        -for(var i=0; i < user.soldProducts.length; i++){
+                            -var product = products.find(e => e._id.toString() == user.soldProducts[i].productID)
+                            -if(!user.soldProducts[i].confirmed && product){
+                                .item.disabled
+                                    .info
+                                        .part.name #{user.soldProducts[i].number} واحد #{product.title} 
+                                            .peranteces (در انتظار تایید)
+                                        .part.price #{user.soldProducts[i].price} $
+                                    .info
+                                        .part.timer 
+                                            -var matTimer = product.period - time%product.period;
+                                            .num(id="sell-product-#{i}-hours") #{Math.floor(matTimer/3600)}
+                                            .double-dots :
+                                            .num(id="sell-product-#{i}-minutes") #{Math.floor((matTimer%3600)/60)}
+                                            .double-dots :
+                                            .num(id="sell-product-#{i}-seconds") #{matTimer%60}
+                                        a.part.buy-btn(href="/trade-workshop/delete-bought-product") 
+                                            i.fa.fa-trash
+                                            | حذف
+                            -}
+                        -}
+                        -for(var i=0; i<user.soldProducts.length; i++){
+                            -var product = products.find(e => e._id.toString() == user.soldProducts[i].productID)
+                            -if(user.soldProducts[i].confirmed){
+                                .item
+                                    .info
+                                        .part.name #{user.soldProducts[i].number} واحد #{product.title} 
+                                    .info.hidden
+                                        //- .part.timer 
+                                        //-     -var matTimer = product.period - time%product.period;
+                                        //-     .num(id="bought-timer-#{i}-hours") #{Math.floor(matTimer/3600)}
+                                        //-     .double-dots :
+                                        //-     .num(id="bought-timer-#{i}-minutes") #{Math.floor((matTimer%3600)/60)}
+                                        //-     .double-dots :
+                                        //-     .num(id="bought-timer-#{i}-seconds") #{matTimer%60}
+                                        
+                            -}
+                            
+                        -}
         script.
             function makeSure(e)
             {

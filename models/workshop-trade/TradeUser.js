@@ -7,6 +7,7 @@ var TradeUserSchema = new mongoose.Schema({
     password: String,
     materials: {type: [Object], default: []},
     products: {type: [Object], default: []},
+    soldProducts: {type: [Object], default: []},
 });
 
 var TradeUser = mongoose.model('TradeUser', TradeUserSchema);
