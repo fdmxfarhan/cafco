@@ -28,11 +28,12 @@ var checkMaterials = (materials, users) => {
             var leftMaterials = materials[i].extendInPeriod;
             for(var j=0; j < tradeRequests.length; j++){
                 if(leftMaterials <= 0) break;
-                if(tradeRequests[j].material.price >= materials[i].minPrice){
+                if(tradeRequests[j].material.price >= materials[i].minPrice && tradeRequests[j].user.card >= tradeRequests[j].material.price * tradeRequests[j].material.number){
                     users[tradeRequests[j].userIndex].materials[tradeRequests[j].materialIndex].confirmed = true;
+                    users[tradeRequests[j].userIndex].card -= tradeRequests[j].material.price * tradeRequests[j].material.number;
                     if(tradeRequests[j].material.number > leftMaterials)
                         users[tradeRequests[j].userIndex].materials[tradeRequests[j].materialIndex].number = leftMaterials;
-                    TradeUser.updateMany({_id: tradeRequests[j].user._id}, {$set: {materials: users[tradeRequests[j].userIndex].materials}}, (err, doc) => {});
+                    TradeUser.updateMany({_id: tradeRequests[j].user._id}, {$set: {card: users[tradeRequests[j].userIndex].card, materials: users[tradeRequests[j].userIndex].materials}}, (err, doc) => {});
                     leftMaterials -= users[tradeRequests[j].userIndex].materials[tradeRequests[j].materialIndex].number;
                 }
             }
@@ -53,11 +54,48 @@ var checkMaterials = (materials, users) => {
 var loopFunction = () => {
     time++;
     Material.find({}, (err, materials) => {
-        TradeUser.find({}, (err, users) => {
-            checkMaterials(materials, users);
-            for (let i = 0; i < users.length; i++) {
-
-            }
+        Product.find({}, (err, products) => {
+            TradeUser.find({}, (err, users) => {
+                checkMaterials(materials, users);
+                for (let i = 0; i < products.length; i++) {
+                    if(time%products[i].period == 0){
+                        var tradeRequests = [];
+                        for(var j=0; j<users.length; j++){
+                            for(var k=0; k<users[j].soldProducts.length; k++){
+                                if(!users[j].soldProducts[k].confirmed && users[j].soldProducts[k].productID.toString() == products[i]._id.toString()){
+                                    tradeRequests.push({user: users[j], product: users[j].soldProducts[k], userIndex: j, productIndex: k});
+                                }
+                            }
+                        }
+                        tradeRequests.sort((a, b) => a.product.price - b.product.price);
+                        // console.log(tradeRequests);
+                        var leftProducts = products[i].sellInPeriod;
+                        for(var j=0; j < tradeRequests.length; j++){
+                            if(leftProducts <= 0) break;
+                            if(tradeRequests[j].product.price <= products[i].maxPrice){
+                                users[tradeRequests[j].userIndex].soldProducts[tradeRequests[j].productIndex].confirmed = true;
+                                if(tradeRequests[j].product.number > leftProducts)
+                                    users[tradeRequests[j].userIndex].soldProducts[tradeRequests[j].productIndex].number = leftProducts;
+                                users[tradeRequests[j].userIndex].card += tradeRequests[j].product.price * users[tradeRequests[j].userIndex].soldProducts[tradeRequests[j].productIndex].number;
+                                TradeUser.updateMany({_id: tradeRequests[j].user._id}, {$set: {card: users[tradeRequests[j].userIndex].card, soldProducts: users[tradeRequests[j].userIndex].soldProducts}}, (err, doc) => {});
+                                leftProducts -= users[tradeRequests[j].userIndex].soldProducts[tradeRequests[j].productIndex].number;
+                            }
+                        }
+                        for(var j=0; j<users.length; j++){
+                            for(var k=0; k<users[j].soldProducts.length; k++){
+                                if(!users[j].soldProducts[k].confirmed && users[j].soldProducts[k].productID.toString() == products[i]._id.toString()){
+                                    user.products.push({productID: users[j].soldProducts[k].productID, number: users[j].soldProducts[k].number});
+                                    users[j].soldProducts.splice(k, 1);
+                                    k--;
+                                    TradeUser.updateMany({_id: users[j]._id}, {$set: {soldProducts: users[j].soldProducts, products: users[j].products}}, (err, doc) => {
+                                        if(err) console.log(err);
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         });
     });
 }

@@ -107,7 +107,7 @@ html(lang="en")
                                 form(action="/trade-workshop/sell-product" method="POST") 
                                     input.hidden(type="text" name="productID" value="#{user.products[i].productID}")
                                     input.text1(type="number" name="number" placeholder="تعداد" required)
-                                    input.text2(type="number" name="price" placeholder="قیمت پیشنهادی" required)
+                                    input.text2(type="number" name="price" placeholder="قیمت پیشنهادی هر واحد" required)
                                     button(type="submit")
                                         i.fa.fa-shopping-cart
                                         | تایید
@@ -137,7 +137,7 @@ html(lang="en")
                                 form(action="/trade-workshop/buy-material" method="POST") 
                                     input.hidden(type="text" name="materialID" value="#{materials[i]._id}")
                                     input.text1(type="number" name="number" placeholder="تعداد" required)
-                                    input.text2(type="number" name="price" placeholder="قیمت پیشنهادی" required)
+                                    input.text2(type="number" name="price" placeholder="قیمت پیشنهادی هر واحد" required)
                                     button(type="submit")
                                         i.fa.fa-shopping-cart
                                         | تایید
