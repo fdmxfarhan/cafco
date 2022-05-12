@@ -83,7 +83,7 @@ html(lang="en")
                             -var reqmats = getProductsRequiredMaterials(makableProducts[i], materials);
                             .item.disabled
                                 .info
-                                    .part.name #{material.title} 
+                                    .part.name #{makableProducts[i].title} 
                                         .peranteces (
                                             -for(var j=0; j<reqmats.length; j++){
                                                 | #{reqmats[j].number} واحد #{reqmats[j].material.title}#{j == reqmats.length-1 ? '' : '، '}
