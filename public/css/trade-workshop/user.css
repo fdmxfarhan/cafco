@@ -1,10 +1,8 @@
 /* --------- Declarations ----------- */
-
 @font-face {
     font-family: 'iransans';
     src: url('../iransans.ttf');
 }
-
 :root {
     --white: #ececec;
     --lightblue: #8ECAE6;
@@ -331,7 +329,246 @@ body::-webkit-scrollbar-thumb:hover{background: var(--blue);}
         background-color: var(--dark);
     }
 }
-
+@media only screen and (max-width: 800px) {
+    .title-view{
+        background-color: white;
+        width: 100%;
+        margin: 0 auto;
+        /* border: var(--lightgray) 0.1vw solid; */
+        /* border-radius: 0.5vw; */
+        /* box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.1); */
+        overflow: hidden;
+        position: relative;
+        height: 10vw;
+    }
+    .title-view .time{
+        position: absolute;
+        right: 40%;
+        width: 20%;
+        overflow: hidden;
+        padding: 0.4vw 2vw;
+        text-align: center;
+    }
+    .title-view .time .num{
+        display: inline;
+        font-family: 'iransans';
+        font-size: 3.9vw;
+        color: var(--darkblue);
+    }
+    .title-view .time .double-dots{
+        display: inline;
+        font-size: 3.9vw;
+    }
+    .title-view .username{
+        float: right;
+        padding: 1.5vw 3vw;
+        font-weight: bold;
+        font-family: 'iransans';
+        font-size: 3.2vw;
+    }
+    .title-view .walet{
+        float: left;
+        padding: 1.5vw 3vw;
+        font-family: 'iransans';
+        font-size: 2.9vw;
+        color: var(--text);
+        overflow: hidden;
+    }
+    .title-view .walet .card{
+        display: inline;
+        font-weight: bold;
+        color: var(--orange);
+        font-size: 3.4vw;
+        padding: 0.7vw 0.5vw;
+    }
+    .two-cards-view{
+        overflow: hidden;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+    }
+    .two-cards-view .card-50{
+        width: 100%;
+        background-color: white;
+        /* border-radius: 0.5vw; */
+        /* box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.1); */
+        /* height: 80vh; */
+        /* float: right; */
+        overflow: hidden;
+    }
+    /* .two-cards-view .card-50.right-card{border-bottom: var(--dark) 0.4vw solid;} */
+    /* .two-cards-view .card-50.left-card{border-bottom: var(--purple) 0.4vw solid;} */
+    /* .two-cards-view .card-50:first-of-type{margin-left: 2%;} */
+    .two-cards-titles{display: none;}
+    .two-cards-view .card-50 .right,
+    .two-cards-view .card-50 .left{
+        /* float: right; */
+        width: 100%;
+        /* height: 10vw; */
+    }
+    .two-cards-view .card-50 .right .title,
+    .two-cards-view .card-50 .left .title{
+        text-align: center;
+        padding: 1vw 0;
+        font-family: 'iransans';
+        font-size: 3vw;
+        font-weight: bold;
+        color: white;
+    }
+    .two-cards-view .card-50 .right .title{background-color: var(--blue);}
+    .two-cards-view .card-50.left-card .right .title{background-color: var(--yellow);}
+    .two-cards-view .card-50 .left .title{background-color: var(--green);}
+    .two-cards-view .card-50.left-card .left .title{background-color: var(--purple);}
+    .two-cards-view .card-50 .break{
+        display: none;
+    }
+    .two-cards-view .card-50 .items-view{
+        margin-bottom: 5vw;
+        /* height: 75vh;
+        overflow-y: scroll; */
+    }
+    .two-cards-view .card-50 .items-view::-webkit-scrollbar {width: 0.3vw;}
+    .two-cards-view .card-50 .items-view::-webkit-scrollbar-track {background: var(--white);}
+    .two-cards-view .card-50 .items-view.blue::-webkit-scrollbar-thumb {background: var(--lightblue);}
+    .two-cards-view .card-50 .items-view.green::-webkit-scrollbar-thumb {background: var(--green);}
+    .two-cards-view .card-50 .items-view.yellow::-webkit-scrollbar-thumb {background: var(--yellow);}
+    .two-cards-view .card-50 .items-view.purple::-webkit-scrollbar-thumb {background: var(--purple);}
+    .two-cards-view .card-50 .items-view::-webkit-scrollbar-thumb:hover{background: var(--blue);}
+    .two-cards-view .card-50 .items-view .item{
+        width: 95%;
+        margin: 1.5vw auto;
+        border-radius: 1.5vw;
+        box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.1);
+    }
+    .two-cards-view .card-50 .items-view.yellow .item{border-bottom: var(--yellow) 0.6vw solid;}
+    .two-cards-view .card-50 .items-view.blue .item{border-bottom: var(--blue) 0.6vw solid;}
+    .two-cards-view .card-50 .items-view.green .item{border-bottom: var(--green) 0.6vw solid;}
+    .two-cards-view .card-50 .items-view.purple .item{border-bottom: var(--purple) 0.6vw solid;}
+    .two-cards-view .card-50 .items-view .item .info{
+        overflow: hidden;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.name{
+        float: right;
+        font-family: 'iransans';
+        font-size: 3vw;
+        font-weight: bold;
+        padding: 1vw 2vw;
+        color: var(--dark);
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.name .peranteces{
+        display: inline;
+        font-family: 'iransans';
+        font-size: 2.8vw;
+        color: var(--text);
+        font-weight: normal;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.price{
+        float: left;
+        padding: 1vw 2vw;
+        font-family: 'iransans';
+        font-size: 3vw;
+        font-weight: bold;
+    }
+    .two-cards-view .card-50 .items-view.yellow .item .info .part.price{color: var(--yellow);}
+    .two-cards-view .card-50 .items-view.blue .item .info .part.price{color: var(--blue);}
+    .two-cards-view .card-50 .items-view.green .item .info .part.price{color: var(--green);}
+    .two-cards-view .card-50 .items-view.purple .item .info .part.price{color: var(--purple);}
+    .two-cards-view .card-50 .items-view .item .info .part.timer{
+        float: right;
+        padding: 1vw 2vw;
+        font-family: 'iransans';
+        font-size: 3vw;
+        overflow: hidden;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.timer .num{
+        display: inline;
+        font-family: 'iransans';
+        font-size: 3vw;
+        overflow: hidden;
+        color: var(--text);
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.timer .double-dots{
+        font-size: 3vw;
+        color: var(--text);
+        display: inline;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.buy-btn{
+        float: left;
+        padding: 0.6vw 2.8vw;
+        font-family: 'iransans';
+        font-size: 2.8vw;
+        overflow: hidden;
+        margin: 0.4vw 0.5vw;
+        border-radius: 1.5vw;
+        color: white;
+        cursor: pointer;
+    }
+    .two-cards-view .card-50 .items-view .item .info a.part.buy-btn{
+        text-decoration: none;
+    }
+    .two-cards-view .card-50 .items-view .item .info .part.buy-btn i{
+        padding-left: 0.5vw;
+        font-size: 2.8vw;
+    }
+    .two-cards-view .card-50 .items-view.yellow .item .info .part.buy-btn{background-color: var(--yellow);}
+    .two-cards-view .card-50 .items-view.blue .item .info .part.buy-btn{background-color: var(--blue);}
+    .two-cards-view .card-50 .items-view.green .item .info .part.buy-btn{background-color: var(--green);}
+    .two-cards-view .card-50 .items-view.purple .item .info .part.buy-btn{background-color: var(--purple);}
+    .two-cards-view .card-50 .items-view .item .info .part.buy-btn:hover{
+        background-color: var(--dark);
+    }
+    .two-cards-view .card-50 .items-view .item-form{
+        width: 95%;
+        margin: auto;
+        margin-bottom: 1.5vw;
+    }
+    .two-cards-view .card-50 .items-view .item-form input{
+        font-family: 'iransans';
+        font-size: 2.8vw;
+        border-radius: 1.5vw;
+        margin-left: 1.5vw;
+    }
+    .two-cards-view .card-50 .items-view .item-form input.text1{width: 20vw;}
+    .two-cards-view .card-50 .items-view .item-form input.text2{width: 50vw;}
+    .two-cards-view .card-50 .items-view.yellow .item-form input{border: var(--yellow) 0.3vw solid;}
+    .two-cards-view .card-50 .items-view.blue .item-form input{border: var(--blue) 0.3vw solid;}
+    .two-cards-view .card-50 .items-view.green .item-form input{border: var(--green) 0.3vw solid;}
+    .two-cards-view .card-50 .items-view.purple .item-form input{border: var(--purple) 0.3vw solid;}
+    .two-cards-view .card-50 .items-view .item-form button{
+        font-family: 'iransans';
+        font-size: 2.8vw;
+        padding: 0.3vw 1.8vw;
+        border-radius: 1.5vw;
+        color: white;
+    }
+    .two-cards-view .card-50 .items-view.yellow .item-form button{
+        background-color: var(--yellow);
+        border: var(--yellow) 0.3vw solid;
+        cursor: pointer;
+    }
+    .two-cards-view .card-50 .items-view.blue .item-form button{
+        background-color: var(--blue);
+        border: var(--blue) 0.3vw solid;
+        cursor: pointer;
+    }
+    .two-cards-view .card-50 .items-view.green .item-form button{
+        background-color: var(--green);
+        border: var(--green) 0.3vw solid;
+        cursor: pointer;
+    }
+    .two-cards-view .card-50 .items-view.purple .item-form button{
+        background-color: var(--purple);
+        border: var(--purple) 0.3vw solid;
+        cursor: pointer;
+    }
+    .two-cards-view .card-50 .items-view .item-form button i{
+        padding-left: 1vw;
+    }
+    .two-cards-view .card-50 .items-view .item-form button:hover{
+        border: var(--dark) 0.1vw solid;
+        background-color: var(--dark);
+    }
+}
 .two-cards-view .card-50 .items-view.blue .item.disabled{color: var(--gray);}
 .two-cards-view .card-50 .items-view.blue .item.disabled{border-bottom-color: gray;}
 .two-cards-view .card-50 .items-view.blue .item.disabled .info .part.name{color: var(--gray);}
