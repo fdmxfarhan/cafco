@@ -84,7 +84,7 @@ var loopFunction = () => {
                         for(var j=0; j<users.length; j++){
                             for(var k=0; k<users[j].soldProducts.length; k++){
                                 if(!users[j].soldProducts[k].confirmed && users[j].soldProducts[k].productID.toString() == products[i]._id.toString()){
-                                    user.products.push({productID: users[j].soldProducts[k].productID, number: users[j].soldProducts[k].number});
+                                    users[j].products.push({productID: users[j].soldProducts[k].productID, number: users[j].soldProducts[k].number});
                                     users[j].soldProducts.splice(k, 1);
                                     k--;
                                     TradeUser.updateMany({_id: users[j]._id}, {$set: {soldProducts: users[j].soldProducts, products: users[j].products}}, (err, doc) => {
