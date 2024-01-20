@@ -1,6 +1,17 @@
 ## Cafco Register Management
 This web application is designed and developed to manage online courses registration for cafco institution. It also contains APIs for CafcoWorkshop Mobile application.
 
+# Note:
+To solve Irans filtering problems we can change our DNS settings in ubuntu as shown bellow:
+```
+sudo nano /etc/resolv.conf
+```
+insted of any nameserver that is written in the file, use this nameservers:
+```
+nameserver 178.22.122.100
+nameserver 185.51.200.2
+```
+
 # Requirements
 To run the server, we need `NodeJS` and `mongodb`. To install these tools follow the instruction bellow. You can run the server on any platforms, such as **Windows**, **Linux** or **MacOS**. You can use Visual Studio Code (VS Code) as an editor and download it from [here](https://code.visualstudio.com/download).
   
